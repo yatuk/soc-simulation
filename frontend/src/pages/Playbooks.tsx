@@ -1,9 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { usePlaybookDefStore, usePlaybookRunStore } from '@/store'
 import { SkeletonTable } from '@/components/ui/skeleton-card'
 import { StatusPill } from '@/components/ui/status-pill'
-import { Play } from 'lucide-react'
+import { EmptyState } from '@/components/ui/empty-state'
+import { Play, Clock, Activity } from 'lucide-react'
+
+const CATEGORY_LABELS: Record<string, string> = { phishing: 'Oltalama', account_compromise: 'Hesap Ele Geçirme', malware: 'Zararlı Yazılım', data_exfiltration: 'Veri Sızdırma' }
 
 export default function Playbooks() {
   const { data: definitions, isLoading: dLoading, load: loadDef } = usePlaybookDefStore()
@@ -11,36 +14,64 @@ export default function Playbooks() {
 
   useEffect(() => { loadDef(); loadRuns() }, [loadDef, loadRuns])
 
+  const playbookStats = useMemo(() => {
+    const map: Record<string, { total: number; completed: number; failed: number; lastRun: typeof runs[0] | null }> = {}
+    definitions.forEach((d) => {
+      const pbRuns = runs.filter((r) => r.playbook_id === d.playbook_id)
+      map[d.playbook_id] = {
+        total: pbRuns.length,
+        completed: pbRuns.filter((r) => r.status === 'completed').length,
+        failed: pbRuns.filter((r) => r.status === 'failed').length,
+        lastRun: pbRuns.sort((a, b) => b.started_at.localeCompare(a.started_at))[0] ?? null,
+      }
+    })
+    return map
+  }, [definitions, runs])
+
   if (dLoading || rLoading) return <div className="p-6"><SkeletonTable rows={4} /></div>
 
   return (
     <div className="p-6 space-y-6">
+      {/* Playbook definitions */}
       <section>
-        <h2 className="text-sm font-semibold mb-3">Playbook Tanımları</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {definitions.map((pb) => (
-            <Link
-              key={pb.playbook_id}
-              to={`/playbooks/${pb.playbook_id}`}
-              className="flex items-start gap-3 p-4 rounded-lg border border-border hover:border-primary/30 hover:bg-accent transition-all"
-            >
-              <Play className="w-4 h-4 text-primary mt-0.5 shrink-0" aria-hidden="true" />
-              <div className="min-w-0">
-                <div className="text-sm font-medium">{pb.name}</div>
-                <div className="text-xs text-muted-foreground mt-1">{pb.description}</div>
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded">{pb.category}</span>
-                  <span className="text-[10px] text-muted-foreground">{pb.steps.length} adım</span>
-                  <span className="text-[10px] text-muted-foreground">{pb.estimated_duration_seconds}s</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <h2 className="text-sm font-semibold mb-3">Playbook Tanımları ({definitions.length})</h2>
+        {definitions.length === 0 ? (
+          <EmptyState icon={<Play className="w-6 h-6" />} title="Tanımlı playbook yok" />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {definitions.map((pb) => {
+              const stats = playbookStats[pb.playbook_id]
+              return (
+                <Link key={pb.playbook_id} to={`/playbooks/${pb.playbook_id}`} className="flex flex-col p-4 rounded-lg border border-border hover:border-primary/30 hover:bg-accent transition-all group">
+                  <div className="flex items-start gap-3 mb-3">
+                    <Play className="w-4 h-4 text-primary mt-0.5 shrink-0" aria-hidden="true" />
+                    <div className="min-w-0">
+                      <div className="text-sm font-medium group-hover:text-primary transition-colors">{pb.name}</div>
+                      <div className="text-xs text-muted-foreground mt-1 line-clamp-2">{pb.description}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 text-[10px] text-muted-foreground mt-auto">
+                    <span className="bg-muted px-1.5 py-0.5 rounded">{CATEGORY_LABELS[pb.category] ?? pb.category}</span>
+                    <span className="flex items-center gap-1"><Activity className="w-3 h-3" />{pb.steps.length} adım</span>
+                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" />~{pb.estimated_duration_seconds}s</span>
+                    {stats && (
+                      <span className="ml-auto font-mono">
+                        <span className="text-status-completed">{stats.completed}</span>
+                        {stats.failed > 0 && <span className="text-status-failed">/{stats.failed}</span>}
+                        /{stats.total} run
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        )}
       </section>
 
+      {/* Run history */}
       <section>
-        <h2 className="text-sm font-semibold mb-3">Çalıştırma Geçmişi</h2>
+        <h2 className="text-sm font-semibold mb-3">Çalıştırma Geçmişi ({runs.length})</h2>
         <div className="rounded-lg border border-border overflow-hidden">
           <table className="w-full text-xs">
             <thead className="bg-muted/50 border-b border-border">
@@ -50,20 +81,24 @@ export default function Playbooks() {
                 <th className="text-left px-3 py-2 font-medium">Olay</th>
                 <th className="text-left px-3 py-2 font-medium">Durum</th>
                 <th className="text-left px-3 py-2 font-medium hidden md:table-cell">Süre</th>
+                <th className="text-left px-3 py-2 font-medium hidden lg:table-cell">Başlatan</th>
               </tr>
             </thead>
             <tbody>
-              {runs.map((r) => {
+              {[...runs].sort((a, b) => b.started_at.localeCompare(a.started_at)).map((r) => {
                 const def = definitions.find((d) => d.playbook_id === r.playbook_id)
                 return (
                   <tr key={r.run_id} className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors">
                     <td className="px-3 py-2 font-mono text-[10px]">{r.run_id}</td>
-                    <td className="px-3 py-2">{def?.name ?? r.playbook_id}</td>
+                    <td className="px-3 py-2">
+                      <Link to={`/playbooks/${r.playbook_id}`} className="hover:text-primary transition-colors">{def?.name ?? r.playbook_id}</Link>
+                    </td>
                     <td className="px-3 py-2 font-mono text-[10px]">
                       <Link to={`/incidents/${r.incident_id}`} className="text-primary hover:underline">{r.incident_id}</Link>
                     </td>
                     <td className="px-3 py-2"><StatusPill status={r.status} /></td>
                     <td className="px-3 py-2 text-muted-foreground hidden md:table-cell">{r.duration_seconds}s</td>
+                    <td className="px-3 py-2 text-muted-foreground hidden lg:table-cell">{r.triggered_by}</td>
                   </tr>
                 )
               })}
