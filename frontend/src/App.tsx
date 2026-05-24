@@ -5,6 +5,7 @@ import { Topbar } from '@/components/layout/Topbar'
 import { ErrorBoundary } from '@/components/ui/error-boundary'
 import { SkeletonCard } from '@/components/ui/skeleton-card'
 import { useUIStore } from '@/store'
+import { useTheme } from '@/hooks'
 import { cn } from '@/lib/utils'
 
 const Overview = lazy(() => import('@/pages/Overview'))
@@ -32,6 +33,7 @@ function PageFallback() {
 }
 
 function App() {
+  useTheme()
   const collapsed = useUIStore((s) => s.sidebarCollapsed)
 
   return (
