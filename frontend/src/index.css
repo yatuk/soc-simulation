@@ -4,7 +4,6 @@
 
 @layer base {
   :root {
-    /* Light Mode */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -25,6 +24,20 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 161 94% 30%;
     --radius: 0.5rem;
+    --severity-critical: #f85149;
+    --severity-high: #f0883e;
+    --severity-medium: #d29922;
+    --severity-low: #3fb950;
+    --severity-info: #8b949e;
+    --status-open: #f0883e;
+    --status-investigating: #58a6ff;
+    --status-contained: #d29922;
+    --status-closed: #3fb950;
+    --status-false-positive: #8b949e;
+    --status-pending: #8b949e;
+    --status-running: #58a6ff;
+    --status-completed: #3fb950;
+    --status-failed: #f85149;
   }
 
   .dark {
@@ -49,31 +62,10 @@
     --ring: 161 94% 30%;
   }
 
-  /* Severity tokens — same in both modes (SOC standard) */
-  :root,
-  .dark {
-    --severity-critical: #f85149;
-    --severity-high:     #f0883e;
-    --severity-medium:   #d29922;
-    --severity-low:      #3fb950;
-    --severity-info:     #8b949e;
-
-    --status-open:            #f0883e;
-    --status-investigating:   #58a6ff;
-    --status-contained:       #d29922;
-    --status-closed:          #3fb950;
-    --status-false-positive:  #8b949e;
-    --status-pending:         #8b949e;
-    --status-running:         #58a6ff;
-    --status-completed:       #3fb950;
-    --status-failed:          #f85149;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -92,7 +84,6 @@
   }
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {

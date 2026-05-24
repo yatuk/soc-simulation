@@ -1,232 +1,258 @@
-// Data types for SOC Dashboard
-
+// ── Enums ──────────────────────────────────────────────────
 export type Severity = 'critical' | 'high' | 'medium' | 'low' | 'info'
-export type CaseStatus = 'new' | 'in_progress' | 'investigating' | 'contained' | 'closed'
+export type IncidentStatus = 'open' | 'investigating' | 'contained' | 'closed'
+export type PlaybookRunStatus = 'pending' | 'running' | 'waiting_approval' | 'completed' | 'failed'
+export type IOCType = 'url' | 'domain' | 'ip' | 'hash' | 'email'
+export type AssetType = 'workstation' | 'laptop' | 'server' | 'mobile' | 'other'
 
+// ── Alert ──────────────────────────────────────────────────
 export interface Alert {
   alert_id: string
-  alert_name?: string
-  name?: string
-  title?: string
-  timestamp?: string
-  ts?: string
-  severity: Severity | number
-  confidence?: string | number
-  user?: string
-  affected_user?: string
-  src_ip?: string
-  source_ip?: string
-  device?: string
-  mitre_techniques?: string[]
-  techniques?: string[]
-  hypothesis?: string
-  description?: string
-  evidence_event_ids?: string[]
-  evidence?: string[]
-  recommended_actions?: string[]
-  case_id?: string
+  incident_id: string | null
+  title: string
+  description: string
+  severity: Severity
+  confidence: number
+  source: string
+  status: 'new' | 'acknowledged' | 'resolved'
+  affected_user_id: string
+  affected_asset_id: string | null
+  source_ip: string | null
+  mitre_technique_ids: string[]
+  evidence_event_ids: string[]
+  evidence_summary: string
+  recommended_actions: string[]
+  playbook_run_id: string | null
+  detected_at: string
+  resolved_at: string | null
 }
 
-export interface Case {
-  case_id: string
+// ── Incident ───────────────────────────────────────────────
+export interface Incident {
+  incident_id: string
   title: string
   severity: Severity
-  status: CaseStatus
-  alert_ids?: string[]
-  affected_users?: string[]
-  start_ts?: string
-  narrative?: string
+  status: IncidentStatus
+  summary: string
+  narrative: string
+  assignee: string | null
+  affected_user_ids: string[]
+  affected_asset_ids: string[]
+  mitre_technique_ids: string[]
+  kill_chain_steps: KillChainStep[]
+  alert_ids: string[]
+  playbook_run_ids: string[]
+  created_at: string
+  updated_at: string
+  resolved_at: string | null
 }
 
-export interface Event {
-  event_id?: string
-  id?: string
-  ts?: string
-  timestamp?: string
-  source?: string
-  event_type?: string
-  severity?: Severity | number
-  user?: string | { id?: string; display?: string; email?: string }
-  device?: string | { id?: string; hostname?: string; os?: string }
-  network?: {
-    src_ip?: string
-    dst_ip?: string
-    src_geo?: string
-    dst_geo?: string
-    domain?: string
-  }
-  src_ip?: string
-  process?: { name?: string; pid?: number; parent_name?: string; cmdline?: string }
-  artifact?: { file_path?: string; hash?: string }
-  tags?: string[]
-  raw?: Record<string, unknown>
-  summary?: string
+export interface KillChainStep {
+  step_id: string
+  tactic: string
+  technique_id: string
+  description: string
+  alert_id: string | null
+  timestamp: string
+  status: 'completed' | 'in_progress' | 'pending'
 }
 
-export interface Device {
-  device_id?: string
-  id?: string
-  hostname: string
-  os?: string
-  owner?: string
-  owner_user?: string
-  location?: string
-  first_seen?: string
-  last_seen?: string
-  risk_score?: number
-  open_alerts?: number
-  recent_processes?: ProcessInfo[]
-  recent_connections?: ConnectionInfo[]
-}
-
-export interface ProcessInfo {
-  process: string
-  parent?: string
-  timestamp?: string
-  pid?: number
-}
-
-export interface ConnectionInfo {
-  domain?: string
-  dst_domain?: string
-  ip?: string
-  dst_ip?: string
-  timestamp?: string
-}
-
+// ── IOC ────────────────────────────────────────────────────
 export interface IOC {
-  type: 'ip' | 'domain' | 'hash' | 'url' | 'email' | string
-
-  // canonical field
+  ioc_id: string
+  type: IOCType
   value: string
-  // aliases / enrichment (Intel.tsx compatibility + different datasets)
-  indicator?: string
-  domain?: string
-  label?: string
-  severity?: 'critical' | 'high' | 'medium' | 'low' | string
-  confidence?: number | string
-  tags?: string[]
-  source?: string
-  first_seen?: string
-  description?: string
-  last_seen?: string
+  label: string
+  severity: Severity
+  confidence: number
+  threat_score: number
+  tags: string[]
+  description: string
+  source: string
+  related_alert_ids: string[]
+  first_seen: string
+  last_seen: string
 }
 
-export interface Playbook {
-  id: string
-  name: string
-  category?: string
-  description?: string
-  triggers?: string[]
-  requires_approval?: boolean
-  estimated_time?: string
-  steps?: PlaybookStep[]
+// ── Asset (Endpoint) ───────────────────────────────────────
+export interface Asset {
+  asset_id: string
+  hostname: string
+  type: AssetType
+  os: string
+  owner_user_id: string
+  location: string
+  risk_score: number
+  isolation_status: 'normal' | 'isolated' | 'pending_isolation'
+  open_alert_count: number
+  recent_processes: ProcessEvent[]
+  recent_network_connections: NetworkConnection[]
+  first_seen: string
+  last_seen: string
 }
 
-export interface PlaybookStep {
-  id: string
-  type: 'enrich' | 'lookup' | 'hunt' | 'action' | 'approval' | 'decision' | 'note'
-  name: string
-  description?: string
-  auto?: boolean
-  edr_action?: string
-  status?: 'pending' | 'running' | 'completed' | 'failed'
+export interface ProcessEvent {
+  process_name: string
+  pid: number
+  parent_process_name: string | null
+  command_line: string | null
+  file_hash: string | null
+  is_suspicious: boolean
+  timestamp: string
 }
 
-export interface PlaybookRun {
-  id: string
-  playbook_id: string
-  playbook_name?: string
-  case_id?: string
-  started_at: string
-  finished_at?: string
-  status: 'pending' | 'running' | 'waiting_approval' | 'completed' | 'failed'
-  steps?: PlaybookStep[]
+export interface NetworkConnection {
+  domain: string | null
+  dst_ip: string | null
+  port: number | null
+  protocol: string
+  is_suspicious: boolean
+  timestamp: string
 }
 
-export interface RiskScore {
-  total_score?: number
-  score?: number
-  factors?: RiskFactor[]
+// ── User ───────────────────────────────────────────────────
+export interface User {
+  user_id: string
+  email: string
+  display_name: string
+  department: string
+  title: string
+  role: 'viewer' | 'analyst' | 'admin'
+  risk_score: number
+  risk_factors: RiskFactor[]
+  event_count: number
+  alert_count: number
+  asset_ids: string[]
+  first_seen: string
+  last_seen: string
 }
 
 export interface RiskFactor {
+  rule: string
+  points: number
+  description: string
+}
+
+// ── Playbook ───────────────────────────────────────────────
+export interface PlaybookDefinition {
+  playbook_id: string
   name: string
-  score?: number
-  weight?: number
+  category: string
+  description: string
+  triggers: string[]
+  requires_approval: boolean
+  estimated_duration_seconds: number
+  steps: PlaybookStep[]
 }
 
-export interface Summary {
-  total_events?: number
-  total_alerts?: number
-  critical_alerts?: number
-  unique_users?: number
-  unique_devices?: number
-  time_range?: { start: string; end: string }
+export interface PlaybookStep {
+  step_id: string
+  order: number
+  type: 'enrich' | 'lookup' | 'hunt' | 'action' | 'approval' | 'decision' | 'notify'
+  name: string
+  description: string
+  is_automated: boolean
 }
 
+export interface PlaybookRun {
+  run_id: string
+  playbook_id: string
+  incident_id: string
+  status: PlaybookRunStatus
+  step_results: PlaybookStepResult[]
+  started_at: string
+  finished_at: string | null
+  duration_seconds: number | null
+  notes: string | null
+  triggered_by: string
+}
+
+export interface PlaybookStepResult {
+  step_id: string
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'skipped'
+  started_at: string | null
+  finished_at: string | null
+  output: string | null
+}
+
+// ── Detection Rule ─────────────────────────────────────────
+export interface DetectionRule {
+  rule_id: string
+  name: string
+  description: string
+  severity: Severity
+  source: string
+  sigma_rule: string
+  mitre_technique_ids: string[]
+  enabled: boolean
+  alert_count_14d: number
+  false_positive_rate: number
+  author: string
+  created_at: string
+  updated_at: string
+  tags: string[]
+}
+
+// ── MITRE Coverage ─────────────────────────────────────────
 export interface MitreCoverage {
-  techniques?: MitreTechnique[]
+  tactics: MitreTactic[]
+  techniques: MitreTechnique[]
+  summary: MitreCoverageSummary
+}
+
+export interface MitreTactic {
+  tactic_id: string
+  name: string
+  short_name: string
+  order: number
+  technique_count: number
 }
 
 export interface MitreTechnique {
-  id: string
+  technique_id: string
   name: string
-  tactic: string
-  count?: number
+  tactic_id: string
+  alert_count: number
+  incident_ids: string[]
+  is_covered: boolean
 }
 
-export interface DatasetProfile {
-  total_files?: number
-  total_events_normalized?: number
-  total_iocs?: number
-  files?: FileProfile[]
+export interface MitreCoverageSummary {
+  total_techniques: number
+  covered_techniques: number
+  coverage_percent: number
+  total_observations: number
 }
 
-export interface FileProfile {
-  filename: string
-  family: string
-  rows: number
-  errors: number
+// ── KPI ────────────────────────────────────────────────────
+export interface KPIMetrics {
+  generated_at: string
+  total_alerts: number
+  open_alerts: number
+  critical_alerts: number
+  total_incidents: number
+  active_incidents: number
+  total_assets: number
+  isolated_assets: number
+  total_users: number
+  high_risk_users: number
+  mttd_seconds: number
+  mttr_seconds: number
+  false_positive_rate: number
+  alerts_by_severity: Record<Severity, number>
+  alert_volume_daily: TimeSeriesPoint[]
+  event_volume_daily: TimeSeriesPoint[]
+  risk_score_daily: TimeSeriesPoint[]
 }
 
-export interface KPITimeseries {
-  hourly_events?: Record<string, number>
-  hourly_alerts?: Record<string, number>
-  daily_risk?: Record<string, number>
+export interface TimeSeriesPoint {
+  date: string
+  count: number
 }
 
-// State types
-export interface EDRState {
-  [deviceId: string]: {
-    isolated: boolean
-    actions: { action: string; time: string }[]
-  }
-}
-
-export interface SOARState {
-  runs: PlaybookRun[]
-  active: string | null
-}
-
+// ── Settings ───────────────────────────────────────────────
 export interface Settings {
-  language: 'tr' | 'en'
-  timezone: string
-  dateFormat: string
   theme: 'dark' | 'light' | 'system'
   sidebarExpanded: boolean
   tableDensity: 'compact' | 'normal' | 'comfortable'
-  notifications: {
-    desktop: boolean
-    sound: boolean
-    criticalPopup: boolean
-  }
-  sessionTimeout: number
-}
-
-export interface SavedSearch {
-  id: string
-  name: string
-  query: string
-  created: string
 }

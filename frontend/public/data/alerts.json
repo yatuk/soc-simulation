@@ -1,0 +1,497 @@
+[
+  {
+    "alert_id": "ALR-0001-001",
+    "incident_id": "INC-2026-0001",
+    "title": "Oltalama Bağlantısına Tıklandı",
+    "description": "Ayşe Demir oltalama e-postasındaki bağlantıya tıkladı ve kimlik bilgilerini zararlı sayfaya girdi. E-posta anadolu-giris-dogrula.example.tk domain'inden geldi.",
+    "severity": "high",
+    "confidence": 85,
+    "source": "email_gateway",
+    "status": "acknowledged",
+    "affected_user_id": "usr-a1b2c3d4",
+    "affected_asset_id": "AST-001",
+    "source_ip": "10.10.1.50",
+    "mitre_technique_ids": [
+      "T1566.002"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "E-posta anadolu-giris-dogrula.example.tk adresinden teslim edildi. Kullanıcı bağlantıya tıkladı ve form doldurdu.",
+    "recommended_actions": [
+      "Kullanıcı parolasını sıfırla",
+      "Oturumları sonlandır",
+      "Alan adını engelle"
+    ],
+    "playbook_run_id": "RUN-1001",
+    "detected_at": "2026-05-11T00:10:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0001-002",
+    "incident_id": "INC-2026-0001",
+    "title": "İmkansız Seyahat Tespit Edildi",
+    "description": "Ayşe Demir hesabına 5 dakika içinde İstanbul ve Romanya'dan giriş yapıldı. Coğrafi olarak imkansız.",
+    "severity": "high",
+    "confidence": 90,
+    "source": "idp_auth",
+    "status": "acknowledged",
+    "affected_user_id": "usr-a1b2c3d4",
+    "affected_asset_id": null,
+    "source_ip": "198.51.100.45",
+    "mitre_technique_ids": [
+      "T1078"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "İstanbul'dan giriş: 2026-05-11T00:55:00. Romanya IP (198.51.100.45)'den giriş: 2026-05-11T01:00:00.",
+    "recommended_actions": [
+      "Kullanıcıyla doğrula",
+      "VPN kullanımını kontrol et",
+      "Hesap ele geçirmeyi değerlendir"
+    ],
+    "playbook_run_id": "RUN-1001",
+    "detected_at": "2026-05-11T01:05:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0001-003",
+    "incident_id": "INC-2026-0001",
+    "title": "Şüpheli Posta Kutusu Yönlendirme Kuralı",
+    "description": "Ayşe Demir posta kutusunda tüm e-postaları harici adrese yönlendiren kural oluşturuldu. Veri sızdırma göstergesi.",
+    "severity": "critical",
+    "confidence": 95,
+    "source": "m365_audit",
+    "status": "new",
+    "affected_user_id": "usr-a1b2c3d4",
+    "affected_asset_id": null,
+    "source_ip": "198.51.100.45",
+    "mitre_technique_ids": [
+      "T1098",
+      "T1114.002"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "Posta kutusu kuralı oluşturuldu. Yönlendirme adresi: saldırgan-kontrol@harici.example.tr. Kural oluşturma zamanı: 2026-05-11T01:30:00.",
+    "recommended_actions": [
+      "Kuralı kaldır",
+      "Gönderilen e-postaları denetle",
+      "Kullanıcıyı bilgilendir"
+    ],
+    "playbook_run_id": "RUN-1001",
+    "detected_at": "2026-05-11T01:35:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0002-001",
+    "incident_id": "INC-2026-0002",
+    "title": "Şüpheli OAuth Uygulama İzni",
+    "description": "Mehmet Kaya bilinmeyen 'MailSyncPro' uygulamasına OAuth izni verdi. Uygulama posta kutusu okuma/yazma yetkisi istedi.",
+    "severity": "high",
+    "confidence": 70,
+    "source": "idp_auth",
+    "status": "acknowledged",
+    "affected_user_id": "usr-b2c3d4e5",
+    "affected_asset_id": "AST-002",
+    "source_ip": "10.10.1.50",
+    "mitre_technique_ids": [
+      "T1528"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "OAuth konsantı: MailSyncPro. İstenen izinler: Mail.ReadWrite, User.Read,offline_access.",
+    "recommended_actions": [
+      "Uygulama iznini iptal et",
+      "Uygulama izinlerini gözden geçir",
+      "Kullanıcıyı bilgilendir"
+    ],
+    "playbook_run_id": "RUN-1002",
+    "detected_at": "2026-05-12T00:15:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0002-002",
+    "incident_id": "INC-2026-0002",
+    "title": "OAuth ile Toplu Posta Kutusu Erişimi",
+    "description": "OAuth token aracılığıyla Mehmet Kaya posta kutusuna 15 dakikada 200+ okuma isteği yapıldı.",
+    "severity": "high",
+    "confidence": 85,
+    "source": "m365_audit",
+    "status": "new",
+    "affected_user_id": "usr-b2c3d4e5",
+    "affected_asset_id": null,
+    "source_ip": "203.0.113.180",
+    "mitre_technique_ids": [
+      "T1114.002"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "Kaynak IP: 203.0.113.180 (Rusya). 12 okuma isteği batch halinde tespit edildi.",
+    "recommended_actions": [
+      "OAuth tokenları iptal et",
+      "Erişilen e-postaları denetle",
+      "Uygulamayı engelle"
+    ],
+    "playbook_run_id": "RUN-1002",
+    "detected_at": "2026-05-12T02:00:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0003-001",
+    "incident_id": "INC-2026-0003",
+    "title": "MFA Push Bombardımanı Tespit Edildi",
+    "description": "Elif Yılmaz hesabına 15 MFA push bildirimi gönderildi. Push bombardıman saldırısı göstergesi.",
+    "severity": "critical",
+    "confidence": 92,
+    "source": "idp_auth",
+    "status": "acknowledged",
+    "affected_user_id": "usr-c3d4e5f6",
+    "affected_asset_id": null,
+    "source_ip": "198.51.100.91",
+    "mitre_technique_ids": [
+      "T1556"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "30 dakikada 198.51.100.91 (Çin) kaynaklı 15 MFA push isteği.",
+    "recommended_actions": [
+      "Kullanıcıyla hemen iletişime geç",
+      "IP'yi engelle",
+      "Oturumları sonlandır"
+    ],
+    "playbook_run_id": "RUN-1003",
+    "detected_at": "2026-05-13T00:30:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0003-002",
+    "incident_id": "INC-2026-0003",
+    "title": "MFA Yorgunluğu Sonrası Yetki Yükseltme",
+    "description": "MFA bombardımanından hemen sonra hesaba GlobalAdmin rolü atandı.",
+    "severity": "critical",
+    "confidence": 88,
+    "source": "admin_audit",
+    "status": "acknowledged",
+    "affected_user_id": "usr-c3d4e5f6",
+    "affected_asset_id": null,
+    "source_ip": "198.51.100.91",
+    "mitre_technique_ids": [
+      "T1098.001"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "2026-05-13T00:40:00 tarihinde kullanıcıya GlobalAdmin rolü atandı.",
+    "recommended_actions": [
+      "Rolü kaldır",
+      "Admin işlemlerini denetle",
+      "Tam olay incelemesi başlat"
+    ],
+    "playbook_run_id": "RUN-1003",
+    "detected_at": "2026-05-13T00:45:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0004-001",
+    "incident_id": "INC-2026-0004",
+    "title": "Parola Püskürtme Saldırısı",
+    "description": "Tek IP'den (203.0.113.195) 6 farklı hesaba başarısız giriş. Parola püskürtme paterni.",
+    "severity": "medium",
+    "confidence": 88,
+    "source": "idp_auth",
+    "status": "acknowledged",
+    "affected_user_id": "usr-d4e5f6a7",
+    "affected_asset_id": null,
+    "source_ip": "203.0.113.195",
+    "mitre_technique_ids": [
+      "T1110.003"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "6 hesap, aynı IP (203.0.113.195, Nijerya), 'Password123' denemesi.",
+    "recommended_actions": [
+      "Kaynak IP'yi engelle",
+      "Etkilenen kullanıcıların parolalarını sıfırla"
+    ],
+    "playbook_run_id": "RUN-1004",
+    "detected_at": "2026-05-14T00:10:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0004-002",
+    "incident_id": "INC-2026-0004",
+    "title": "Posta Kutusu Sızdırma",
+    "description": "Başarılı püskürtme girişinden sonra Mustafa Arslan posta kutusundan toplu dışa aktarım.",
+    "severity": "high",
+    "confidence": 85,
+    "source": "m365_audit",
+    "status": "acknowledged",
+    "affected_user_id": "usr-d4e5f6a7",
+    "affected_asset_id": null,
+    "source_ip": "203.0.113.195",
+    "mitre_technique_ids": [
+      "T1114.002"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "Posta kutusunda 'fatura', 'havale', 'sözleşme' anahtar kelimeleriyle arama. PST dışa aktarımı başlatıldı.",
+    "recommended_actions": [
+      "Oturumları sonlandır",
+      "Dışa aktarılan verileri denetle",
+      "Yasal bildirim yap"
+    ],
+    "playbook_run_id": "RUN-1004",
+    "detected_at": "2026-05-14T00:50:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0005-001",
+    "incident_id": "INC-2026-0005",
+    "title": "Finans Hesabı Ele Geçirme",
+    "description": "Muhasebe müdürü Fatma Şahin hesabına şüpheli konumdan erişildi.",
+    "severity": "critical",
+    "confidence": 93,
+    "source": "idp_auth",
+    "status": "acknowledged",
+    "affected_user_id": "usr-a7b8c9d0",
+    "affected_asset_id": null,
+    "source_ip": "198.51.100.54",
+    "mitre_technique_ids": [
+      "T1078",
+      "T1098"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "Brezilya IP (198.51.100.54)'den giriş. 'dolandırıcılık' içeren e-postaları silen kural oluşturuldu.",
+    "recommended_actions": [
+      "Hemen parola sıfırla",
+      "Posta kutusu kurallarını kaldır",
+      "Finans ekibini uyar"
+    ],
+    "playbook_run_id": "RUN-1005",
+    "detected_at": "2026-05-15T00:25:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0005-002",
+    "incident_id": "INC-2026-0005",
+    "title": "İş E-postası Ele Geçirme - Havale Dolandırıcılığı",
+    "description": "Ele geçirilen Fatma Şahin hesabından tedarikçilere sahte havale talebi gönderildi.",
+    "severity": "critical",
+    "confidence": 96,
+    "source": "email_gateway",
+    "status": "new",
+    "affected_user_id": "usr-a7b8c9d0",
+    "affected_asset_id": null,
+    "source_ip": "198.51.100.54",
+    "mitre_technique_ids": [
+      "T1114.002"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "3 tedarikçiye 'hesap numarası değişikliği' konulu e-posta gönderildi. Hedef IBAN: Litvanya bankası.",
+    "recommended_actions": [
+      "Alıcılarla iletişime geç",
+      "E-postaları geri çağır",
+      "Yasal bildirim ve savcılığa suç duyurusu"
+    ],
+    "playbook_run_id": "RUN-1005",
+    "detected_at": "2026-05-15T01:05:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0006-001",
+    "incident_id": "INC-2026-0006",
+    "title": "Makro Çalıştırma - Zararlı Yazılım Dağıtımı",
+    "description": "Zeynep Çelik cihazında Word makrosu PowerShell çalıştırdı ve payload bıraktı.",
+    "severity": "critical",
+    "confidence": 90,
+    "source": "endpoint_edr",
+    "status": "acknowledged",
+    "affected_user_id": "usr-e5f6a7b8",
+    "affected_asset_id": "AST-005",
+    "source_ip": "10.10.1.50",
+    "mitre_technique_ids": [
+      "T1566.001",
+      "T1059.005"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "WINWORD.EXE → powershell.exe → C:\\Users\\usr-e5f6a7b8\\AppData\\Local\\Temp\\guncelleme.exe",
+    "recommended_actions": [
+      "Uç noktayı izole et",
+      "Ek hash'ini engelle",
+      "Benzer e-postaları tara"
+    ],
+    "playbook_run_id": "RUN-1006",
+    "detected_at": "2026-05-16T00:10:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0006-002",
+    "incident_id": "INC-2026-0006",
+    "title": "Zararlı Yazılım Kalıcılığı Sağlandı",
+    "description": "Kayıt defteri Run anahtarı ile oturum başlangıcında çalışacak şekilde kalıcılık sağlandı.",
+    "severity": "critical",
+    "confidence": 88,
+    "source": "endpoint_edr",
+    "status": "acknowledged",
+    "affected_user_id": "usr-e5f6a7b8",
+    "affected_asset_id": "AST-005",
+    "source_ip": null,
+    "mitre_technique_ids": [
+      "T1547.001"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\UpdateService eklendi.",
+    "recommended_actions": [
+      "Kalıcılığı kaldır",
+      "Tam zararlı yazılım analizi yap",
+      "Yanal hareketi kontrol et"
+    ],
+    "playbook_run_id": "RUN-1006",
+    "detected_at": "2026-05-16T00:12:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0006-003",
+    "incident_id": "INC-2026-0006",
+    "title": "Komuta ve Kontrol (C2) Aktivitesi",
+    "description": "Enfekte cihazdan cdn-guncelleme.example.cf adresine periyodik beacon bağlantısı tespit edildi.",
+    "severity": "critical",
+    "confidence": 94,
+    "source": "endpoint_edr",
+    "status": "new",
+    "affected_user_id": "usr-e5f6a7b8",
+    "affected_asset_id": "AST-005",
+    "source_ip": "203.0.113.78",
+    "mitre_technique_ids": [
+      "T1071.001"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "10 dakikada bir cdn-guncelleme.example.cf adresine HTTPS beacon. User-Agent anomalisi mevcut.",
+    "recommended_actions": [
+      "C2 alan adını engelle",
+      "Uç noktayı izole et",
+      "Ağ adli bilişimi başlat"
+    ],
+    "playbook_run_id": "RUN-1006",
+    "detected_at": "2026-05-16T01:00:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0007-001",
+    "incident_id": "INC-2026-0007",
+    "title": "Yeni Cihazdan Riskli Giriş",
+    "description": "CFO Ahmet Yıldız hesabına Nijerya'dan yeni bir cihazla giriş yapıldı.",
+    "severity": "high",
+    "confidence": 75,
+    "source": "idp_auth",
+    "status": "acknowledged",
+    "affected_user_id": "usr-b8c9d0e1",
+    "affected_asset_id": "AST-022",
+    "source_ip": "203.0.113.195",
+    "mitre_technique_ids": [
+      "T1078.004"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "Yeni cihaz: IZM-WS-001. Kayıt zamanı: 2026-05-17T00:00:00. IP: 203.0.113.195 (Nijerya).",
+    "recommended_actions": [
+      "Kullanıcıyla doğrula",
+      "Cihazı incele",
+      "Engellemeyi değerlendir"
+    ],
+    "playbook_run_id": "RUN-1007",
+    "detected_at": "2026-05-17T00:10:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0007-002",
+    "incident_id": "INC-2026-0007",
+    "title": "Şüpheli Admin Rol Atama",
+    "description": "Riskli girişten 10 dakika sonra hesaba Exchange Administrator rolü atandı.",
+    "severity": "high",
+    "confidence": 82,
+    "source": "admin_audit",
+    "status": "acknowledged",
+    "affected_user_id": "usr-b8c9d0e1",
+    "affected_asset_id": null,
+    "source_ip": "203.0.113.195",
+    "mitre_technique_ids": [
+      "T1098.001"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "Exchange Administrator rolü atandı. Ardından mailbox permission değişikliği denemesi.",
+    "recommended_actions": [
+      "Rolü kaldır",
+      "Son admin işlemlerini denetle",
+      "Yetkilendirmeyi doğrula"
+    ],
+    "playbook_run_id": "RUN-1007",
+    "detected_at": "2026-05-17T00:20:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0008-001",
+    "incident_id": "INC-2026-0008",
+    "title": "Toplu Harici Dosya Paylaşımı",
+    "description": "Deniz Aydın kısa sürede 5 hassas dosya için herkese açık paylaşım bağlantısı oluşturdu.",
+    "severity": "high",
+    "confidence": 72,
+    "source": "m365_audit",
+    "status": "acknowledged",
+    "affected_user_id": "usr-e1f2a3b4",
+    "affected_asset_id": "AST-011",
+    "source_ip": "10.10.1.50",
+    "mitre_technique_ids": [
+      "T1567.002"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "5 dosya: müşteri-listesi.xlsx, veritabani-backup.sql, kullanici-parolalari.csv, sözleşmeler-2025.zip, maas-bordro.xlsx.",
+    "recommended_actions": [
+      "Paylaşılan dosyaları incele",
+      "Bağlantıları iptal et",
+      "Kullanıcıyla doğrula"
+    ],
+    "playbook_run_id": "RUN-1008",
+    "detected_at": "2026-05-18T00:55:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0008-002",
+    "incident_id": "INC-2026-0008",
+    "title": "Paylaşılan Dosyalara Harici Erişim",
+    "description": "Herkese açık paylaşılan dosyalara Hollanda IP'sinden erişildi.",
+    "severity": "high",
+    "confidence": 78,
+    "source": "m365_audit",
+    "status": "new",
+    "affected_user_id": "usr-e1f2a3b4",
+    "affected_asset_id": null,
+    "source_ip": "192.0.2.100",
+    "mitre_technique_ids": [
+      "T1567.002"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "IP: 192.0.2.100 (Hollanda). 3 dosya indirildi: müşteri-listesi.xlsx, veritabani-backup.sql, kullanici-parolalari.csv.",
+    "recommended_actions": [
+      "Paylaşımı devre dışı bırak",
+      "Dosya içeriklerini denetle",
+      "DLP incelemesi başlat"
+    ],
+    "playbook_run_id": "RUN-1008",
+    "detected_at": "2026-05-18T01:05:00",
+    "resolved_at": null
+  },
+  {
+    "alert_id": "ALR-0009-001",
+    "incident_id": "INC-2026-0009",
+    "title": "İmkansız Seyahat (VPN - Yanlış Pozitif)",
+    "description": "Burak Polat hesabına 5 dakika içinde İstanbul ve Amsterdam'dan giriş yapıldı. VPN kullanımı doğrulandı.",
+    "severity": "low",
+    "confidence": 30,
+    "source": "idp_auth",
+    "status": "resolved",
+    "affected_user_id": "usr-f2a3b4c5",
+    "affected_asset_id": "AST-012",
+    "source_ip": "192.0.2.100",
+    "mitre_technique_ids": [
+      "T1078"
+    ],
+    "evidence_event_ids": [],
+    "evidence_summary": "Giriş 1: İstanbul (10.10.1.50). Giriş 2: Amsterdam VPN (192.0.2.100). VPN çıkış noktası bilinen listede.",
+    "recommended_actions": [
+      "VPN kullanımını doğrula",
+      "Bilinen VPN çıkış noktalarını beyaz listeye ekle"
+    ],
+    "playbook_run_id": "RUN-1009",
+    "detected_at": "2026-05-19T00:10:00",
+    "resolved_at": "2026-05-19T00:15:00"
+  }
+]

@@ -1,0 +1,38 @@
+import { cn } from '@/lib/utils'
+
+interface SkeletonCardProps {
+  className?: string
+}
+
+export function SkeletonCard({ className }: SkeletonCardProps) {
+  return (
+    <div
+      className={cn('rounded-lg border border-border bg-card p-4 animate-pulse', className)}
+      role="status"
+      aria-label="Yükleniyor"
+    >
+      <div className="h-3 w-24 bg-muted rounded mb-3" />
+      <div className="h-6 w-16 bg-muted rounded mb-2" />
+      <div className="h-3 w-32 bg-muted rounded" />
+    </div>
+  )
+}
+
+export function SkeletonTable({ rows = 5, className }: { rows?: number; className?: string }) {
+  return (
+    <div
+      className={cn('rounded-lg border border-border overflow-hidden', className)}
+      role="status"
+      aria-label="Yükleniyor"
+    >
+      <div className="h-8 bg-muted/50 border-b border-border" />
+      {Array.from({ length: rows }).map((_, i) => (
+        <div key={i} className="h-10 border-b border-border last:border-0 px-4 flex items-center gap-2 animate-pulse">
+          <div className="h-3 bg-muted rounded w-1/4" />
+          <div className="h-3 bg-muted rounded w-1/6" />
+          <div className="h-3 bg-muted rounded w-1/5 ml-auto" />
+        </div>
+      ))}
+    </div>
+  )
+}

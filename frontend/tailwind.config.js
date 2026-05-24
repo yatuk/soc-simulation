@@ -27,7 +27,7 @@ export default {
           running:         '#58a6ff',
           completed:       '#3fb950',
           failed:          '#f85149',
-          waiting_approval:' '#d29922',
+          waiting_approval: '#d29922',
         },
         // shadcn-style CSS variable tokens (dark mode default)
         background:       'hsl(var(--background))',

@@ -1,0 +1,248 @@
+{
+  "tactics": [
+    {
+      "tactic_id": "TA0001",
+      "name": "Initial Access",
+      "short_name": "initial-access",
+      "order": 1,
+      "technique_count": 2
+    },
+    {
+      "tactic_id": "TA0002",
+      "name": "Execution",
+      "short_name": "execution",
+      "order": 2,
+      "technique_count": 1
+    },
+    {
+      "tactic_id": "TA0003",
+      "name": "Persistence",
+      "short_name": "persistence",
+      "order": 3,
+      "technique_count": 3
+    },
+    {
+      "tactic_id": "TA0004",
+      "name": "Privilege Escalation",
+      "short_name": "privilege-escalation",
+      "order": 4,
+      "technique_count": 0
+    },
+    {
+      "tactic_id": "TA0005",
+      "name": "Defense Evasion",
+      "short_name": "defense-evasion",
+      "order": 5,
+      "technique_count": 2
+    },
+    {
+      "tactic_id": "TA0006",
+      "name": "Credential Access",
+      "short_name": "credential-access",
+      "order": 6,
+      "technique_count": 3
+    },
+    {
+      "tactic_id": "TA0007",
+      "name": "Discovery",
+      "short_name": "discovery",
+      "order": 7,
+      "technique_count": 0
+    },
+    {
+      "tactic_id": "TA0008",
+      "name": "Lateral Movement",
+      "short_name": "lateral-movement",
+      "order": 8,
+      "technique_count": 0
+    },
+    {
+      "tactic_id": "TA0009",
+      "name": "Collection",
+      "short_name": "collection",
+      "order": 9,
+      "technique_count": 1
+    },
+    {
+      "tactic_id": "TA0010",
+      "name": "Exfiltration",
+      "short_name": "exfiltration",
+      "order": 12,
+      "technique_count": 1
+    },
+    {
+      "tactic_id": "TA0011",
+      "name": "Command and Control",
+      "short_name": "command-and-control",
+      "order": 10,
+      "technique_count": 1
+    }
+  ],
+  "techniques": [
+    {
+      "technique_id": "T1059.001",
+      "name": "Komut ve Betik: PowerShell",
+      "tactic_id": "TA0002",
+      "alert_count": 0,
+      "incident_ids": [],
+      "is_covered": false
+    },
+    {
+      "technique_id": "T1059.005",
+      "name": "Komut ve Betik: Visual Basic",
+      "tactic_id": "TA0002",
+      "alert_count": 1,
+      "incident_ids": [
+        "INC-2026-0006"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1071.001",
+      "name": "Uyg. Katmanı Protokolü: Web Protokol.",
+      "tactic_id": "TA0011",
+      "alert_count": 1,
+      "incident_ids": [
+        "INC-2026-0006"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1078",
+      "name": "Geçerli Hesaplar",
+      "tactic_id": "TA0005",
+      "alert_count": 3,
+      "incident_ids": [
+        "INC-2026-0001",
+        "INC-2026-0003",
+        "INC-2026-0004",
+        "INC-2026-0005",
+        "INC-2026-0009"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1078.004",
+      "name": "Geçerli Hesaplar: Bulut Hesapları",
+      "tactic_id": "TA0005",
+      "alert_count": 1,
+      "incident_ids": [
+        "INC-2026-0007"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1098",
+      "name": "Hesap Manipülasyonu",
+      "tactic_id": "TA0003",
+      "alert_count": 2,
+      "incident_ids": [
+        "INC-2026-0001",
+        "INC-2026-0005"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1098.001",
+      "name": "Hesap Manipülasyonu: Ek Bulut Kimlik.",
+      "tactic_id": "TA0003",
+      "alert_count": 2,
+      "incident_ids": [
+        "INC-2026-0003",
+        "INC-2026-0007"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1110.003",
+      "name": "Kaba Kuvvet: Parola Püskürtme",
+      "tactic_id": "TA0006",
+      "alert_count": 1,
+      "incident_ids": [
+        "INC-2026-0004"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1114.002",
+      "name": "E-posta Toplama: Uzak E-posta Erişimi",
+      "tactic_id": "TA0009",
+      "alert_count": 4,
+      "incident_ids": [
+        "INC-2026-0001",
+        "INC-2026-0002",
+        "INC-2026-0004",
+        "INC-2026-0005"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1528",
+      "name": "Uygulama Erişim Jetonu Çalma",
+      "tactic_id": "TA0006",
+      "alert_count": 1,
+      "incident_ids": [
+        "INC-2026-0002"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1547.001",
+      "name": "Önyükleme/Oturum: Kayıt Defteri Anaht.",
+      "tactic_id": "TA0003",
+      "alert_count": 1,
+      "incident_ids": [
+        "INC-2026-0006"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1556",
+      "name": "Kimlik Doğrulama Sürecini Değiştirme",
+      "tactic_id": "TA0006",
+      "alert_count": 1,
+      "incident_ids": [
+        "INC-2026-0003"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1566.001",
+      "name": "Oltalama: Hedefli Ek Dosya",
+      "tactic_id": "TA0001",
+      "alert_count": 1,
+      "incident_ids": [
+        "INC-2026-0006"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1566.002",
+      "name": "Oltalama: Hedefli Bağlantı",
+      "tactic_id": "TA0001",
+      "alert_count": 1,
+      "incident_ids": [
+        "INC-2026-0001",
+        "INC-2026-0002",
+        "INC-2026-0005"
+      ],
+      "is_covered": true
+    },
+    {
+      "technique_id": "T1567.002",
+      "name": "Web Servisi Üzerinden Veri Sızdırma",
+      "tactic_id": "TA0010",
+      "alert_count": 2,
+      "incident_ids": [
+        "INC-2026-0008"
+      ],
+      "is_covered": true
+    }
+  ],
+  "summary": {
+    "total_techniques": 15,
+    "covered_techniques": 14,
+    "coverage_percent": 93.3,
+    "total_observations": 22
+  }
+}

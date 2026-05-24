@@ -1,278 +1,92 @@
-import { useMemo } from 'react'
-import { motion } from 'framer-motion'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { useDataStore } from '@/store'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { Target, Shield } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useMitreStore } from '@/store'
+import { SkeletonCard } from '@/components/ui/skeleton-card'
+import { EmptyState } from '@/components/ui/empty-state'
+import { Target } from 'lucide-react'
 
-const MITRE_TACTICS = [
-  'Reconnaissance',
-  'Resource Development',
-  'Initial Access',
-  'Execution',
-  'Persistence',
-  'Privilege Escalation',
-  'Defense Evasion',
-  'Credential Access',
-  'Discovery',
-  'Lateral Movement',
-  'Collection',
-  'Command and Control',
-  'Exfiltration',
-  'Impact',
-]
+const tacticColors: Record<string, string> = {
+  'TA0001': 'bg-blue-500/10 border-blue-500/30',
+  'TA0002': 'bg-purple-500/10 border-purple-500/30',
+  'TA0003': 'bg-amber-500/10 border-amber-500/30',
+  'TA0004': 'bg-orange-500/10 border-orange-500/30',
+  'TA0005': 'bg-cyan-500/10 border-cyan-500/30',
+  'TA0006': 'bg-red-500/10 border-red-500/30',
+  'TA0007': 'bg-lime-500/10 border-lime-500/30',
+  'TA0008': 'bg-pink-500/10 border-pink-500/30',
+  'TA0009': 'bg-teal-500/10 border-teal-500/30',
+  'TA0010': 'bg-rose-500/10 border-rose-500/30',
+  'TA0011': 'bg-indigo-500/10 border-indigo-500/30',
+}
 
 export default function Mitre() {
-  const { mitreCoverage, alerts } = useDataStore()
+  const { data: mitre, isLoading, load } = useMitreStore()
+  const [selectedTactic, setSelectedTactic] = useState<string | null>(null)
 
-  // Extract techniques from alerts and coverage
-  const techniques = useMemo(() => {
-    const techMap = new Map<string, { id: string; name: string; tactic: string; count: number }>()
+  useEffect(() => { load() }, [load])
 
-    // From mitre_coverage
-    mitreCoverage?.techniques?.forEach((t) => {
-      techMap.set(t.id, {
-        id: t.id,
-        name: t.name,
-        tactic: t.tactic,
-        count: t.count || 1,
-      })
-    })
+  if (isLoading) return <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">{Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}</div>
+  if (!mitre) return <div className="p-6"><EmptyState icon={<Target className="w-8 h-8" />} title="MITRE verisi yüklenemedi" /></div>
 
-    // From alerts
-    alerts.forEach((alert) => {
-      const techs = alert.mitre_techniques || alert.techniques || []
-      techs.forEach((techId) => {
-        if (techMap.has(techId)) {
-          const existing = techMap.get(techId)!
-          techMap.set(techId, { ...existing, count: existing.count + 1 })
-        } else {
-          techMap.set(techId, {
-            id: techId,
-            name: techId,
-            tactic: 'Unknown',
-            count: 1,
-          })
-        }
-      })
-    })
-
-    return Array.from(techMap.values())
-  }, [mitreCoverage, alerts])
-
-  // Group by tactic
-  const tacticGroups = useMemo(() => {
-    const groups: Record<string, typeof techniques> = {}
-    MITRE_TACTICS.forEach((tactic) => {
-      groups[tactic] = techniques.filter(
-        (t) => t.tactic.toLowerCase().includes(tactic.toLowerCase().split(' ')[0])
-      )
-    })
-    return groups
-  }, [techniques])
-
-  const totalTechniques = techniques.length
-  const coveredTactics = Object.values(tacticGroups).filter((g) => g.length > 0).length
-
-  const getHeatColor = (count: number) => {
-    if (count >= 5) return 'bg-red-500'
-    if (count >= 3) return 'bg-orange-500'
-    if (count >= 1) return 'bg-yellow-500'
-    return 'bg-secondary'
-  }
+  const filteredTechniques = selectedTactic
+    ? mitre.techniques.filter((t) => t.tactic_id === selectedTactic)
+    : mitre.techniques
 
   return (
-    <div className="space-y-6">
-      {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-lg bg-primary/20 text-primary">
-                <Target className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold">{totalTechniques}</p>
-                <p className="text-sm text-muted-foreground">Tespit Edilen Teknik</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-lg bg-orange-500/20 text-orange-400">
-                <Shield className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold">{coveredTactics}</p>
-                <p className="text-sm text-muted-foreground">Etkilenen Taktik</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-lg bg-green-500/20 text-green-400">
-                <Shield className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold">
-                  {Math.round((coveredTactics / MITRE_TACTICS.length) * 100)}%
-                </p>
-                <p className="text-sm text-muted-foreground">Taktik Kapsamı</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+    <div className="p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-sm font-semibold">MITRE ATT&CK Kapsamı</h2>
+          <p className="text-xs text-muted-foreground mt-1">
+            {mitre.summary.covered_techniques}/{mitre.summary.total_techniques} teknik cover edildi (%{mitre.summary.coverage_percent})
+          </p>
+        </div>
       </div>
 
-      {/* MITRE Matrix */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Target className="h-5 w-5" />
-            MITRE ATT&CK Matrix
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <div className="grid grid-cols-7 gap-2 min-w-[900px]">
-              {MITRE_TACTICS.slice(0, 7).map((tactic, index) => (
-                <div key={tactic} className="space-y-2">
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="p-2 rounded-lg bg-secondary text-center"
-                  >
-                    <h4 className="text-xs font-medium truncate">{tactic}</h4>
-                  </motion.div>
-                  <div className="space-y-1">
-                    {tacticGroups[tactic]?.map((tech, i) => (
-                      <Tooltip key={tech.id}>
-                        <TooltipTrigger asChild>
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: index * 0.05 + i * 0.02 }}
-                            className={`p-2 rounded text-xs cursor-pointer transition-colors ${getHeatColor(
-                              tech.count
-                            )} text-white`}
-                          >
-                            <p className="font-mono text-[10px]">{tech.id}</p>
-                          </motion.div>
-                        </TooltipTrigger>
-                        <TooltipContent side="right" className="max-w-xs">
-                          <p className="font-medium">{tech.name}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {tech.id} - {tech.count} kez tespit
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    ))}
-                    {tacticGroups[tactic]?.length === 0 && (
-                      <div className="p-2 rounded bg-secondary/30 text-center">
-                        <span className="text-[10px] text-muted-foreground">—</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Tactic tabs */}
+      <div className="flex items-center gap-1 flex-wrap">
+        <button
+          onClick={() => setSelectedTactic(null)}
+          className={`px-2.5 py-1 rounded-md text-xs border transition-colors ${!selectedTactic ? 'bg-primary/10 border-primary/30 text-primary' : 'border-border text-muted-foreground hover:bg-accent'}`}
+          aria-pressed={!selectedTactic}
+        >
+          Tümü
+        </button>
+        {mitre.tactics.map((tactic) => (
+          <button
+            key={tactic.tactic_id}
+            onClick={() => setSelectedTactic(tactic.tactic_id)}
+            className={`px-2.5 py-1 rounded-md text-xs border transition-colors ${selectedTactic === tactic.tactic_id ? 'bg-primary/10 border-primary/30 text-primary' : 'border-border text-muted-foreground hover:bg-accent'}`}
+            aria-pressed={selectedTactic === tactic.tactic_id}
+          >
+            {tactic.name} ({tactic.technique_count})
+          </button>
+        ))}
+      </div>
 
-            {/* Second row */}
-            <div className="grid grid-cols-7 gap-2 min-w-[900px] mt-4">
-              {MITRE_TACTICS.slice(7, 14).map((tactic, index) => (
-                <div key={tactic} className="space-y-2">
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: (index + 7) * 0.05 }}
-                    className="p-2 rounded-lg bg-secondary text-center"
-                  >
-                    <h4 className="text-xs font-medium truncate">{tactic}</h4>
-                  </motion.div>
-                  <div className="space-y-1">
-                    {tacticGroups[tactic]?.map((tech, i) => (
-                      <Tooltip key={tech.id}>
-                        <TooltipTrigger asChild>
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: (index + 7) * 0.05 + i * 0.02 }}
-                            className={`p-2 rounded text-xs cursor-pointer transition-colors ${getHeatColor(
-                              tech.count
-                            )} text-white`}
-                          >
-                            <p className="font-mono text-[10px]">{tech.id}</p>
-                          </motion.div>
-                        </TooltipTrigger>
-                        <TooltipContent side="right" className="max-w-xs">
-                          <p className="font-medium">{tech.name}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {tech.id} - {tech.count} kez tespit
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    ))}
-                    {tacticGroups[tactic]?.length === 0 && (
-                      <div className="p-2 rounded bg-secondary/30 text-center">
-                        <span className="text-[10px] text-muted-foreground">—</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+      {/* Technique grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+        {filteredTechniques.map((tech) => (
+          <div
+            key={tech.technique_id}
+            className={`p-3 rounded-lg border text-xs transition-colors ${
+              tech.is_covered
+                ? tacticColors[tech.tactic_id] ?? 'bg-muted/30 border-border'
+                : 'bg-muted/10 border-border opacity-50'
+            }`}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-mono text-[10px] font-medium">{tech.technique_id}</span>
+              {tech.is_covered && <span className="text-[10px] bg-muted px-1 rounded">{tech.alert_count} uyarı</span>}
             </div>
+            <div className="font-medium">{tech.name}</div>
+            {tech.incident_ids.length > 0 && (
+              <div className="text-[10px] text-muted-foreground mt-1">
+                {tech.incident_ids.length} olayda görüldü
+              </div>
+            )}
           </div>
-
-          {/* Legend */}
-          <div className="flex items-center justify-end gap-4 mt-6 text-xs">
-            <span className="text-muted-foreground">Yoğunluk:</span>
-            <div className="flex items-center gap-1">
-              <div className="w-4 h-4 rounded bg-yellow-500" />
-              <span>1-2</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-4 h-4 rounded bg-orange-500" />
-              <span>3-4</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-4 h-4 rounded bg-red-500" />
-              <span>5+</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Detected Techniques List */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Tespit Edilen Teknikler</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
-            {techniques.map((tech, index) => (
-              <motion.div
-                key={tech.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: index * 0.02 }}
-                className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
-              >
-                <div>
-                  <p className="font-mono text-sm">{tech.id}</p>
-                  <p className="text-xs text-muted-foreground">{tech.name}</p>
-                </div>
-                <Badge variant="secondary">{tech.count}</Badge>
-              </motion.div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+        ))}
+      </div>
     </div>
   )
 }
