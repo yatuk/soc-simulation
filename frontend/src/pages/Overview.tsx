@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useKPIStore, useIncidentStore, useAlertStore, useMitreStore } from '@/store'
 import { SkeletonCard } from '@/components/ui/skeleton-card'
 import { KpiCards } from '@/components/features/dashboard/KpiCards'
@@ -6,18 +6,21 @@ import { AlertVolumeChart } from '@/components/features/dashboard/AlertVolumeCha
 import { SeverityDonut } from '@/components/features/dashboard/SeverityDonut'
 import { TopMitreBar } from '@/components/features/dashboard/TopMitreBar'
 import { RecentIncidents } from '@/components/features/dashboard/RecentIncidents'
+import { GeoMap } from '@/components/features/dashboard/GeoMap'
+import { loadEntity } from '@/lib/data'
 
 export default function Overview() {
   const { data: kpi, isLoading: kpiLoading, load: loadKPI } = useKPIStore()
   const { data: incidents, isLoading: incLoading, load: loadInc } = useIncidentStore()
   const { data: alerts, isLoading: alertLoading, load: loadAlerts } = useAlertStore()
   const { data: mitre, isLoading: mitreLoading, load: loadMitre } = useMitreStore()
+  const [origins, setOrigins] = useState<Array<Record<string, unknown>>>([])
+  const [geoLoading, setGeoLoading] = useState(false)
 
   useEffect(() => {
-    loadKPI()
-    loadInc()
-    loadAlerts()
-    loadMitre()
+    loadKPI(); loadInc(); loadAlerts(); loadMitre()
+    setGeoLoading(true)
+    loadEntity<Array<Record<string, unknown>>>('threat_origins.json').then(setOrigins).finally(() => setGeoLoading(false))
   }, [loadKPI, loadInc, loadAlerts, loadMitre])
 
   const loading = kpiLoading || incLoading || alertLoading || mitreLoading
@@ -40,6 +43,8 @@ export default function Overview() {
         </div>
         <SeverityDonut kpi={kpi} isLoading={kpiLoading} />
       </div>
+
+      <GeoMap origins={origins as Array<{ country: string; city: string; lat: number; lng: number; count: number; severity: string }>} isLoading={geoLoading} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">

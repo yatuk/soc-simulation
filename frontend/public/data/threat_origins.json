@@ -1,0 +1,9 @@
+[
+  { "country": "Romanya", "city": "Bükreş", "lat": 45.9, "lng": 24.9, "count": 12, "severity": "high" },
+  { "country": "Rusya", "city": "Moskova", "lat": 61.5, "lng": 105.3, "count": 15, "severity": "high" },
+  { "country": "Çin", "city": "Pekin", "lat": 35.8, "lng": 104.1, "count": 8, "severity": "critical" },
+  { "country": "Nijerya", "city": "Lagos", "lat": 6.5, "lng": 3.4, "count": 5, "severity": "high" },
+  { "country": "Brezilya", "city": "São Paulo", "lat": -23.5, "lng": -46.6, "count": 3, "severity": "medium" },
+  { "country": "Türkiye", "city": "İstanbul", "lat": 41.0, "lng": 28.9, "count": 47, "severity": "low" },
+  { "country": "Hollanda", "city": "Amsterdam", "lat": 52.3, "lng": 4.9, "count": 2, "severity": "low" }
+]
