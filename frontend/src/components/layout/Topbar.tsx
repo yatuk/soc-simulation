@@ -1,5 +1,6 @@
 import { useUIStore, useSettingsStore } from '@/store'
 import { Menu, Moon, Sun, Search } from 'lucide-react'
+import { NotificationsBell } from '@/components/layout/NotificationsBell'
 
 const pageTitles: Record<string, string> = {
   '/': 'Genel Bakış',
@@ -45,6 +46,8 @@ export function Topbar() {
             Ctrl+K
           </kbd>
         </button>
+
+        <NotificationsBell />
 
         <button
           onClick={() =>
