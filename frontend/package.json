@@ -1,7 +1,7 @@
 {
   "name": "soc-case-study-project",
   "private": true,
-  "version": "2.1.1",
+  "version": "2.2.0",
   "browserslist": [">0.5%", "not dead", "not op_mini all", "supports es6-module"],
   "description": "SOC Console — SIEM/SOAR/EDR simülasyonu | Portfolyo case study",
   "type": "module",
