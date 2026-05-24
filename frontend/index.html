@@ -4,15 +4,37 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/SOC-case-study-project/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="SOC Console — Kurgusal Anadolu Finans Holding için SIEM + SOAR + EDR simülasyonu. Portfolyo projesi." />
+    <meta name="description" content="SOC Console — SIEM, SOAR ve EDR simülasyonu. Kurgusal incident senaryoları, MITRE ATT&CK coverage, threat intelligence. Portfolyo amaçlı." />
     <meta name="theme-color" content="#0b1121" />
-    <title>SOC Console</title>
+    <meta name="color-scheme" content="dark light" />
+    <title>SOC Console — SIEM/SOAR/EDR Simulation</title>
+
+    <!-- CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://fonts.googleapis.com; media-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests;" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="SOC Console — Security Operations Center Simulation" />
+    <meta property="og:description" content="127 alert, 126 false positive, 1 gerçek tehdit, 6 kahve. İnteraktif SIEM/SOAR/EDR portfolyo." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yatuk.github.io/SOC-case-study-project/" />
+    <meta property="og:image" content="https://yatuk.github.io/SOC-case-study-project/docs/screenshots/overview.png" />
+    <meta property="og:locale" content="tr_TR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SOC Console — SIEM/SOAR/EDR Simulation" />
+    <meta name="twitter:description" content="İnteraktif SOC analist portfolyo case study." />
+    <meta name="twitter:image" content="https://yatuk.github.io/SOC-case-study-project/docs/screenshots/overview.png" />
+
+    <!-- Preload critical data -->
+    <link rel="preload" href="/SOC-case-study-project/data/kpi_metrics.json" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="/SOC-case-study-project/data/incidents.json" as="fetch" crossorigin="anonymous" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>@font-face{font-family:'Inter';font-display:swap}@font-face{font-family:'JetBrains Mono';font-display:swap}</style>
   </head>
   <body>
     <div id="root"></div>
