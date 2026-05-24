@@ -6,7 +6,7 @@ import { SkeletonCard } from '@/components/ui/skeleton-card'
 import { SeverityPill } from '@/components/ui/severity-pill'
 import { StatusPill } from '@/components/ui/status-pill'
 import { EmptyState } from '@/components/ui/empty-state'
-import { ArrowLeft, Lock, Play, CheckCircle, Clock, Target, FileSearch } from 'lucide-react'
+import { ArrowLeft, Lock, Play, CheckCircle, Target, FileSearch } from 'lucide-react'
 
 export default function IncidentDetail() {
   const { id } = useParams<{ id: string }>()

@@ -4,7 +4,6 @@ import { toast } from 'sonner'
 import { useAssetStore, useUserStore } from '@/store'
 import { SkeletonCard } from '@/components/ui/skeleton-card'
 import { StatusPill } from '@/components/ui/status-pill'
-import { EmptyState } from '@/components/ui/empty-state'
 import { ArrowLeft, Monitor, ShieldBan, ShieldCheck, Zap, Cpu, Globe, AlertTriangle } from 'lucide-react'
 
 export default function EndpointDetail() {

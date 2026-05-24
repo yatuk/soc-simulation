@@ -30,7 +30,6 @@ export function SeverityDonut({ kpi, isLoading }: Props) {
   const sevData = kpi?.alerts_by_severity
   const entries = sevData ? Object.entries(sevData).filter(([, v]) => v > 0) : []
   const data = entries.map(([key, value]) => ({ name: SEVERITY_LABELS[key] ?? key, value, color: SEVERITY_COLORS[key] ?? '#8b949e' }))
-  const total = data.reduce((s, d) => s + d.value, 0)
 
   if (data.length === 0) {
     return <ChartShell title="Önem Dağılımı"><p className="text-xs text-muted-foreground text-center py-12">Uyarı bulunamadı.</p></ChartShell>

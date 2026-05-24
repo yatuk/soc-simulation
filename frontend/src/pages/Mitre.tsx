@@ -56,7 +56,7 @@ export default function Mitre() {
       </div>
 
       {/* Horizontal scroll matrix */}
-      <div className="overflow-x-auto -mx-2 px-2">
+      <div className="overflow-x-auto -mx-2 px-2" role="grid" aria-label="MITRE ATT&CK matrisi">
         <div className="flex gap-3" style={{ minWidth: grouped.length * 170 }}>
           {grouped.map(({ tactic, techniques }) => (
             <div key={tactic.tactic_id} className="flex-shrink-0 w-40 flex flex-col">
@@ -78,7 +78,7 @@ export default function Mitre() {
       </div>
 
       {/* Mobile: accordion fallback */}
-      <div className="lg:hidden space-y-2">
+      <div className="lg:hidden space-y-2" role="list" aria-label="MITRE taktikleri (mobil)">
         {grouped.map(({ tactic, techniques }) => (
           <details key={tactic.tactic_id} className="rounded-lg border border-border bg-card">
             <summary className="px-3 py-2 text-xs font-semibold cursor-pointer hover:bg-accent transition-colors">{tactic.name} ({tactic.technique_count})</summary>
@@ -92,7 +92,7 @@ export default function Mitre() {
       {/* Technique detail drawer */}
       {selectedTech && (
         <>
-          <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" onClick={() => setSelectedTech(null)} />
+          <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" onClick={() => setSelectedTech(null)} onKeyDown={(e) => e.key === 'Escape' && setSelectedTech(null)} role="button" tabIndex={0} aria-label="Kapat" />
           <aside className="fixed right-0 top-0 z-50 h-full w-full max-w-md bg-card border-l border-border shadow-2xl overflow-y-auto animate-slide-in-right" role="dialog" aria-modal="true" aria-label={selectedTech.name}>
             <div className="flex items-center justify-between h-14 px-4 border-b border-border sticky top-0 bg-card z-10">
               <div>
