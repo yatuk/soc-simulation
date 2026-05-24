@@ -21,6 +21,7 @@ const EndpointDetail = lazy(() => import('@/pages/EndpointDetail'))
 const Mitre = lazy(() => import('@/pages/Mitre'))
 const Detections = lazy(() => import('@/pages/Detections'))
 const Settings = lazy(() => import('@/pages/Settings'))
+const CommandPalette = lazy(() => import('@/components/features/command-palette/CommandPalette').then(m => ({ default: m.CommandPalette })))
 
 function PageFallback() {
   return (
@@ -35,6 +36,8 @@ function PageFallback() {
 function App() {
   useTheme()
   const collapsed = useUIStore((s) => s.sidebarCollapsed)
+  const cmdOpen = useUIStore((s) => s.cmdPaletteOpen)
+  const toggleCmd = useUIStore((s) => s.toggleCmdPalette)
 
   return (
     <ErrorBoundary>
@@ -77,6 +80,9 @@ function App() {
           </footer>
         </main>
       </div>
+      <Suspense fallback={null}>
+        {cmdOpen && <CommandPalette open={cmdOpen} onClose={toggleCmd} />}
+      </Suspense>
     </ErrorBoundary>
   )
 }

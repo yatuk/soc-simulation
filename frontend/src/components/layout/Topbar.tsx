@@ -15,6 +15,7 @@ const pageTitles: Record<string, string> = {
 
 export function Topbar() {
   const toggleSidebar = useUIStore((s) => s.toggleSidebar)
+  const toggleCmdPalette = useUIStore((s) => s.toggleCmdPalette)
   const { settings, updateSetting } = useSettingsStore()
   const path = window.location.hash.replace('#', '') || '/'
   const title = pageTitles[path] || 'SOC Console'
@@ -34,9 +35,9 @@ export function Topbar() {
 
       <div className="flex items-center gap-2 shrink-0">
         <button
+          onClick={toggleCmdPalette}
           className="flex items-center gap-2 h-8 px-3 rounded-md border border-border bg-muted/50 text-muted-foreground text-xs hover:bg-muted transition-colors"
-          aria-label="Arama"
-          tabIndex={-1}
+          aria-label="Komut paletini aç (Ctrl+K)"
         >
           <Search className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Ara...</span>

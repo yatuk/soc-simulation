@@ -9,7 +9,15 @@
     "url": "https://github.com/yatuk/SOC-case-study-project"
   },
   "homepage": "https://yatuk.github.io/SOC-case-study-project/",
-  "keywords": ["soc", "siem", "soar", "edr", "mitre-attack", "cybersecurity", "portfolio"],
+  "keywords": [
+    "soc",
+    "siem",
+    "soar",
+    "edr",
+    "mitre-attack",
+    "cybersecurity",
+    "portfolio"
+  ],
   "license": "MIT",
   "scripts": {
     "dev": "vite",
@@ -30,6 +38,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cmdk": "^1.1.1",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.312.0",
     "react": "^18.2.0",

@@ -91,18 +91,22 @@ export const useKPIStore = create<KPIState>((set) => ({
 // ── UI Store ───────────────────────────────────────────────
 interface UIState {
   sidebarCollapsed: boolean
+  cmdPaletteOpen: boolean
   activeDrawer: string | null
   drawerData: unknown
   toggleSidebar: () => void
+  toggleCmdPalette: () => void
   openDrawer: (type: string, data?: unknown) => void
   closeDrawer: () => void
 }
 
 export const useUIStore = create<UIState>((set) => ({
   sidebarCollapsed: false,
+  cmdPaletteOpen: false,
   activeDrawer: null,
   drawerData: null,
   toggleSidebar: () => set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
+  toggleCmdPalette: () => set((s) => ({ cmdPaletteOpen: !s.cmdPaletteOpen })),
   openDrawer: (type, data) => set({ activeDrawer: type, drawerData: data ?? null }),
   closeDrawer: () => set({ activeDrawer: null, drawerData: null }),
 }))
