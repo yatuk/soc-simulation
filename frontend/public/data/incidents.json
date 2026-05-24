@@ -5,13 +5,13 @@
     "severity": "critical",
     "status": "investigating",
     "summary": "Kullanıcı oltalama e-postası aldı, zararlı bağlantıya tıkladı ve kimlik bilgilerini girdi. Saldırgan yabancı IP'den giriş yaparak posta kutusu yönlendirme kuralı oluşturdu.",
-    "narrative": "10 Mayıs 2026 sabahı, Ayşe Demir (Finans departmanı) gelen kutusunda 'Acil: Hesap Doğrulama Gerekli' konulu bir e-posta buldu. E-posta, kurumsal BT departmanından geliyormuş gibi görünüyordu ve anadolu-giris-dogrula.example.tk adresine yönlendiren bir bağlantı içeriyordu.\n\nKullanıcı bağlantıya tıkladı ve Office 365 giriş sayfasının birebir kopyasına kimlik bilgilerini girdi. 55 dakika sonra saldırgan, Romanya merkezli bir IP'den (198.51.100.45) hesaba erişti ve otomatik yönlendirme kuralı oluşturdu.\n\nOlay, SIEM'deki imkansız seyahat kuralı sayesinde tespit edildi. Hesap derhal kilitlendi, oturumlar sonlandırıldı ve posta kutusu kuralları temizlendi. Kullanıcıya güvenlik farkındalık eğitimi verildi.",
+    "narrative": "10 Mayıs 2026 sabahı, Ayşe Demir (IT departmanı) gelen kutusunda 'Acil: Hesap Doğrulama Gerekli' konulu bir e-posta buldu. E-posta, kurumsal BT departmanından geliyormuş gibi görünüyordu ve anadolu-giris-dogrula.example.tk adresine yönlendiren bir bağlantı içeriyordu.\n\nKullanıcı bağlantıya tıkladı ve Office 365 giriş sayfasının birebir kopyasına kimlik bilgilerini girdi. 55 dakika sonra saldırgan, Romanya merkezli bir IP'den (198.51.100.45) hesaba erişti ve otomatik yönlendirme kuralı oluşturdu.\n\nOlay, SIEM'deki imkansız seyahat kuralı sayesinde tespit edildi. Hesap derhal kilitlendi, oturumlar sonlandırıldı ve posta kutusu kuralları temizlendi. Kullanıcıya güvenlik farkındalık eğitimi verildi.",
     "assignee": "Emre Korkmaz",
     "affected_user_ids": [
-      "usr-a1b2c3d4"
+      "usr-affe559c"
     ],
     "affected_asset_ids": [
-      "AST-001"
+      "AST-0001"
     ],
     "mitre_technique_ids": [
       "T1566.002",
@@ -26,7 +26,7 @@
         "technique_id": "T1566.002",
         "description": "Oltalama e-postası teslim edildi ve kullanıcı bağlantıya tıkladı",
         "alert_id": "ALR-0001-001",
-        "timestamp": "2026-05-11T00:05:00",
+        "timestamp": "2026-03-26T00:05:00",
         "status": "completed"
       },
       {
@@ -35,7 +35,7 @@
         "technique_id": "T1078",
         "description": "Çalınan kimlik bilgileriyle imkansız seyahat girişi",
         "alert_id": "ALR-0001-002",
-        "timestamp": "2026-05-11T01:00:00",
+        "timestamp": "2026-03-26T01:00:00",
         "status": "completed"
       },
       {
@@ -44,7 +44,7 @@
         "technique_id": "T1098",
         "description": "Posta kutusu yönlendirme kuralı ile kalıcılık sağlandı",
         "alert_id": "ALR-0001-003",
-        "timestamp": "2026-05-11T01:30:00",
+        "timestamp": "2026-03-26T01:30:00",
         "status": "completed"
       },
       {
@@ -53,7 +53,7 @@
         "technique_id": "T1114.002",
         "description": "E-postalar harici adrese yönlendiriliyor",
         "alert_id": "ALR-0001-003",
-        "timestamp": "2026-05-11T01:30:00",
+        "timestamp": "2026-03-26T01:30:00",
         "status": "pending"
       }
     ],
@@ -65,8 +65,8 @@
     "playbook_run_ids": [
       "RUN-1001"
     ],
-    "created_at": "2026-05-11T00:00:00",
-    "updated_at": "2026-05-11T03:00:00",
+    "created_at": "2026-03-26T00:00:00",
+    "updated_at": "2026-03-26T03:00:00",
     "resolved_at": null
   },
   {
@@ -78,10 +78,10 @@
     "narrative": "11 Mayıs 2026'da Mehmet Kaya, 'MailSyncPro — E-posta Yedekleme Aracı' adlı bir uygulamanın OAuth onay isteğini kabul etti. Uygulama, kurumsal bir çözüm gibi görünüyordu ancak Rusya merkezli bir tehdit aktörü tarafından kontrol ediliyordu.\n\nOnaydan sonra saldırgan, OAuth token'ı kullanarak kullanıcının posta kutusundaki tüm e-postaları programatik olarak okudu. Toplamda 200'den fazla e-posta dışarı sızdırıldı. Olay, anormal API çağrı hacmi sayesinde tespit edildi.\n\nUygulama izni iptal edildi, OAuth token'ları geçersiz kılındı ve tenant genelinde OAuth onay politikaları sıkılaştırıldı.",
     "assignee": "Emre Korkmaz",
     "affected_user_ids": [
-      "usr-b2c3d4e5"
+      "usr-c5378aa9"
     ],
     "affected_asset_ids": [
-      "AST-002"
+      "AST-0001"
     ],
     "mitre_technique_ids": [
       "T1566.002",
@@ -95,7 +95,7 @@
         "technique_id": "T1566.002",
         "description": "OAuth onay isteği e-postası alındı",
         "alert_id": "ALR-0002-001",
-        "timestamp": "2026-05-12T00:00:00",
+        "timestamp": "2026-03-27T00:00:00",
         "status": "completed"
       },
       {
@@ -104,7 +104,7 @@
         "technique_id": "T1528",
         "description": "Kullanıcı zararlı uygulamaya izin verdi",
         "alert_id": "ALR-0002-001",
-        "timestamp": "2026-05-12T00:10:00",
+        "timestamp": "2026-03-27T00:10:00",
         "status": "completed"
       },
       {
@@ -113,7 +113,7 @@
         "technique_id": "T1114.002",
         "description": "OAuth token ile toplu e-posta erişimi",
         "alert_id": "ALR-0002-002",
-        "timestamp": "2026-05-12T01:00:00",
+        "timestamp": "2026-03-27T01:00:00",
         "status": "completed"
       }
     ],
@@ -124,8 +124,8 @@
     "playbook_run_ids": [
       "RUN-1002"
     ],
-    "created_at": "2026-05-12T00:00:00",
-    "updated_at": "2026-05-12T04:00:00",
+    "created_at": "2026-03-27T00:00:00",
+    "updated_at": "2026-03-27T04:00:00",
     "resolved_at": null
   },
   {
@@ -137,10 +137,10 @@
     "narrative": "12 Mayıs 2026 akşamı, Elif Yılmaz telefonuna art arda MFA onay bildirimleri gelmeye başladı. 15. denemede, muhtemelen 'yanlışlıkla' veya 'bildirimleri susturmak için' onay verdi.\n\nSaldırgan, Çin merkezli IP (198.51.100.91) üzerinden hesaba giriş yaptı ve 8 dakika içinde hesaba GlobalAdmin rolü atadı.\n\nSIEM korelasyon kuralı, MFA push hacmindeki anormalliği tespit etti ve alert üretti. Rol ataması geri alındı, tüm oturumlar sonlandırıldı ve MFA politikası gözden geçirildi.",
     "assignee": "Deniz Aydın",
     "affected_user_ids": [
-      "usr-c3d4e5f6"
+      "usr-a838ab2f"
     ],
     "affected_asset_ids": [
-      "AST-003"
+      "AST-0001"
     ],
     "mitre_technique_ids": [
       "T1556",
@@ -154,7 +154,7 @@
         "technique_id": "T1556",
         "description": "15 MFA push bombardımanı",
         "alert_id": "ALR-0003-001",
-        "timestamp": "2026-05-13T00:15:00",
+        "timestamp": "2026-03-28T00:15:00",
         "status": "completed"
       },
       {
@@ -163,7 +163,7 @@
         "technique_id": "T1078",
         "description": "MFA onayı alındı, hesaba giriş yapıldı",
         "alert_id": "ALR-0003-001",
-        "timestamp": "2026-05-13T00:32:00",
+        "timestamp": "2026-03-28T00:32:00",
         "status": "completed"
       },
       {
@@ -172,7 +172,7 @@
         "technique_id": "T1098.001",
         "description": "GlobalAdmin rolü atandı",
         "alert_id": "ALR-0003-002",
-        "timestamp": "2026-05-13T00:40:00",
+        "timestamp": "2026-03-28T00:40:00",
         "status": "completed"
       }
     ],
@@ -183,8 +183,8 @@
     "playbook_run_ids": [
       "RUN-1003"
     ],
-    "created_at": "2026-05-13T00:00:00",
-    "updated_at": "2026-05-13T01:00:00",
+    "created_at": "2026-03-28T00:00:00",
+    "updated_at": "2026-03-28T01:00:00",
     "resolved_at": null
   },
   {
@@ -196,12 +196,12 @@
     "narrative": "13 Mayıs 2026 sabahı, Nijerya merkezli bir IP adresinden (203.0.113.195) 6 farklı kurumsal hesaba 'Password123' ve 'Anadolu2024' gibi yaygın parolalarla giriş denemesi yapıldı. Mustafa Arslan hesabı başarıyla ele geçirildi.\n\nSaldırgan, posta kutusunda 'fatura', 'havale' ve 'sözleşme' anahtar kelimeleriyle arama yaptı ve PST formatında toplu dışa aktarım başlattı.\n\nOlay, SIEM'deki 'Çoklu Başarısız Giriş + Posta Kutusu Aktivitesi' korelasyon kuralıyla tespit edildi. Hesap kilitlendi ve parola politikası gözden geçirildi.",
     "assignee": "Emre Korkmaz",
     "affected_user_ids": [
-      "usr-d4e5f6a7",
-      "usr-a1b2c3d4",
-      "usr-e5f6a7b8",
-      "usr-f6a7b8c9",
-      "usr-a7b8c9d0",
-      "usr-b8c9d0e1"
+      "usr-8a472b91",
+      "usr-affe559c",
+      "usr-3662893a",
+      "usr-df817d1a",
+      "usr-5edc5997",
+      "usr-716ea30b"
     ],
     "affected_asset_ids": [],
     "mitre_technique_ids": [
@@ -216,7 +216,7 @@
         "technique_id": "T1110.003",
         "description": "6 hesaba parola püskürtme denemesi",
         "alert_id": "ALR-0004-001",
-        "timestamp": "2026-05-14T00:06:00",
+        "timestamp": "2026-03-29T00:06:00",
         "status": "completed"
       },
       {
@@ -225,7 +225,7 @@
         "technique_id": "T1078",
         "description": "Püskürtme başarılı, hesaba giriş yapıldı",
         "alert_id": "ALR-0004-001",
-        "timestamp": "2026-05-14T00:15:00",
+        "timestamp": "2026-03-29T00:15:00",
         "status": "completed"
       },
       {
@@ -234,7 +234,7 @@
         "technique_id": "T1114.002",
         "description": "Posta kutusu arandı ve dışa aktarıldı",
         "alert_id": "ALR-0004-002",
-        "timestamp": "2026-05-14T00:45:00",
+        "timestamp": "2026-03-29T00:45:00",
         "status": "pending"
       }
     ],
@@ -245,8 +245,8 @@
     "playbook_run_ids": [
       "RUN-1004"
     ],
-    "created_at": "2026-05-14T00:00:00",
-    "updated_at": "2026-05-14T02:00:00",
+    "created_at": "2026-03-29T00:00:00",
+    "updated_at": "2026-03-29T02:00:00",
     "resolved_at": null
   },
   {
@@ -258,7 +258,7 @@
     "narrative": "14 Mayıs 2026'da Fatma Şahin, 'Fatura Ödeme Sistemi Güncellemesi' konulu bir e-posta aldı ve fatura-odeme-sistemi.example.cf domain'indeki sahte portala kimlik bilgilerini girdi.\n\nSaldırgan, Brezilya IP'si (198.51.100.54) üzerinden hesaba erişti. İlk iş olarak 'dolandırıcılık' ve 'şüpheli' kelimelerini içeren e-postaları silen bir kural oluşturdu — böylece güvenlik ekibinin uyarıları kullanıcıya ulaşamayacaktı.\n\nArdından 3 tedarikçiye 'banka hesap numaramız değişti' içerikli sahte e-postalar gönderdi. Hedef IBAN Litvanya'daki bir banka hesabıydı. Olay, tedarikçilerden birinin telefonla teyit istemesi üzerine ortaya çıktı.",
     "assignee": "Ceren Erdoğan",
     "affected_user_ids": [
-      "usr-a7b8c9d0"
+      "usr-5edc5997"
     ],
     "affected_asset_ids": [],
     "mitre_technique_ids": [
@@ -274,7 +274,7 @@
         "technique_id": "T1566.002",
         "description": "Finans temalı oltalama e-postası",
         "alert_id": "ALR-0005-001",
-        "timestamp": "2026-05-15T00:00:00",
+        "timestamp": "2026-03-30T00:00:00",
         "status": "completed"
       },
       {
@@ -283,7 +283,7 @@
         "technique_id": "T1078",
         "description": "Brezilya IP'den başarılı giriş",
         "alert_id": "ALR-0005-001",
-        "timestamp": "2026-05-15T00:10:00",
+        "timestamp": "2026-03-30T00:10:00",
         "status": "completed"
       },
       {
@@ -292,7 +292,7 @@
         "technique_id": "T1098",
         "description": "Anti-forensic posta kutusu kuralı",
         "alert_id": "ALR-0005-001",
-        "timestamp": "2026-05-15T00:20:00",
+        "timestamp": "2026-03-30T00:20:00",
         "status": "completed"
       },
       {
@@ -301,7 +301,7 @@
         "technique_id": "T1114.002",
         "description": "Tedarikçilere sahte havale e-postası",
         "alert_id": "ALR-0005-002",
-        "timestamp": "2026-05-15T01:00:00",
+        "timestamp": "2026-03-30T01:00:00",
         "status": "completed"
       }
     ],
@@ -312,8 +312,8 @@
     "playbook_run_ids": [
       "RUN-1005"
     ],
-    "created_at": "2026-05-15T00:00:00",
-    "updated_at": "2026-05-15T05:00:00",
+    "created_at": "2026-03-30T00:00:00",
+    "updated_at": "2026-03-30T05:00:00",
     "resolved_at": null
   },
   {
@@ -325,10 +325,10 @@
     "narrative": "15 Mayıs 2026'da Zeynep Çelik, 'İş Başvurusu - CV ve Referans Mektubu' konulu bir e-postadaki .docm ekini açtı. Belge, kullanıcıya 'içeriği görüntülemek için makroları etkinleştirin' mesajını gösteriyordu.\n\nMakro etkinleştirildiğinde, WINWORD.EXE process'i PowerShell başlattı ve Temp klasörüne 'guncelleme.exe' adlı bir payload bıraktı. Bu payload, Registry Run anahtarına kendini ekleyerek kalıcılık sağladı ve cdn-guncelleme.example.cf adresine her 10 dakikada bir HTTPS beacon göndermeye başladı.\n\nEDR çözümü, Word'den PowerShell spawn edilmesini tespit ederek SOC ekibini uyardı. Uç nokta izole edildi ve adli bilişim süreci başlatıldı.",
     "assignee": "Deniz Aydın",
     "affected_user_ids": [
-      "usr-e5f6a7b8"
+      "usr-3662893a"
     ],
     "affected_asset_ids": [
-      "AST-005"
+      "AST-0001"
     ],
     "mitre_technique_ids": [
       "T1566.001",
@@ -343,7 +343,7 @@
         "technique_id": "T1566.001",
         "description": "Zararlı ek içeren e-posta teslim edildi",
         "alert_id": "ALR-0006-001",
-        "timestamp": "2026-05-16T00:00:00",
+        "timestamp": "2026-03-31T00:00:00",
         "status": "completed"
       },
       {
@@ -352,7 +352,7 @@
         "technique_id": "T1059.005",
         "description": "VBA makro PowerShell çalıştırdı",
         "alert_id": "ALR-0006-001",
-        "timestamp": "2026-05-16T00:06:00",
+        "timestamp": "2026-03-31T00:06:00",
         "status": "completed"
       },
       {
@@ -361,7 +361,7 @@
         "technique_id": "T1547.001",
         "description": "Registry Run key kalıcılığı",
         "alert_id": "ALR-0006-002",
-        "timestamp": "2026-05-16T00:08:00",
+        "timestamp": "2026-03-31T00:08:00",
         "status": "completed"
       },
       {
@@ -370,7 +370,7 @@
         "technique_id": "T1071.001",
         "description": "C2 beacon iletişimi",
         "alert_id": "ALR-0006-003",
-        "timestamp": "2026-05-16T00:15:00",
+        "timestamp": "2026-03-31T00:15:00",
         "status": "pending"
       }
     ],
@@ -382,8 +382,8 @@
     "playbook_run_ids": [
       "RUN-1006"
     ],
-    "created_at": "2026-05-16T00:00:00",
-    "updated_at": "2026-05-16T03:00:00",
+    "created_at": "2026-03-31T00:00:00",
+    "updated_at": "2026-03-31T03:00:00",
     "resolved_at": null
   },
   {
@@ -392,10 +392,10 @@
     "severity": "high",
     "status": "contained",
     "summary": "CFO hesabına Nijerya'da yeni bir cihaz kaydedildi ve admin rolü atandı.",
-    "narrative": "16 Mayıs 2026'da, CFO Ahmet Yıldız hesabına İzmir ofisinde kayıtlı görünen ancak daha önce hiç kullanılmamış bir cihazla (IZM-WS-001) giriş yapıldı. Giriş IP'si Nijerya (203.0.113.195) olarak görünüyordu.\n\nGirişten 10 dakika sonra hesaba Exchange Administrator rolü atandı ve diğer yöneticilerin posta kutularına erişim denemesi yapıldı.\n\nSIEM'deki 'VIP Kullanıcı Anomalisi' kuralı olayı tespit etti. CFO ile telefonda doğrulama yapıldı ve kendisinin böyle bir giriş yapmadığı teyit edildi. Rol geri alındı, oturum sonlandırıldı.",
+    "narrative": "16 Mayıs 2026'da, CFO Ahmet Aksoy hesabına İzmir ofisinde kayıtlı görünen ancak daha önce hiç kullanılmamış bir cihazla (IZM-WS-001) giriş yapıldı. Giriş IP'si Nijerya (203.0.113.195) olarak görünüyordu.\n\nGirişten 10 dakika sonra hesaba Exchange Administrator rolü atandı ve diğer yöneticilerin posta kutularına erişim denemesi yapıldı.\n\nSIEM'deki 'VIP Kullanıcı Anomalisi' kuralı olayı tespit etti. CFO ile telefonda doğrulama yapıldı ve kendisinin böyle bir giriş yapmadığı teyit edildi. Rol geri alındı, oturum sonlandırıldı.",
     "assignee": "Ceren Erdoğan",
     "affected_user_ids": [
-      "usr-b8c9d0e1"
+      "usr-716ea30b"
     ],
     "affected_asset_ids": [
       "AST-022"
@@ -411,7 +411,7 @@
         "technique_id": "T1078.004",
         "description": "Bilinmeyen cihazdan CFO hesabına giriş",
         "alert_id": "ALR-0007-001",
-        "timestamp": "2026-05-17T00:05:00",
+        "timestamp": "2026-04-01T00:05:00",
         "status": "completed"
       },
       {
@@ -420,7 +420,7 @@
         "technique_id": "T1098.001",
         "description": "Exchange Administrator rolü atandı",
         "alert_id": "ALR-0007-002",
-        "timestamp": "2026-05-17T00:15:00",
+        "timestamp": "2026-04-01T00:15:00",
         "status": "completed"
       }
     ],
@@ -431,8 +431,8 @@
     "playbook_run_ids": [
       "RUN-1007"
     ],
-    "created_at": "2026-05-17T00:00:00",
-    "updated_at": "2026-05-17T01:00:00",
+    "created_at": "2026-04-01T00:00:00",
+    "updated_at": "2026-04-01T01:00:00",
     "resolved_at": null
   },
   {
@@ -441,13 +441,13 @@
     "severity": "high",
     "status": "investigating",
     "summary": "DevOps mühendisi hassas dosyalar için herkese açık paylaşım bağlantıları oluşturdu. Dosyalara harici IP'den erişildi.",
-    "narrative": "17 Mayıs 2026'da Deniz Aydın, OneDrive üzerinde 5 hassas dosya için 'herkes erişebilir' bağlantıları oluşturdu. Paylaşılan dosyalar arasında müşteri listesi, veritabanı yedeği, kullanıcı parolaları CSV'si, sözleşmeler ve maaş bordro dosyası bulunuyordu.\n\nKısa süre sonra Hollanda merkezli bir IP'den bu dosyalara erişildi ve 3 tanesi indirildi. Olay, DLP alarmı ile tespit edildi.\n\nYapılan incelemede kullanıcının departman içi paylaşım yaparken yanlışlıkla 'herkes' seçeneğini işaretlediği anlaşıldı. Paylaşım bağlantıları iptal edildi ve DLP politikaları gözden geçirildi.",
+    "narrative": "17 Mayıs 2026'da Deniz Polat, OneDrive üzerinde 5 hassas dosya için 'herkes erişebilir' bağlantıları oluşturdu. Paylaşılan dosyalar arasında müşteri listesi, veritabanı yedeği, kullanıcı parolaları CSV'si, sözleşmeler ve maaş bordro dosyası bulunuyordu.\n\nKısa süre sonra Hollanda merkezli bir IP'den bu dosyalara erişildi ve 3 tanesi indirildi. Olay, DLP alarmı ile tespit edildi.\n\nYapılan incelemede kullanıcının departman içi paylaşım yaparken yanlışlıkla 'herkes' seçeneğini işaretlediği anlaşıldı. Paylaşım bağlantıları iptal edildi ve DLP politikaları gözden geçirildi.",
     "assignee": "Ceren Erdoğan",
     "affected_user_ids": [
-      "usr-e1f2a3b4"
+      "usr-7d7e2e35"
     ],
     "affected_asset_ids": [
-      "AST-011"
+      "AST-0001"
     ],
     "mitre_technique_ids": [
       "T1567.002"
@@ -459,7 +459,7 @@
         "technique_id": "T1567.002",
         "description": "Hassas dosyalar herkese açık paylaşıldı",
         "alert_id": "ALR-0008-001",
-        "timestamp": "2026-05-18T00:50:00",
+        "timestamp": "2026-04-02T00:50:00",
         "status": "completed"
       },
       {
@@ -468,7 +468,7 @@
         "technique_id": "T1567.002",
         "description": "Harici IP'den dosya indirildi",
         "alert_id": "ALR-0008-002",
-        "timestamp": "2026-05-18T01:00:00",
+        "timestamp": "2026-04-02T01:00:00",
         "status": "completed"
       }
     ],
@@ -479,8 +479,8 @@
     "playbook_run_ids": [
       "RUN-1008"
     ],
-    "created_at": "2026-05-18T00:00:00",
-    "updated_at": "2026-05-18T02:00:00",
+    "created_at": "2026-04-02T00:00:00",
+    "updated_at": "2026-04-02T02:00:00",
     "resolved_at": null
   },
   {
@@ -489,13 +489,13 @@
     "severity": "low",
     "status": "closed",
     "summary": "Kullanıcının VPN kullanımı nedeniyle imkansız seyahat uyarısı tetiklendi. İnceleme sonrası yanlış pozitif olarak belirlendi.",
-    "narrative": "18 Mayıs 2026'da Burak Polat için imkansız seyahat alarmı tetiklendi. Kullanıcı 5 dakika içinde İstanbul ve Amsterdam'dan giriş yapmış görünüyordu.\n\nİncelemede Amsterdam IP'sinin (192.0.2.100) bilinen bir kurumsal VPN çıkış noktası olduğu tespit edildi. Kullanıcı VPN bağlantısı üzerinden çalışıyordu ve coğrafi uyumsuzluk normaldi.\n\nAlert false positive olarak kapatıldı. VPN çıkış IP'leri SIEM whitelist'ine eklendi ve benzer false positive'lerin önüne geçildi.",
+    "narrative": "18 Mayıs 2026'da Burak Erdoğan için imkansız seyahat alarmı tetiklendi. Kullanıcı 5 dakika içinde İstanbul ve Amsterdam'dan giriş yapmış görünüyordu.\n\nİncelemede Amsterdam IP'sinin (192.0.2.100) bilinen bir kurumsal VPN çıkış noktası olduğu tespit edildi. Kullanıcı VPN bağlantısı üzerinden çalışıyordu ve coğrafi uyumsuzluk normaldi.\n\nAlert false positive olarak kapatıldı. VPN çıkış IP'leri SIEM whitelist'ine eklendi ve benzer false positive'lerin önüne geçildi.",
     "assignee": "Emre Korkmaz",
     "affected_user_ids": [
-      "usr-f2a3b4c5"
+      "usr-5b17b6dd"
     ],
     "affected_asset_ids": [
-      "AST-012"
+      "AST-0001"
     ],
     "mitre_technique_ids": [
       "T1078"
@@ -507,8 +507,8 @@
     "playbook_run_ids": [
       "RUN-1009"
     ],
-    "created_at": "2026-05-19T00:00:00",
-    "updated_at": "2026-05-19T00:30:00",
-    "resolved_at": "2026-05-19T00:30:00"
+    "created_at": "2026-04-03T00:00:00",
+    "updated_at": "2026-04-03T00:30:00",
+    "resolved_at": "2026-04-03T00:30:00"
   }
 ]

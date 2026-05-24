@@ -6,139 +6,135 @@ Seed-based reproducibility.
 import hashlib
 from datetime import datetime, timedelta
 
-# ── Time window ──────────────────────────────────────────────
-BASE_TIME = datetime(2026, 5, 10, 0, 0, 0)  # fixed anchor for reproducibility
-WINDOW_DAYS = 14
+# Time window — 60 days
+BASE_TIME = datetime(2026, 3, 25, 0, 0, 0)
+WINDOW_DAYS = 60
 
-# ── Fictional company ────────────────────────────────────────
-PRIMARY_COMPANY = {
-    "name": "Anadolu Finans Holding",
-    "domain": "anadolufinans.example.tr",
-    "sector": "Finance",
-}
+PRIMARY_COMPANY = {"name": "Anadolu Finans Holding", "domain": "anadolufinans.example.tr", "sector": "Finance"}
 
-# ── Fictional users ──────────────────────────────────────────
-USERS = [
-    {"user_id": "usr-a1b2c3d4", "email": "ayse.demir@anadolufinans.example.tr",  "display_name": "Ayşe Demir",   "department": "Finans",           "title": "Finans Analisti",         "role": "analyst"},
-    {"user_id": "usr-b2c3d4e5", "email": "mehmet.kaya@anadolufinans.example.tr", "display_name": "Mehmet Kaya",   "department": "BT",                "title": "Sistem Yöneticisi",       "role": "admin"},
-    {"user_id": "usr-c3d4e5f6", "email": "elif.yilmaz@anadolufinans.example.tr", "display_name": "Elif Yılmaz",   "department": "Yazılım",           "title": "Kıdemli Geliştirici",     "role": "analyst"},
-    {"user_id": "usr-d4e5f6a7", "email": "mustafa.arslan@anadolufinans.example.tr", "display_name": "Mustafa Arslan", "department": "Satış",           "title": "Satış Müdürü",            "role": "viewer"},
-    {"user_id": "usr-e5f6a7b8", "email": "zeynep.celik@anadolufinans.example.tr", "display_name": "Zeynep Çelik",  "department": "İK",                "title": "İK Uzmanı",               "role": "viewer"},
-    {"user_id": "usr-f6a7b8c9", "email": "ali.ozturk@anadolufinans.example.tr",   "display_name": "Ali Öztürk",    "department": "Pazarlama",          "title": "Pazarlama Direktörü",     "role": "viewer"},
-    {"user_id": "usr-a7b8c9d0", "email": "fatma.sahin@anadolufinans.example.tr",  "display_name": "Fatma Şahin",   "department": "Finans",             "title": "Muhasebe Müdürü",         "role": "analyst"},
-    {"user_id": "usr-b8c9d0e1", "email": "ahmet.yildiz@anadolufinans.example.tr", "display_name": "Ahmet Yıldız",  "department": "Yönetim",            "title": "CFO",                     "role": "admin"},
-    {"user_id": "usr-c9d0e1f2", "email": "selin.aksoy@anadolufinans.example.tr",  "display_name": "Selin Aksoy",   "department": "Hukuk",              "title": "Hukuk Danışmanı",         "role": "viewer"},
-    {"user_id": "usr-d0e1f2a3", "email": "emre.korkmaz@anadolufinans.example.tr", "display_name": "Emre Korkmaz",  "department": "BT",                 "title": "Siber Güvenlik Analisti", "role": "analyst"},
-    {"user_id": "usr-e1f2a3b4", "email": "deniz.aydin@anadolufinans.example.tr",  "display_name": "Deniz Aydın",   "department": "Yazılım",            "title": "DevOps Mühendisi",        "role": "analyst"},
-    {"user_id": "usr-f2a3b4c5", "email": "burak.polat@anadolufinans.example.tr",  "display_name": "Burak Polat",   "department": "Satış",              "title": "Bölge Müdürü",            "role": "viewer"},
-    {"user_id": "usr-a3b4c5d6", "email": "ceren.erdogan@anadolufinans.example.tr","display_name": "Ceren Erdoğan", "department": "Risk",               "title": "Risk Analisti",           "role": "analyst"},
-    {"user_id": "usr-b4c5d6e7", "email": "oguz.tekin@anadolufinans.example.tr",   "display_name": "Oğuz Tekin",    "department": "Operasyon",          "title": "Operasyon Müdürü",        "role": "viewer"},
-    {"user_id": "usr-c5d6e7f8", "email": "gulsen.dogan@anadolufinans.example.tr", "display_name": "Gülşen Doğan",  "department": "Müşteri Hizmetleri", "title": "Müşteri İlişkileri Yön.", "role": "viewer"},
-]
+# ── Expanded users (85) ─────────────────────────────────────
+FIRST_NAMES = ["Ayşe","Mehmet","Elif","Mustafa","Zeynep","Ali","Fatma","Ahmet","Selin","Emre","Deniz","Burak","Ceren","Oğuz","Gülşen","Cem","Derya","Kemal","Leyla","Murat","Nalan","Orhan","Pınar","Serkan","Tuğba","Uğur","Vildan","Yusuf","Zehra","Barış","Cansu","Doğan","Ebru","Fırat","Gizem","Hakan","Işıl","Kaan","Lale","Mert","Nergis","Onur","Sema","Tarık","Umut","Volkan","Yasemin","Berk","Damla","Efe","Funda","Gökhan","Hande","İpek","İsmail","Kadir","Leman","Merve","Nuri","Özge","Pelin","Rıza","Sarp","Tuğçe","Ulaş","Bahar","Can","Dilek","Ender","Feray","Güven","Hülya","İbrahim","Jale","Koray","Levent","Melis","Nazlı","Osman","Peri","Remzi","Sevgi","Tolga","Ümit"]
+LAST_NAMES = ["Demir","Kaya","Yılmaz","Arslan","Çelik","Öztürk","Şahin","Aksoy","Korkmaz","Aydın","Polat","Erdoğan","Tekin","Doğan","Güneş","Özdemir","Yıldırım","Koç","Kara","Eren","Çetin","Kurt","Özkan","Şen","Acar","Bulut","Tunç","Kaplan","Yalçın","Güler","Aslan","Taş","Ateş","Balcı","Candan","Duran","Ersoy","Genç","Hoş","Işık","Karaca","Mutlu","Okan","Peker","Savaş","Türkmen","Uysal","Yaman"]
+DEPARTMENTS = {"IT":15,"Finans":10,"Yazılım":20,"Satış":15,"İK":5,"Pazarlama":4,"Yönetim":3,"Hukuk":2,"Risk":3,"Operasyon":5,"Müşteri Hizmetleri":3}
+TITLES = {"analyst":["Analist","Kıdemli Analist","Uzman"],"admin":["Sistem Yöneticisi","Güvenlik Mühendisi","Ağ Yöneticisi"],"viewer":["Uzman","Müdür","Direktör","Koordinatör"]}
+CITIES = ["İstanbul","Ankara","İzmir","Bursa","Antalya"]
 
-# ── Fictional assets (endpoints) ─────────────────────────────
-ASSETS = [
-    {"asset_id": "AST-001", "hostname": "IST-WS-001",     "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-a1b2c3d4", "location": "İstanbul"},
-    {"asset_id": "AST-002", "hostname": "IST-WS-002",     "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-b2c3d4e5", "location": "İstanbul"},
-    {"asset_id": "AST-003", "hostname": "ANK-LT-001",     "type": "laptop",      "os": "macOS 14 Sonoma",       "owner_user_id": "usr-c3d4e5f6", "location": "Ankara"},
-    {"asset_id": "AST-004", "hostname": "IST-WS-003",     "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-d4e5f6a7", "location": "İstanbul"},
-    {"asset_id": "AST-005", "hostname": "IST-WS-004",     "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-e5f6a7b8", "location": "İstanbul"},
-    {"asset_id": "AST-006", "hostname": "IZM-LT-001",     "type": "laptop",      "os": "macOS 14 Sonoma",       "owner_user_id": "usr-f6a7b8c9", "location": "İzmir"},
-    {"asset_id": "AST-007", "hostname": "IST-WS-005",     "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-a7b8c9d0", "location": "İstanbul"},
-    {"asset_id": "AST-008", "hostname": "IST-EXC-001",    "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-b8c9d0e1", "location": "İstanbul"},
-    {"asset_id": "AST-009", "hostname": "ANK-LT-002",     "type": "laptop",      "os": "macOS 14 Sonoma",       "owner_user_id": "usr-c9d0e1f2", "location": "Ankara"},
-    {"asset_id": "AST-010", "hostname": "IST-SEC-001",    "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-d0e1f2a3", "location": "İstanbul"},
-    {"asset_id": "AST-011", "hostname": "IST-DEV-001",    "type": "workstation", "os": "Ubuntu 22.04 LTS",      "owner_user_id": "usr-e1f2a3b4", "location": "İstanbul"},
-    {"asset_id": "AST-012", "hostname": "BRS-WS-001",     "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-f2a3b4c5", "location": "Bursa"},
-    {"asset_id": "AST-013", "hostname": "IST-WS-006",     "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-a3b4c5d6", "location": "İstanbul"},
-    {"asset_id": "AST-014", "hostname": "IST-WS-007",     "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-b4c5d6e7", "location": "İstanbul"},
-    {"asset_id": "AST-015", "hostname": "IST-WS-008",     "type": "workstation", "os": "Windows 11 Pro",       "owner_user_id": "usr-c5d6e7f8", "location": "İstanbul"},
-    {"asset_id": "AST-016", "hostname": "IST-DC-001",     "type": "server",      "os": "Windows Server 2022",   "owner_user_id": "usr-b2c3d4e5", "location": "İstanbul DC"},
-    {"asset_id": "AST-017", "hostname": "IST-MAIL-001",   "type": "server",      "os": "Windows Server 2022",   "owner_user_id": "usr-b2c3d4e5", "location": "İstanbul DC"},
-    {"asset_id": "AST-018", "hostname": "IST-WEB-001",    "type": "server",      "os": "Ubuntu 22.04 LTS",      "owner_user_id": "usr-b2c3d4e5", "location": "İstanbul DC"},
-    {"asset_id": "AST-019", "hostname": "ANK-VDI-001",    "type": "laptop",      "os": "Windows 11 Enterprise", "owner_user_id": "usr-b2c3d4e5", "location": "Ankara DC"},
-    {"asset_id": "AST-020", "hostname": "IST-MOB-001",    "type": "mobile",      "os": "iOS 17",                "owner_user_id": "usr-b8c9d0e1", "location": "İstanbul"},
-    {"asset_id": "AST-021", "hostname": "IST-MOB-002",    "type": "mobile",      "os": "Android 14",            "owner_user_id": "usr-d4e5f6a7", "location": "İstanbul"},
-    {"asset_id": "AST-022", "hostname": "IZM-WS-001",     "type": "workstation", "os": "Windows 10 Pro",       "owner_user_id": "usr-b2c3d4e5", "location": "İzmir"},
-    {"asset_id": "AST-023", "hostname": "ANT-LT-001",     "type": "laptop",      "os": "Windows 11 Pro",       "owner_user_id": "usr-f2a3b4c5", "location": "Antalya"},
-    {"asset_id": "AST-024", "hostname": "IST-KIOSK-001",  "type": "other",       "os": "Windows 10 LTSC",       "owner_user_id": "usr-b2c3d4e5", "location": "İstanbul Şube"},
-    {"asset_id": "AST-025", "hostname": "IST-PRINT-001",  "type": "other",       "os": "Embedded Linux",        "owner_user_id": "usr-b2c3d4e5", "location": "İstanbul"},
-]
+def generate_users(count=85):
+    users = []
+    for i in range(min(count, len(FIRST_NAMES))):
+        dept = list(DEPARTMENTS.keys())[i % len(DEPARTMENTS)]
+        role = "admin" if i < 8 else "analyst" if i < 35 else "viewer"
+        fn = FIRST_NAMES[i]; ln = LAST_NAMES[i % len(LAST_NAMES)]
+        uid = f"usr-{hashlib.sha256(f'{fn}{ln}'.encode()).hexdigest()[:8]}"
+        email = f"{fn.lower().replace('ş','s').replace('ç','c').replace('ğ','g').replace('ı','i').replace('ö','o').replace('ü','u')}.{ln.lower().replace('ş','s').replace('ç','c').replace('ğ','g').replace('ı','i').replace('ö','o').replace('ü','u')}@anadolufinans.example.tr"
+        users.append({"user_id":uid,"email":email,"display_name":f"{fn} {ln}","department":dept,"title":f"{dept} {TITLES[role][i%len(TITLES[role])]}","role":role})
+    return users
 
-# ── Malicious domains (clearly fake, .example TLDs) ──────────
+def generate_assets(count=140):
+    assets = []
+    types = {"workstation":70,"laptop":30,"server":15,"mobile":20,"other":5}
+    hosts = {"workstation":"WS","laptop":"LT","server":"SRV","mobile":"MOB","other":"PRN"}
+    idx = 0
+    for atype, cnt in types.items():
+        for _ in range(cnt):
+            idx += 1
+            city = CITIES[idx % len(CITIES)]
+            h = hosts[atype]
+            aid = f"AST-{idx:04d}"
+            hostname = f"{city[:3].upper()}-{h}-{idx:03d}"
+            os = "Windows 11 Pro" if atype in ("workstation","laptop") else "Windows Server 2022" if atype=="server" else "iOS 17" if "MOB" in h else "Ubuntu 22.04 LTS"
+            assets.append({"asset_id":aid,"hostname":hostname,"type":atype,"os":os,"owner_user_id":"","location":city})
+    return assets
+
+USERS = generate_users(85)
+ASSETS = generate_assets(140)
+
+# ── Expanded malicious entities ─────────────────────────────
 MALICIOUS_DOMAINS = [
-    "anadolu-giris-dogrula.example.tk",
-    "finans-portal-guvenli.example.ml",
-    "microsoft-tr-auth.example.cf",
-    "sharepoint-dosya-indir.example.ga",
-    "onedrive-paylasim.example.tk",
-    "outlook-guvenlik.example.ml",
-    "fatura-odeme-sistemi.example.cf",
-    "ik-maas-guncelleme.example.ga",
-    "yonetim-portal.example.tk",
-    "cdn-guncelleme.example.cf",
+    "anadolu-giris-dogrula.example.tk","finans-portal-guvenli.example.ml","microsoft-tr-auth.example.cf",
+    "sharepoint-dosya-indir.example.ga","onedrive-paylasim.example.tk","outlook-guvenlik.example.ml",
+    "fatura-odeme-sistemi.example.cf","ik-maas-guncelleme.example.ga","yonetim-portal.example.tk",
+    "cdn-guncelleme.example.cf","bankacilik-guvenlik.example.tk","e-devlet-sorgu.example.ml",
+    "apple-verify-tr.example.cf","dropbox-paylas.example.ga","zoom-davet.example.tk",
+    "acil-guvenlik.example.ml","dhl-kargo-takip.example.cf","fedex-gonderi.example.ga",
+    "linkedin-baglanti.example.tk","twitter-dogrulama.example.ml","instagram-yardim.example.cf",
+    "anadolu-cti.example.tk","c2-beacon-tr.example.cf","xmr-pool-tr.example.ga",
+    "dns-tunnel.example.tk","evil-cdn.example.cf","phish-kit-tr.example.ga",
+    "sifir-giris.example.tk","sms-dogrula.example.ml","kargo-teslim.example.cf",
+    "dns-exfil.example.tk","mimikatz-tr.example.cf","kerberos-hash.example.ga",
+    "cobalt-c2.example.tk","silver-beacon.example.ml","log4j-tr.example.cf",
+    "eternal-blue.example.ga","wanna-cry-tr.example.tk",
 ]
 
-# ── Malicious IPs (TEST-NET ranges per RFC 5737) ─────────────
 MALICIOUS_IPS = [
-    "198.51.100.45",   # TEST-NET-2 (Bükreş/Romanya aktörü)
-    "203.0.113.180",   # TEST-NET-3 (Moskova/Rusya aktörü)
-    "198.51.100.91",   # TEST-NET-2 (Pekin/Çin aktörü)
-    "203.0.113.195",   # TEST-NET-3 (Lagos/Nijerya aktörü)
-    "198.51.100.54",   # TEST-NET-2 (São Paulo/Brezilya aktörü)
-    "203.0.113.78",    # TEST-NET-3
+    "198.51.100.45","203.0.113.180","198.51.100.91","203.0.113.195","198.51.100.54","203.0.113.78",
+    "198.51.100.12","203.0.113.221","198.51.100.167","203.0.113.89","198.51.100.201","203.0.113.33",
+    "198.51.100.76","203.0.113.144","198.51.100.233","203.0.113.56","198.51.100.98","203.0.113.177",
+    "198.51.100.145","203.0.113.212","198.51.100.34","203.0.113.68","198.51.100.189","203.0.113.123",
+    "198.51.100.210","203.0.113.245","198.51.100.123","203.0.113.199","198.51.100.56","203.0.113.111",
 ]
 
-BENIGN_IPS = [
-    "10.10.1.50", "10.10.1.51", "10.10.2.100",
-    "192.168.1.1", "172.16.0.1",
-    "192.0.2.100", "192.0.2.101",
-]
+BENIGN_IPS = ["10.10.1.50","10.10.1.51","10.10.2.100","10.10.3.25","10.10.4.75","192.168.1.1","172.16.0.1","192.0.2.100","192.0.2.101","10.0.0.1"]
 
 GEO_LOCATIONS = {
-    "198.51.100.45":  {"city": "Bükreş",    "country": "Romanya"},
-    "203.0.113.180":  {"city": "Moskova",   "country": "Rusya"},
-    "198.51.100.91":  {"city": "Pekin",     "country": "Çin"},
-    "203.0.113.195":  {"city": "Lagos",     "country": "Nijerya"},
-    "198.51.100.54":  {"city": "São Paulo", "country": "Brezilya"},
-    "10.10.1.50":     {"city": "İstanbul",  "country": "Türkiye"},
-    "10.10.1.51":     {"city": "Ankara",    "country": "Türkiye"},
-    "192.0.2.100":    {"city": "Amsterdam", "country": "Hollanda"},
+    "198.51.100.45":{"city":"Bükreş","country":"Romanya"},"203.0.113.180":{"city":"Moskova","country":"Rusya"},
+    "198.51.100.91":{"city":"Pekin","country":"Çin"},"203.0.113.195":{"city":"Lagos","country":"Nijerya"},
+    "198.51.100.54":{"city":"São Paulo","country":"Brezilya"},"10.10.1.50":{"city":"İstanbul","country":"Türkiye"},
+    "192.0.2.100":{"city":"Amsterdam","country":"Hollanda"},"198.51.100.12":{"city":"Tahran","country":"İran"},
+    "203.0.113.221":{"city":"Pyongyang","country":"Kuzey Kore"},"198.51.100.167":{"city":"Hanoi","country":"Vietnam"},
+    "203.0.113.33":{"city":"Londra","country":"İngiltere"},"198.51.100.201":{"city":"Berlin","country":"Almanya"},
+    "203.0.113.144":{"city":"New York","country":"ABD"},
 }
 
-# ── MITRE ATT&CK techniques ──────────────────────────────────
 MITRE_TECHNIQUES = {
-    "T1566.001": {"name": "Oltalama: Hedefli Ek Dosya",              "tactic": "Initial Access"},
-    "T1566.002": {"name": "Oltalama: Hedefli Bağlantı",             "tactic": "Initial Access"},
-    "T1078":     {"name": "Geçerli Hesaplar",                       "tactic": "Defense Evasion"},
-    "T1078.004": {"name": "Geçerli Hesaplar: Bulut Hesapları",     "tactic": "Defense Evasion"},
-    "T1114.002": {"name": "E-posta Toplama: Uzak E-posta Erişimi",  "tactic": "Collection"},
-    "T1098":     {"name": "Hesap Manipülasyonu",                    "tactic": "Persistence"},
-    "T1098.001": {"name": "Hesap Manipülasyonu: Ek Bulut Kimlik.",  "tactic": "Persistence"},
-    "T1528":     {"name": "Uygulama Erişim Jetonu Çalma",          "tactic": "Credential Access"},
-    "T1556":     {"name": "Kimlik Doğrulama Sürecini Değiştirme",  "tactic": "Credential Access"},
-    "T1059.001": {"name": "Komut ve Betik: PowerShell",            "tactic": "Execution"},
-    "T1059.005": {"name": "Komut ve Betik: Visual Basic",          "tactic": "Execution"},
-    "T1547.001": {"name": "Önyükleme/Oturum: Kayıt Defteri Anaht.", "tactic": "Persistence"},
-    "T1071.001": {"name": "Uyg. Katmanı Protokolü: Web Protokol.",  "tactic": "Command and Control"},
-    "T1567.002": {"name": "Web Servisi Üzerinden Veri Sızdırma",   "tactic": "Exfiltration"},
-    "T1110.003": {"name": "Kaba Kuvvet: Parola Püskürtme",        "tactic": "Credential Access"},
+    "T1566.001":{"name":"Oltalama: Hedefli Ek Dosya","tactic":"Initial Access"},
+    "T1566.002":{"name":"Oltalama: Hedefli Bağlantı","tactic":"Initial Access"},
+    "T1078":{"name":"Geçerli Hesaplar","tactic":"Defense Evasion"},
+    "T1078.004":{"name":"Geçerli Hesaplar: Bulut Hesapları","tactic":"Defense Evasion"},
+    "T1114.002":{"name":"E-posta Toplama: Uzak E-posta Erişimi","tactic":"Collection"},
+    "T1098":{"name":"Hesap Manipülasyonu","tactic":"Persistence"},
+    "T1098.001":{"name":"Hesap Manipülasyonu: Ek Bulut Kimlik.","tactic":"Persistence"},
+    "T1528":{"name":"Uygulama Erişim Jetonu Çalma","tactic":"Credential Access"},
+    "T1556":{"name":"Kimlik Doğrulama Sürecini Değiştirme","tactic":"Credential Access"},
+    "T1059.001":{"name":"Komut ve Betik: PowerShell","tactic":"Execution"},
+    "T1059.005":{"name":"Komut ve Betik: Visual Basic","tactic":"Execution"},
+    "T1547.001":{"name":"Önyükleme/Oturum: Kayıt Defteri Anaht.","tactic":"Persistence"},
+    "T1071.001":{"name":"Uygulama Katmanı Protokolü: Web","tactic":"Command and Control"},
+    "T1567.002":{"name":"Web Servisi Üzerinden Veri Sızdırma","tactic":"Exfiltration"},
+    "T1110.003":{"name":"Kaba Kuvvet: Parola Püskürtme","tactic":"Credential Access"},
+    "T1003.001":{"name":"İşletim Sistemi Kimlik Bilgisi Dump","tactic":"Credential Access"},
+    "T1053.005":{"name":"Zamanlanmış Görev","tactic":"Execution"},
+    "T1486":{"name":"Veri Şifreleme (Fidye)","tactic":"Impact"},
+    "T1047":{"name":"Windows Management Instrumentation","tactic":"Execution"},
+    "T1558.003":{"name":"Kerberoasting","tactic":"Credential Access"},
+    "T1505.003":{"name":"Web Shell","tactic":"Persistence"},
+    "T1072":{"name":"Yazılım Dağıtım Araçları","tactic":"Execution"},
+    "T1572":{"name":"Protokol Tünelleme","tactic":"Command and Control"},
+    "T1496":{"name":"Kaynak Ele Geçirme","tactic":"Impact"},
+    "T1539":{"name":"Web Servislerini Çalma","tactic":"Credential Access"},
+    "T1195.002":{"name":"Tedarik Zinciri: Derleme Sistemi","tactic":"Initial Access"},
+    "T1571":{"name":"Standart Olmayan Port","tactic":"Command and Control"},
+    "T1036.005":{"name":"Dosya Uzantılarının Değiştirilmesi","tactic":"Defense Evasion"},
+    "T1562.001":{"name":"Araçları Devre Dışı Bırakma","tactic":"Defense Evasion"},
+    "T1048.003":{"name":"Alternatif Protokol ile Veri Sızdırma","tactic":"Exfiltration"},
 }
 
 MITRE_TACTICS = [
-    {"tactic_id": "TA0001", "name": "Initial Access",       "short_name": "initial-access",       "order": 1},
-    {"tactic_id": "TA0002", "name": "Execution",            "short_name": "execution",            "order": 2},
-    {"tactic_id": "TA0003", "name": "Persistence",          "short_name": "persistence",           "order": 3},
-    {"tactic_id": "TA0004", "name": "Privilege Escalation", "short_name": "privilege-escalation",  "order": 4},
-    {"tactic_id": "TA0005", "name": "Defense Evasion",      "short_name": "defense-evasion",       "order": 5},
-    {"tactic_id": "TA0006", "name": "Credential Access",    "short_name": "credential-access",     "order": 6},
-    {"tactic_id": "TA0007", "name": "Discovery",            "short_name": "discovery",             "order": 7},
-    {"tactic_id": "TA0008", "name": "Lateral Movement",     "short_name": "lateral-movement",      "order": 8},
-    {"tactic_id": "TA0009", "name": "Collection",           "short_name": "collection",            "order": 9},
-    {"tactic_id": "TA0010", "name": "Exfiltration",         "short_name": "exfiltration",          "order": 12},
-    {"tactic_id": "TA0011", "name": "Command and Control",  "short_name": "command-and-control",   "order": 10},
+    {"tactic_id":"TA0001","name":"Initial Access","short_name":"initial-access","order":1},
+    {"tactic_id":"TA0002","name":"Execution","short_name":"execution","order":2},
+    {"tactic_id":"TA0003","name":"Persistence","short_name":"persistence","order":3},
+    {"tactic_id":"TA0004","name":"Privilege Escalation","short_name":"privilege-escalation","order":4},
+    {"tactic_id":"TA0005","name":"Defense Evasion","short_name":"defense-evasion","order":5},
+    {"tactic_id":"TA0006","name":"Credential Access","short_name":"credential-access","order":6},
+    {"tactic_id":"TA0007","name":"Discovery","short_name":"discovery","order":7},
+    {"tactic_id":"TA0008","name":"Lateral Movement","short_name":"lateral-movement","order":8},
+    {"tactic_id":"TA0009","name":"Collection","short_name":"collection","order":9},
+    {"tactic_id":"TA0010","name":"Exfiltration","short_name":"exfiltration","order":12},
+    {"tactic_id":"TA0011","name":"Command and Control","short_name":"command-and-control","order":10},
+    {"tactic_id":"TA0040","name":"Impact","short_name":"impact","order":11},
 ]
 
-# ── Hasher helper ────────────────────────────────────────────
+ALERT_SOURCES = ["email_gateway","idp_auth","m365_audit","admin_audit","edr_telemetry","dlp_engine","firewall","proxy","dns_logs","ids_signature","threat_intel_feed","cloud_audit","vpn_logs","cert_authority"]
+
 def stable_hash(value: str, length: int = 8) -> str:
     return hashlib.sha256(value.lower().encode()).hexdigest()[:length]

@@ -2,129 +2,589 @@
   {
     "rule_id": "RULE-MAILBOX-FWD",
     "name": "Harici Posta Kutusu Yönlendirme Kuralı",
-    "description": "Bir kullanıcı, gelen tüm e-postaları kurum dışındaki bir adrese yönlendiren kural oluşturduğunda tetiklenir. Meşru bir kullanım senaryosu var mı? Var — danışmanlar, ortak projeler. Peki saldırganın ilk işi bu mudur? Evet. Her. Seferinde.",
+    "description": "Harici Posta Kutusu Yönlendirme Kuralı tespit kuralı. m365_audit kaynağında tetiklenir.",
     "severity": "critical",
     "source": "m365_audit",
-    "sigma_rule": "title: External Mailbox Forwarding Rule\ndescription: Detects creation of forwarding rules to external domains\nlogsource:\n  product: m365\n  service: audit\ndetection:\n  keywords: ['New-InboxRule', 'ForwardTo', 'external']\n  condition: keywords",
-    "mitre_technique_ids": ["T1114.002", "T1098"],
+    "sigma_rule": "title: Harici Posta Kutusu Yönlendirme Kuralı\nlogsource:\n  product: m365_audit\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1114.002",
+      "T1098"
+    ],
     "enabled": true,
     "alert_count_14d": 3,
-    "false_positive_rate": 5.0,
+    "false_positive_rate": 2.5,
     "author": "SOC Team",
-    "created_at": "2026-02-09T00:00:00",
-    "updated_at": "2026-04-10T00:00:00",
-    "tags": ["phishing", "exfiltration", "persistence"]
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-01T00:00:00",
+    "tags": [
+      "m365_audit",
+      "detection"
+    ]
   },
   {
     "rule_id": "RULE-IMPOSSIBLE",
     "name": "İmkansız Seyahat Tespiti",
-    "description": "Aynı kullanıcı 30 dakika içinde fiziksel olarak imkansız iki konumdan giriş yaptığında alarm verir. VPN kullanıcıları bu kuralın doğal düşmanıdır. Her VPN çıkışı bir 'imkansız seyahat'tir — ta ki whitelist'e ekleyene kadar. False positive oranı yüksektir ama true positive'leri altın değerindedir.",
+    "description": "İmkansız Seyahat Tespiti tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "high",
     "source": "idp_auth",
-    "sigma_rule": "title: Impossible Travel Detection\ndescription: Login from geographically impossible locations\nlogsource:\n  product: azure_ad\n  service: signins\ndetection:\n  selection:\n    - location_distance > 1000km\n    - time_difference < 30min\n  condition: selection",
-    "mitre_technique_ids": ["T1078"],
+    "sigma_rule": "title: İmkansız Seyahat Tespiti\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1078"
+    ],
     "enabled": true,
-    "alert_count_14d": 2,
-    "false_positive_rate": 15.0,
+    "alert_count_14d": 26,
+    "false_positive_rate": 3.0,
     "author": "SOC Team",
-    "created_at": "2025-11-11T00:00:00",
-    "updated_at": "2026-04-10T00:00:00",
-    "tags": ["credential_theft", "geo_anomaly"]
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-02-24T00:00:00",
+    "tags": [
+      "idp_auth",
+      "detection"
+    ]
   },
   {
     "rule_id": "RULE-MFA-BOMBING",
     "name": "MFA Push Bombardımanı",
-    "description": "10 dakika içinde aynı hesaba 5'ten fazla MFA push bildirimi gönderildiğinde tetiklenir. Saldırganın stratejisi basittir: kullanıcıyı o kadar bunalt ki, 'tamam tamam ne halin varsa gör' deyip onaylasın. İşe yarıyor. Şaşırtıcı derecede sık.",
+    "description": "MFA Push Bombardımanı tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "critical",
     "source": "idp_auth",
-    "sigma_rule": "title: MFA Push Bombing\ndescription: Multiple MFA push requests in short time\ndetection:\n  timeframe: 10m\n  condition: mfa_push_count > 5",
-    "mitre_technique_ids": ["T1556"],
+    "sigma_rule": "title: MFA Push Bombardımanı\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1556"
+    ],
     "enabled": true,
-    "alert_count_14d": 1,
-    "false_positive_rate": 2.0,
+    "alert_count_14d": 9,
+    "false_positive_rate": 6.1,
     "author": "SOC Team",
-    "created_at": "2026-03-11T00:00:00",
-    "updated_at": "2026-04-25T00:00:00",
-    "tags": ["mfa", "credential_access"]
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-12T00:00:00",
+    "tags": [
+      "idp_auth",
+      "detection"
+    ]
   },
   {
     "rule_id": "RULE-PW-SPRAY",
     "name": "Parola Püskürtme Tespiti",
-    "description": "Tek bir IP'den 5 dakika içinde 5'ten fazla hesaba başarısız giriş denemesi parola püskürtme saldırısı göstergesidir. Saldırgan 'Password123' veya 'Anadolu2024' gibi yaygın parolaları çok sayıda hesapta dener. Birinin tutması an meselesidir. Genellikle tutar da.",
+    "description": "Parola Püskürtme Tespiti tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "medium",
     "source": "idp_auth",
-    "sigma_rule": "title: Password Spray Attack\ndetection:\n  selection:\n    - EventID: 4625\n    - distinct_users > 5\n  timeframe: 5m\n  condition: selection",
-    "mitre_technique_ids": ["T1110.003"],
+    "sigma_rule": "title: Parola Püskürtme Tespiti\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1110.003"
+    ],
     "enabled": true,
-    "alert_count_14d": 2,
-    "false_positive_rate": 10.0,
+    "alert_count_14d": 30,
+    "false_positive_rate": 2.2,
     "author": "SOC Team",
-    "created_at": "2025-11-11T00:00:00",
-    "updated_at": "2026-03-11T00:00:00",
-    "tags": ["brute_force", "credential_access"]
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-02-23T00:00:00",
+    "tags": [
+      "idp_auth",
+      "detection"
+    ]
   },
   {
     "rule_id": "RULE-OAUTH-RISKY",
     "name": "Riskli OAuth Uygulama İzni",
-    "description": "Kullanıcı, posta kutusu okuma/yazma yetkisi isteyen ve risk skoru yüksek bir üçüncü parti uygulamaya OAuth izni verdiğinde tetiklenir. 'MailSyncPro' kulağa profesyonel geliyor, değil mi? Değil. Özellikle de Rusya'dan kaydedilmişse.",
+    "description": "Riskli OAuth Uygulama İzni tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "high",
     "source": "idp_auth",
-    "sigma_rule": "title: Risky OAuth Application Consent\ndetection:\n  selection:\n    - app_risk_score >= 70\n    - permissions includes 'Mail.ReadWrite'\n  condition: selection",
-    "mitre_technique_ids": ["T1528"],
+    "sigma_rule": "title: Riskli OAuth Uygulama İzni\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1528"
+    ],
     "enabled": true,
-    "alert_count_14d": 1,
-    "false_positive_rate": 8.0,
+    "alert_count_14d": 12,
+    "false_positive_rate": 1.2,
     "author": "SOC Team",
-    "created_at": "2026-04-10T00:00:00",
-    "updated_at": "2026-04-10T00:00:00",
-    "tags": ["oauth", "credential_access"]
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-13T00:00:00",
+    "tags": [
+      "idp_auth",
+      "detection"
+    ]
   },
   {
     "rule_id": "RULE-MACRO-EXEC",
     "name": "Office Makro Çalıştırma Zinciri",
-    "description": "WINWORD.EXE veya EXCEL.EXE'den PowerShell, cmd.exe ya da wscript.exe spawn edildiğinde tetiklenir. Normal bir Office belgesinin PowerShell çalıştırması için hiçbir meşru sebep yoktur. Sıfır. 'CV.pdf_______________________________________________.exe' dosyasını açan kullanıcıya sorun.",
+    "description": "Office Makro Çalıştırma Zinciri tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "critical",
-    "source": "endpoint_edr",
-    "sigma_rule": "title: Office Macro Spawns Shell\ndetection:\n  selection:\n    parent: ['WINWORD.EXE', 'EXCEL.EXE']\n    process: ['powershell.exe', 'cmd.exe', 'wscript.exe']\n  condition: selection",
-    "mitre_technique_ids": ["T1566.001", "T1059.005"],
+    "source": "edr_telemetry",
+    "sigma_rule": "title: Office Makro Çalıştırma Zinciri\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1566.001",
+      "T1059.005"
+    ],
     "enabled": true,
-    "alert_count_14d": 1,
-    "false_positive_rate": 3.0,
+    "alert_count_14d": 41,
+    "false_positive_rate": 1.8,
     "author": "SOC Team",
-    "created_at": "2025-11-11T00:00:00",
-    "updated_at": "2026-02-09T00:00:00",
-    "tags": ["malware", "macro", "execution"]
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-08T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
   },
   {
     "rule_id": "RULE-C2-BEACON",
     "name": "C2 Beacon İletişimi",
-    "description": "Bir uç noktadan bilinen zararlı domain'e her 10 dakikada bir HTTPS isteği gidiyorsa, bu büyük ihtimalle C2 beacon'dır. Normal yazılımlar bu kadar düzenli davranmaz. Saldırganın 'heartbeat' sinyali, sizin tespit sinyalinizdir.",
+    "description": "C2 Beacon İletişimi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "critical",
-    "source": "endpoint_edr",
-    "sigma_rule": "title: C2 Beacon Detection\ndetection:\n  selection:\n    - connection_interval_seconds: 600\n    - destination_port: 443\n  condition: selection",
-    "mitre_technique_ids": ["T1071.001"],
+    "source": "edr_telemetry",
+    "sigma_rule": "title: C2 Beacon İletişimi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1071.001"
+    ],
     "enabled": true,
-    "alert_count_14d": 1,
-    "false_positive_rate": 5.0,
+    "alert_count_14d": 50,
+    "false_positive_rate": 14.0,
     "author": "SOC Team",
-    "created_at": "2026-02-09T00:00:00",
-    "updated_at": "2026-04-10T00:00:00",
-    "tags": ["c2", "malware", "command_and_control"]
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-19T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
   },
   {
     "rule_id": "RULE-SHARING-BULK",
     "name": "Toplu Dış Paylaşım",
-    "description": "Bir kullanıcı 30 dakika içinde 3'ten fazla 'herkes erişebilir' paylaşım bağlantısı oluşturduğunda alarm çalar. 'Yanlışlıkla herkes seçeneğini işaretledim' — SOC analistlerinin en sık duyduğu 5 cümleden biri. Diğerleri: 'Ben o linke tıklamadım', 'VPN kullanıyorum', 'Şifremi kimseyle paylaşmadım' ve 'Bu alert false positive mi?'",
+    "description": "Toplu Dış Paylaşım tespit kuralı. m365_audit kaynağında tetiklenir.",
     "severity": "high",
     "source": "m365_audit",
-    "sigma_rule": "title: Bulk External File Sharing\ndetection:\n  timeframe: 30m\n  condition: sharing_link_count > 3 AND sharing_type == 'anonymous'",
-    "mitre_technique_ids": ["T1567.002"],
+    "sigma_rule": "title: Toplu Dış Paylaşım\nlogsource:\n  product: m365_audit\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1567.002"
+    ],
     "enabled": true,
-    "alert_count_14d": 1,
-    "false_positive_rate": 12.0,
+    "alert_count_14d": 13,
+    "false_positive_rate": 5.8,
     "author": "SOC Team",
-    "created_at": "2026-03-26T00:00:00",
-    "updated_at": "2026-03-26T00:00:00",
-    "tags": ["exfiltration", "dlp"]
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-02T00:00:00",
+    "tags": [
+      "m365_audit",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-DNS-TUNNEL",
+    "name": "Anormal Uzun DNS Query Tespiti",
+    "description": "Anormal Uzun DNS Query Tespiti tespit kuralı. dns_logs kaynağında tetiklenir.",
+    "severity": "critical",
+    "source": "dns_logs",
+    "sigma_rule": "title: Anormal Uzun DNS Query Tespiti\nlogsource:\n  product: dns_logs\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1572"
+    ],
+    "enabled": true,
+    "alert_count_14d": 7,
+    "false_positive_rate": 13.7,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-05T00:00:00",
+    "tags": [
+      "dns_logs",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-KERBEROAST",
+    "name": "Kerberos TGS Request Spike",
+    "description": "Kerberos TGS Request Spike tespit kuralı. idp_auth kaynağında tetiklenir.",
+    "severity": "high",
+    "source": "idp_auth",
+    "sigma_rule": "title: Kerberos TGS Request Spike\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1558.003"
+    ],
+    "enabled": true,
+    "alert_count_14d": 14,
+    "false_positive_rate": 10.1,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-06T00:00:00",
+    "tags": [
+      "idp_auth",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-WEBSHELL-IIS",
+    "name": "IIS Dizininde Şüpheli .aspx Dosyası",
+    "description": "IIS Dizininde Şüpheli .aspx Dosyası tespit kuralı. ids_signature kaynağında tetiklenir.",
+    "severity": "critical",
+    "source": "ids_signature",
+    "sigma_rule": "title: IIS Dizininde Şüpheli .aspx Dosyası\nlogsource:\n  product: ids_signature\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1505.003"
+    ],
+    "enabled": true,
+    "alert_count_14d": 34,
+    "false_positive_rate": 3.3,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-02-25T00:00:00",
+    "tags": [
+      "ids_signature",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-LSASS-ACCESS",
+    "name": "LSASS Process Memory Erişimi",
+    "description": "LSASS Process Memory Erişimi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
+    "severity": "critical",
+    "source": "edr_telemetry",
+    "sigma_rule": "title: LSASS Process Memory Erişimi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1003.001"
+    ],
+    "enabled": true,
+    "alert_count_14d": 4,
+    "false_positive_rate": 6.0,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-17T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-SMB-LATERAL",
+    "name": "Admin Share Üzerinden Binary Transfer",
+    "description": "Admin Share Üzerinden Binary Transfer tespit kuralı. edr_telemetry kaynağında tetiklenir.",
+    "severity": "high",
+    "source": "edr_telemetry",
+    "sigma_rule": "title: Admin Share Üzerinden Binary Transfer\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1072"
+    ],
+    "enabled": true,
+    "alert_count_14d": 19,
+    "false_positive_rate": 1.4,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-02-23T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-EGRESS-VOLUME",
+    "name": "Anormal Veri Çıkış Hacmi",
+    "description": "Anormal Veri Çıkış Hacmi tespit kuralı. dlp_engine kaynağında tetiklenir.",
+    "severity": "high",
+    "source": "dlp_engine",
+    "sigma_rule": "title: Anormal Veri Çıkış Hacmi\nlogsource:\n  product: dlp_engine\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1048.003"
+    ],
+    "enabled": true,
+    "alert_count_14d": 27,
+    "false_positive_rate": 2.8,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-05T00:00:00",
+    "tags": [
+      "dlp_engine",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-DGA-DOMAIN",
+    "name": "DGA Pattern DNS Query",
+    "description": "DGA Pattern DNS Query tespit kuralı. dns_logs kaynağında tetiklenir.",
+    "severity": "high",
+    "source": "dns_logs",
+    "sigma_rule": "title: DGA Pattern DNS Query\nlogsource:\n  product: dns_logs\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1071.001"
+    ],
+    "enabled": true,
+    "alert_count_14d": 4,
+    "false_positive_rate": 14.8,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-02-26T00:00:00",
+    "tags": [
+      "dns_logs",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-DISABLE-AV",
+    "name": "Antivirüs Servisi Durdurma Girişimi",
+    "description": "Antivirüs Servisi Durdurma Girişimi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
+    "severity": "critical",
+    "source": "edr_telemetry",
+    "sigma_rule": "title: Antivirüs Servisi Durdurma Girişimi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1562.001"
+    ],
+    "enabled": true,
+    "alert_count_14d": 14,
+    "false_positive_rate": 1.3,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-23T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-RANSOMWARE-EXT",
+    "name": "Toplu Dosya Uzantısı Değişimi",
+    "description": "Toplu Dosya Uzantısı Değişimi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
+    "severity": "critical",
+    "source": "edr_telemetry",
+    "sigma_rule": "title: Toplu Dosya Uzantısı Değişimi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1486"
+    ],
+    "enabled": true,
+    "alert_count_14d": 23,
+    "false_positive_rate": 3.5,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-02-23T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-SCHEDULED-TASK",
+    "name": "Şüpheli Zamanlanmış Görev",
+    "description": "Şüpheli Zamanlanmış Görev tespit kuralı. edr_telemetry kaynağında tetiklenir.",
+    "severity": "high",
+    "source": "edr_telemetry",
+    "sigma_rule": "title: Şüpheli Zamanlanmış Görev\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1053.005"
+    ],
+    "enabled": true,
+    "alert_count_14d": 30,
+    "false_positive_rate": 2.2,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-01T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-WMI-PERSIST",
+    "name": "WMI Kalıcılığı",
+    "description": "WMI Kalıcılığı tespit kuralı. edr_telemetry kaynağında tetiklenir.",
+    "severity": "high",
+    "source": "edr_telemetry",
+    "sigma_rule": "title: WMI Kalıcılığı\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1047"
+    ],
+    "enabled": true,
+    "alert_count_14d": 45,
+    "false_positive_rate": 7.2,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-07T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-CRYPT-MINING",
+    "name": "Kripto Mining Aktivitesi",
+    "description": "Kripto Mining Aktivitesi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
+    "severity": "medium",
+    "source": "edr_telemetry",
+    "sigma_rule": "title: Kripto Mining Aktivitesi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1496"
+    ],
+    "enabled": true,
+    "alert_count_14d": 44,
+    "false_positive_rate": 17.8,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-15T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-SUPPLY-CHAIN",
+    "name": "Şüpheli Paket İndirme",
+    "description": "Şüpheli Paket İndirme tespit kuralı. proxy kaynağında tetiklenir.",
+    "severity": "high",
+    "source": "proxy",
+    "sigma_rule": "title: Şüpheli Paket İndirme\nlogsource:\n  product: proxy\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1195.002"
+    ],
+    "enabled": true,
+    "alert_count_14d": 50,
+    "false_positive_rate": 7.9,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-17T00:00:00",
+    "tags": [
+      "proxy",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-ALT-PORT",
+    "name": "Standart Olmayan Port Kullanımı",
+    "description": "Standart Olmayan Port Kullanımı tespit kuralı. firewall kaynağında tetiklenir.",
+    "severity": "medium",
+    "source": "firewall",
+    "sigma_rule": "title: Standart Olmayan Port Kullanımı\nlogsource:\n  product: firewall\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1571"
+    ],
+    "enabled": true,
+    "alert_count_14d": 39,
+    "false_positive_rate": 4.9,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-02-25T00:00:00",
+    "tags": [
+      "firewall",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-FILE-EXT-SPOOF",
+    "name": "Dosya Uzantısı Aldatmacası",
+    "description": "Dosya Uzantısı Aldatmacası tespit kuralı. email_gateway kaynağında tetiklenir.",
+    "severity": "medium",
+    "source": "email_gateway",
+    "sigma_rule": "title: Dosya Uzantısı Aldatmacası\nlogsource:\n  product: email_gateway\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1036.005"
+    ],
+    "enabled": true,
+    "alert_count_14d": 19,
+    "false_positive_rate": 6.6,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-07T00:00:00",
+    "tags": [
+      "email_gateway",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-SESSION-REPLAY",
+    "name": "Session Token Replay",
+    "description": "Session Token Replay tespit kuralı. idp_auth kaynağında tetiklenir.",
+    "severity": "high",
+    "source": "idp_auth",
+    "sigma_rule": "title: Session Token Replay\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1539"
+    ],
+    "enabled": true,
+    "alert_count_14d": 0,
+    "false_positive_rate": 2.5,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-14T00:00:00",
+    "tags": [
+      "idp_auth",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-ENCODED-PS",
+    "name": "Base64 PowerShell Komutu",
+    "description": "Base64 PowerShell Komutu tespit kuralı. edr_telemetry kaynağında tetiklenir.",
+    "severity": "critical",
+    "source": "edr_telemetry",
+    "sigma_rule": "title: Base64 PowerShell Komutu\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1059.001"
+    ],
+    "enabled": true,
+    "alert_count_14d": 7,
+    "false_positive_rate": 1.3,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-02-24T00:00:00",
+    "tags": [
+      "edr_telemetry",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-CLOUD-MISCONF",
+    "name": "Public Cloud Storage Yanlış Yapılandırma",
+    "description": "Public Cloud Storage Yanlış Yapılandırma tespit kuralı. cloud_audit kaynağında tetiklenir.",
+    "severity": "medium",
+    "source": "cloud_audit",
+    "sigma_rule": "title: Public Cloud Storage Yanlış Yapılandırma\nlogsource:\n  product: cloud_audit\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1567.002"
+    ],
+    "enabled": true,
+    "alert_count_14d": 31,
+    "false_positive_rate": 13.9,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-11T00:00:00",
+    "tags": [
+      "cloud_audit",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-CERT-ANOMALY",
+    "name": "Anormal Sertifika İsteği",
+    "description": "Anormal Sertifika İsteği tespit kuralı. cert_authority kaynağında tetiklenir.",
+    "severity": "medium",
+    "source": "cert_authority",
+    "sigma_rule": "title: Anormal Sertifika İsteği\nlogsource:\n  product: cert_authority\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [],
+    "enabled": true,
+    "alert_count_14d": 9,
+    "false_positive_rate": 5.4,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-03-09T00:00:00",
+    "tags": [
+      "cert_authority",
+      "detection"
+    ]
+  },
+  {
+    "rule_id": "RULE-VPN-BRUTE",
+    "name": "VPN Brute Force",
+    "description": "VPN Brute Force tespit kuralı. vpn_logs kaynağında tetiklenir.",
+    "severity": "high",
+    "source": "vpn_logs",
+    "sigma_rule": "title: VPN Brute Force\nlogsource:\n  product: vpn_logs\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "mitre_technique_ids": [
+      "T1110.003"
+    ],
+    "enabled": true,
+    "alert_count_14d": 37,
+    "false_positive_rate": 9.6,
+    "author": "SOC Team",
+    "created_at": "2025-12-25T00:00:00",
+    "updated_at": "2026-02-27T00:00:00",
+    "tags": [
+      "vpn_logs",
+      "detection"
+    ]
   }
 ]

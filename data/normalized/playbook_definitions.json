@@ -3,65 +3,180 @@
     "playbook_id": "PB-PHISHING-01",
     "name": "Oltalama Yanıt",
     "category": "phishing",
-    "description": "Oltalama e-postası tespitinde çalışan otomatik yanıt playbook'u. İlk 60 saniyede maksimum etki hedeflenir — saldırganın fark edilmeden önceki zamanı sizin aleyhinizedir.",
-    "triggers": ["alert.severity >= high AND alert.mitre_technique_ids includes T1566"],
+    "description": "Oltalama e-postası tespitinde çalışan otomatik yanıt playbook'u",
+    "triggers": [
+      "alert.severity >= high AND alert.mitre_technique_ids includes T1566"
+    ],
     "requires_approval": false,
     "estimated_duration_seconds": 120,
     "steps": [
-      { "step_id": "s1", "order": 1, "type": "enrich", "name": "Gönderici Repütasyon Kontrolü", "description": "E-posta göndericisinin domain ve IP'sini threat intelligence feed'lerinde sorgula. Bilinen bir oltalama altyapısı mı, yoksa ilk kez mi görülüyor? Cevap ne olursa olsun, sonraki adımları etkilemez — bu playbook şüpheyle başlar.", "is_automated": true },
-      { "step_id": "s2", "order": 2, "type": "action", "name": "E-postayı Karantinaya Al", "description": "Aynı göndericiden gelen tüm e-postaları anında karantinaya taşı. Kullanıcının 'bu mail önemliydi' deme ihtimaline karşı karantina — silme değil. 30 gün sonra otomatik temizlenir.", "is_automated": true },
-      { "step_id": "s3", "order": 3, "type": "action", "name": "Hesabı Kilitle ve Parola Sıfırla", "description": "Etkilenen hesabı geçici olarak devre dışı bırak, tüm aktif oturumları sonlandır ve parolayı zorunlu sıfırla. Saldırgan zaten içerideyse, kapıyı kilitlemek yetmez — içeridekini de dışarı çıkarmak gerekir.", "is_automated": true },
-      { "step_id": "s4", "order": 4, "type": "action", "name": "Posta Kutusu Kurallarını Denetle", "description": "Saldırganın klasik hamlesi: gelen e-postaları harici adrese yönlendiren gizli kural oluşturmak. Tüm inbox rule, forwarding ve auto-reply ayarlarını tara. Bulduğun her şüpheli kuralı kaydet (kanıt) ve kaldır.", "is_automated": true },
-      { "step_id": "s5", "order": 5, "type": "hunt", "name": "Son 7 Gün Gönderilen E-postaları Tara", "description": "Hesap ele geçirildikten sonra saldırgan ne yaptı? Phishing yaydı mı, tedarikçilere sahte havale talebi gönderdi mi, yoksa sessizce veri mi topladı? Mail trace log'larını kontrol et. Bulgular incident raporuna eklenir.", "is_automated": true },
-      { "step_id": "s6", "order": 6, "type": "notify", "name": "Kullanıcıya Bildir ve Eğitim Ata", "description": "Kullanıcıya ne olduğunu, neden olduğunu ve bir dahaki sefere ne yapması gerektiğini anlatan bir e-posta gönder. Mail çok gerçekçi görünüyordu, değil mi? Her zaman öyle görünür. Zorunlu güvenlik farkındalık eğitimini de takvimine ekle.", "is_automated": true },
-      { "step_id": "s7", "order": 7, "type": "approval", "name": "Kapatma Onayı", "description": "SOC analisti tüm adımları gözden geçirir, eksik kalan bir şey olmadığını teyit eder ve vakayı kapatır. Kapatmadan önce son bir soru: 'Bu saldırgan başka kimi hedefledi?' Cevap 'bilmiyorum' ise, 5. adıma geri dön.", "is_automated": false }
+      {
+        "step_id": "s1",
+        "order": 1,
+        "type": "enrich",
+        "name": "Gönderici Repütasyon Kontrolü",
+        "description": "Email sender domain ve IP'sini threat intel'de sorgula",
+        "is_automated": true
+      },
+      {
+        "step_id": "s2",
+        "order": 2,
+        "type": "action",
+        "name": "E-postayı Karantinaya Al",
+        "description": "Aynı sender'dan gelen tüm e-postaları karantinaya taşı",
+        "is_automated": true
+      },
+      {
+        "step_id": "s3",
+        "order": 3,
+        "type": "action",
+        "name": "Parola Sıfırla",
+        "description": "Etkilenen kullanıcının parolasını zorunlu sıfırla",
+        "is_automated": true
+      },
+      {
+        "step_id": "s4",
+        "order": 4,
+        "type": "notify",
+        "name": "Kullanıcıyı Bilgilendir",
+        "description": "Kullanıcıya güvenlik farkındalık e-postası gönder",
+        "is_automated": true
+      },
+      {
+        "step_id": "s5",
+        "order": 5,
+        "type": "approval",
+        "name": "Kapatma Onayı",
+        "description": "SOC analisti vakayı inceler ve kapatır",
+        "is_automated": false
+      }
     ]
   },
   {
     "playbook_id": "PB-ACCOUNT-01",
     "name": "Hesap Ele Geçirme Yanıtı",
     "category": "account_compromise",
-    "description": "Hesap ele geçirme (ATO) şüphesinde çalışan müdahale zinciri. Hız kritiktir — saldırganın içeride geçirdiği her dakika, veri kaybı riskini katlar.",
-    "triggers": ["alert.severity >= high AND alert.mitre_technique_ids includes T1078"],
+    "description": "Hesap ele geçirme şüphesinde çalışan müdahale playbook'u",
+    "triggers": [
+      "alert.severity >= high AND alert.mitre_technique_ids includes T1078"
+    ],
     "requires_approval": false,
     "estimated_duration_seconds": 180,
     "steps": [
-      { "step_id": "s1", "order": 1, "type": "action", "name": "Tüm Oturumları Sonlandır", "description": "Kullanıcının tüm aktif oturumlarını — web, mobil, masaüstü, API token'ları dahil — zorla sonlandır. Saldırgan VPN ile içerideyse bile bu adım onu dışarı atar. OAuth token'larını da unutma; onlar session gibi görünmez ama aynı kapıyı açar.", "is_automated": true },
-      { "step_id": "s2", "order": 2, "type": "action", "name": "Parola Sıfırla + MFA Yeniden Kaydet", "description": "Parolayı sıfırla ve MFA cihazını yeniden kaydettir. Önceki parola nasıl çalındıysa, yenisi de aynı yöntemle çalınabilir — bu yüzden MFA zorunlu. 'Ama ben MFA kullanıyordum ki' diyorsan, MFA fatigue attack'ları selam söylüyor.", "is_automated": true },
-      { "step_id": "s3", "order": 3, "type": "hunt", "name": "Yanal Hareket ve Yetki Taraması", "description": "Aynı kaynak IP'den başka hesaplara erişim denemesi var mı? Kullanıcıya yeni rol veya yetki atanmış mı? Exchange, SharePoint, Azure portal audit log'larını son 24 saat için tara. Saldırgan nadiren tek hesapla yetinir.", "is_automated": true },
-      { "step_id": "s4", "order": 4, "type": "action", "name": "Posta Kutusu ve Dosya Erişim Denetimi", "description": "Ele geçirilen hesabın posta kutusu aktivitelerini son 14 gün için çıkar: hangi e-postalar okundu, hangileri iletildi, hangi ekler indirildi. OneDrive/SharePoint dosya erişim log'larını da aynı dönem için kontrol et.", "is_automated": true },
-      { "step_id": "s5", "order": 5, "type": "decision", "name": "Cihaz İzolasyon Kararı", "description": "Kullanıcının risk skoruna ve olayın ciddiyetine göre, etkilenen cihazı ağdan izole etme kararı ver. Kullanıcı CFO ise önce telefonla ara. Kullanıcı stajyer ise... yine ara. Ama daha hızlı karar ver.", "is_automated": false }
+      {
+        "step_id": "s1",
+        "order": 1,
+        "type": "action",
+        "name": "Oturumları Sonlandır",
+        "description": "Kullanıcının tüm aktif oturumlarını sonlandır",
+        "is_automated": true
+      },
+      {
+        "step_id": "s2",
+        "order": 2,
+        "type": "action",
+        "name": "Parola Sıfırla ve MFA Zorla",
+        "description": "Parolayı sıfırla, MFA'yı yeniden kaydettir",
+        "is_automated": true
+      },
+      {
+        "step_id": "s3",
+        "order": 3,
+        "type": "hunt",
+        "name": "Yanal Hareket Kontrolü",
+        "description": "Aynı IP'den diğer hesaplara erişim denemesi var mı kontrol et",
+        "is_automated": true
+      },
+      {
+        "step_id": "s4",
+        "order": 4,
+        "type": "decision",
+        "name": "İzolasyon Kararı",
+        "description": "Risk skoruna göre kullanıcı cihazını izole et",
+        "is_automated": false
+      }
     ]
   },
   {
     "playbook_id": "PB-MALWARE-01",
     "name": "Zararlı Yazılım İzolasyonu",
     "category": "malware",
-    "description": "EDR telemetrisinde zararlı yazılım aktivitesi tespit edildiğinde çalışan müdahale zinciri. Manuel onay gerektirir — çünkü bir uç noktayı izole etmek, bir çalışanı iş yapamaz hale getirmektir.",
-    "triggers": ["alert.source == endpoint_edr AND alert.severity >= high"],
+    "description": "Zararlı yazılım tespitinde uç nokta izolasyon ve adli bilişim",
+    "triggers": [
+      "alert.source == endpoint_edr AND alert.severity >= high"
+    ],
     "requires_approval": true,
     "estimated_duration_seconds": 300,
     "steps": [
-      { "step_id": "s1", "order": 1, "type": "action", "name": "Uç Noktayı Ağdan İzole Et", "description": "Cihazı production ağından izole et, sadece SOC analiz VLAN'ına erişime izin ver. Bu adım saldırganın C2 iletişimini keser ve yanal hareketi engeller. Kullanıcıya 'bilgisayarın bakıma alındı' mesajı göster — panik yapmasın.", "is_automated": true },
-      { "step_id": "s2", "order": 2, "type": "action", "name": "Adli Bilişim Verisi Topla", "description": "İzole edilen cihazdan memory dump, çalışan process listesi, aktif ağ bağlantıları, autorun kayıtları ve son 1 saatlik event log'ları topla. Bu veriler olmadan 'ne olduğunu' anlamak imkansızdır. Tahminle SOC yönetilmez.", "is_automated": true },
-      { "step_id": "s3", "order": 3, "type": "action", "name": "IOC'leri Tüm Ortamda Engelle", "description": "Tespit edilen dosya hash'lerini, C2 domain'lerini ve IP'lerini firewall, proxy ve EDR politikalarına ekle. Bir uç noktada bulduğun IOC, büyük ihtimalle başka bir yerde de vardır. 'Muhtemelen' ile yetinme, tara.", "is_automated": false },
-      { "step_id": "s4", "order": 4, "type": "hunt", "name": "Benzer Uç Noktaları Threat Hunt", "description": "Aynı IOC'leri, aynı kullanıcı grubundaki ve aynı subnet'teki diğer cihazlarda threat hunt yap. Zararlı yazılım nadiren tek başına gezer. Genellikle arkadaşlarını da çağırır.", "is_automated": true },
-      { "step_id": "s5", "order": 5, "type": "decision", "name": "Yeniden İmajlama veya Temizleme Kararı", "description": "Adli bilişim sonuçlarına göre: cihazı temizleyip geri vermek mi, yoksa sıfırdan imajlamak mı? Birincisi daha hızlıdır, ikincisi daha güvenlidir. SOC analisti olarak sen ikincisini önerirsin, IT birincisini. Pazarlık başlar.", "is_automated": false }
+      {
+        "step_id": "s1",
+        "order": 1,
+        "type": "action",
+        "name": "Uç Noktayı İzole Et",
+        "description": "Cihazı ağdan izole et, sadece SOC VLAN'ına izin ver",
+        "is_automated": true
+      },
+      {
+        "step_id": "s2",
+        "order": 2,
+        "type": "action",
+        "name": "Adli Bilişim Topla",
+        "description": "Memory dump, process list, network connections, autoruns",
+        "is_automated": true
+      },
+      {
+        "step_id": "s3",
+        "order": 3,
+        "type": "action",
+        "name": "IOC'leri Engelle",
+        "description": "Dosya hash'lerini ve C2 domain'lerini tüm ortamda engelle",
+        "is_automated": false
+      },
+      {
+        "step_id": "s4",
+        "order": 4,
+        "type": "hunt",
+        "name": "Benzer Cihazları Tara",
+        "description": "Aynı IOC'leri diğer endpoint'lerde threat hunt",
+        "is_automated": true
+      }
     ]
   },
   {
     "playbook_id": "PB-EXFIL-01",
     "name": "Veri Sızdırma Yanıtı",
     "category": "data_exfiltration",
-    "description": "Veri sızdırma şüphesinde DLP olay yanıt zinciri. Hukuki bildirim süresi genellikle 72 saattir — bu playbook'un tamamı ilk 1 saat içinde biter.",
-    "triggers": ["alert.mitre_technique_ids includes T1567 OR alert.mitre_technique_ids includes T1114"],
+    "description": "Veri sızdırma şüphesinde DLP yanıt playbook'u",
+    "triggers": [
+      "alert.mitre_technique_ids includes T1567 OR alert.mitre_technique_ids includes T1114"
+    ],
     "requires_approval": false,
     "estimated_duration_seconds": 150,
     "steps": [
-      { "step_id": "s1", "order": 1, "type": "action", "name": "Paylaşımı ve Yönlendirmeyi Anında İptal Et", "description": "Tüm harici paylaşım bağlantılarını kır, forwarding kurallarını kaldır, 'herkes' erişimini 'sadece kurum içi' olarak değiştir. Saniyeler önemlidir — her an birileri bu dosyaları indiriyor olabilir. Zaten indirdiyse, en azından daha fazlasını engelle.", "is_automated": true },
-      { "step_id": "s2", "order": 2, "type": "enrich", "name": "Sızan Verinin Kapsamını Belirle", "description": "Hangi dosyalara erişildi, kaç kez indirildi, hangi IP'lerden? Veri sınıflandırma etiketlerini kontrol et: müşteri PII'si mi, finansal veri mi, fikri mülkiyet mi? Cevap, sonraki adımın aciliyetini belirler.", "is_automated": true },
-      { "step_id": "s3", "order": 3, "type": "action", "name": "Etkilenen Kullanıcı Hesaplarını Kilitle", "description": "Veriyi sızdıran hesabı geçici olarak dondur. 'Ama yanlışlıkla oldu' — olay incelemesi sırasında değerlendirilir. Şu an öncelik, daha fazla verinin çıkmasını engellemek.", "is_automated": true },
-      { "step_id": "s4", "order": 4, "type": "notify", "name": "Yasal Bildirim ve DLP Raporlaması", "description": "Veri koruma görevlisine (DPO) ve hukuk departmanına otomatik bildirim hazırla. KVKK/GDPR kapsamında 72 saat içinde resmi bildirim yapılması gerekebilir. Bu playbook'un en sevimsiz ama en kritik adımı.", "is_automated": false }
+      {
+        "step_id": "s1",
+        "order": 1,
+        "type": "action",
+        "name": "Paylaşımı İptal Et",
+        "description": "Harici paylaşım bağlantılarını ve yönlendirme kurallarını kaldır",
+        "is_automated": true
+      },
+      {
+        "step_id": "s2",
+        "order": 2,
+        "type": "enrich",
+        "name": "Erişim Denetimi",
+        "description": "Hangi dosyalara/maillere erişildi, ne kadar veri sızdı",
+        "is_automated": true
+      },
+      {
+        "step_id": "s3",
+        "order": 3,
+        "type": "notify",
+        "name": "Yasal Bildirim",
+        "description": "Veri koruma görevlisine ve hukuka bildirim hazırla",
+        "is_automated": false
+      }
     ]
   }
 ]
