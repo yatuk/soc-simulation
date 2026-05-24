@@ -5,7 +5,6 @@ import { useAlertStore, useIOCStore, useMitreStore, useIncidentStore } from '@/s
 import { SkeletonCard } from '@/components/ui/skeleton-card'
 import { SeverityPill } from '@/components/ui/severity-pill'
 import { StatusPill } from '@/components/ui/status-pill'
-import { EmptyState } from '@/components/ui/empty-state'
 import { defang } from '@/lib/utils'
 import { ArrowLeft, Shield, Target, ArrowUpRight, Copy, CheckCircle } from 'lucide-react'
 
