@@ -4,7 +4,7 @@ import { useUIStore } from '@/store'
 import { cn } from '@/lib/utils'
 import {
   LayoutDashboard, AlertTriangle, FileSearch, Shield,
-  Play, Monitor, Target, Crosshair, Settings,
+  Play, Monitor, Target, Crosshair, Settings, Users,
   ChevronLeft, ChevronRight, X,
 } from 'lucide-react'
 
@@ -16,6 +16,7 @@ const links = [
   { to: '/playbooks',  icon: Play,             label: 'Playbook\'lar' },
   { to: '/endpoints',  icon: Monitor,          label: 'Cihazlar' },
   { to: '/mitre',      icon: Target,           label: 'MITRE ATT&CK' },
+  { to: '/threat-actors', icon: Users,         label: 'Tehdit Aktörleri' },
   { to: '/detections', icon: Crosshair,        label: 'Kurallar' },
   { to: '/settings',   icon: Settings,         label: 'Ayarlar' },
 ]

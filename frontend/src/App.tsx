@@ -21,6 +21,8 @@ const EndpointDetail = lazy(() => import('@/pages/EndpointDetail'))
 const Mitre = lazy(() => import('@/pages/Mitre'))
 const Detections = lazy(() => import('@/pages/Detections'))
 const Settings = lazy(() => import('@/pages/Settings'))
+const ThreatActors = lazy(() => import('@/pages/ThreatActors'))
+const ThreatActorDetail = lazy(() => import('@/pages/ThreatActorDetail'))
 const CommandPalette = lazy(() => import('@/components/features/command-palette/CommandPalette').then(m => ({ default: m.CommandPalette })))
 
 function PageFallback() {
@@ -73,6 +75,8 @@ function App() {
               <Route path="/mitre" element={<Mitre />} />
               <Route path="/detections" element={<Detections />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/threat-actors" element={<ThreatActors />} />
+              <Route path="/threat-actors/:id" element={<ThreatActorDetail />} />
             </Routes>
           </Suspense>
           <footer className="border-t border-border py-3 px-6 text-[10px] text-muted-foreground" role="contentinfo">

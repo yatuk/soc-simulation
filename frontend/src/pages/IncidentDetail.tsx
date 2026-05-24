@@ -6,7 +6,7 @@ import { SkeletonCard } from '@/components/ui/skeleton-card'
 import { SeverityPill } from '@/components/ui/severity-pill'
 import { StatusPill } from '@/components/ui/status-pill'
 import { EmptyState } from '@/components/ui/empty-state'
-import { ArrowLeft, Lock, Play, CheckCircle, Target, FileSearch, Share2 } from 'lucide-react'
+import { ArrowLeft, Lock, Play, CheckCircle, Target, FileSearch, Share2, Shield } from 'lucide-react'
 
 const InvestigationGraph = lazy(() => import('@/components/features/investigation/InvestigationGraph'))
 
@@ -170,6 +170,9 @@ export default function IncidentDetail() {
       )}
 
       {/* Metadata */}
+      {/* Actor cross-reference */}
+      <ThreatActorMatches incidentId={incident.incident_id} />
+
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs p-4 rounded-lg border border-border bg-card">
         <Meta label="Atanan" value={incident.assignee ?? '—'} />
         <Meta label="Oluşturma" value={new Date(incident.created_at).toLocaleString('tr-TR')} />
@@ -200,4 +203,40 @@ function ActionBtn({ icon: Icon, label, onClick, variant }: { icon: React.Compon
 
 function Meta({ label, value }: { label: string; value: string }) {
   return <div><span className="text-muted-foreground">{label}</span><br /><span className="font-medium">{value}</span></div>
+}
+
+function ThreatActorMatches({ incidentId }: { incidentId: string }) {
+  const [actors, setActors] = useState<Array<Record<string,unknown>>>([])
+  useEffect(() => {
+    import('@/lib/data').then(m => m.loadEntity<Array<Record<string,unknown>>>('threat_actors.json').then(setActors))
+  }, [])
+  const matches = actors.filter(a => {
+    const mi = (a.matched_incidents as Array<Record<string,unknown>>|undefined)
+    return mi?.some((m: Record<string,unknown>) => m.incident_id === incidentId)
+  })
+  if (matches.length === 0 || actors.length === 0) return null
+  return (
+    <section>
+      <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+        <Shield className="w-3.5 h-3.5" /> Olası Aktör Eşleşmeleri
+      </h3>
+      <div className="space-y-2">
+        {matches.map(a => {
+          const m = ((a.matched_incidents as Array<Record<string,unknown>>) ?? []).find((mi: Record<string,unknown>) => mi.incident_id === incidentId) as Record<string,unknown> | undefined
+          return (
+            <Link key={a.id as string} to={`/threat-actors/${a.id}`} className="flex items-center gap-3 p-3 rounded-lg border border-border hover:bg-accent transition-colors text-xs">
+              <span className="font-bold">{a.name as string}</span>
+              <div className="flex items-center gap-2 flex-1">
+                <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden max-w-32">
+                  <div className="h-full bg-primary rounded-full" style={{width:`${m?.ttp_overlap_percent ?? 0}%`}}/>
+                </div>
+                <span className="font-mono text-[10px]">%{String(m?.ttp_overlap_percent ?? 0)}</span>
+              </div>
+              <span className="text-[10px] text-muted-foreground">→</span>
+            </Link>
+          )
+        })}
+      </div>
+    </section>
+  )
 }

@@ -1,0 +1,228 @@
+[
+  {
+    "id": "apt29", "name": "APT29", "aliases": ["Cozy Bear", "Nobelium", "Midnight Blizzard"],
+    "origin": {"country": "Rusya", "attribution_confidence": "high", "suspected_sponsor": "SVR"},
+    "motivation": ["espionage"], "active_since": "2008", "status": "active",
+    "targeted_sectors": ["Devlet", "Düşünce Kuruluşları", "Teknoloji", "Savunma"],
+    "targeted_geographies": ["ABD", "Avrupa Birliği", "Türkiye"],
+    "associated_techniques": ["T1566.002", "T1078", "T1098", "T1528", "T1071.001"],
+    "associated_tools": ["Cobalt Strike", "WellMess", "Mimikatz", "PowerShell Empire"],
+    "notable_campaigns": [
+      {"name": "SolarWinds Tedarik Zinciri", "year": 2020, "description": "SolarWinds Orion yazılımı üzerinden 18.000'den fazla kuruma bulaşan tedarik zinciri saldırısı. ABD devlet kurumları hedef alındı."},
+      {"name": "COVID-19 Aşı Araştırması Hırsızlığı", "year": 2020, "description": "İngiltere, ABD ve Kanada'daki aşı araştırma kurumlarına yönelik hedefli spear-phishing kampanyası."}
+    ],
+    "description": "APT29, Rusya Dış İstihbarat Servisi (SVR) ile ilişkilendirilen ileri seviye kalıcı tehdit grubudur. 2008'den beri aktif olan grup, özellikle devlet kurumları, düşünce kuruluşları ve diplomatik misyonları hedef alır.\n\nTipik saldırı zinciri: spear-phishing e-postalar ile kimlik bilgisi toplama, OAuth token kötüye kullanımı, bulut depolama üzerinden veri sızdırma. SolarWinds saldırısı, grubun en bilinen operasyonudur ve tedarik zinciri saldırılarının en büyük örneklerinden biri olarak kabul edilir.\n\nAPT29, operational security konusunda son derece disiplinlidir. Her operasyon için özel altyapı kullanır, C2 domain'lerini düzenli olarak değiştirir ve tespit edilmekten kaçınmak için 'living off the land' tekniklerini yoğun şekilde kullanır.",
+    "references": ["https://attack.mitre.org/groups/G0016/"],
+    "glyph": {"color": "#ef4444", "icon": "shield-alert"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0001", "ttp_overlap_percent": 72, "rationale": "T1566.002 + T1078 + T1098 örtüşmesi. Phishing → credential theft → persistence zinciri APT29'un tipik modus operandi'si ile uyumlu."},
+      {"incident_id": "INC-2026-0002", "ttp_overlap_percent": 65, "rationale": "T1528 (OAuth token çalma) ve T1114.002 (e-posta toplama) — APT29'un bulut hesap compromise patern'i."}
+    ]
+  },
+  {
+    "id": "apt28", "name": "APT28", "aliases": ["Fancy Bear", "Sofacy", "Sednit"],
+    "origin": {"country": "Rusya", "attribution_confidence": "high", "suspected_sponsor": "GRU"},
+    "motivation": ["espionage", "destruction"], "active_since": "2004", "status": "active",
+    "targeted_sectors": ["Askeri", "Hükümet", "Medya", "Enerji"],
+    "targeted_geographies": ["ABD", "Ukrayna", "NATO Üyeleri"],
+    "associated_techniques": ["T1566.001", "T1059.001", "T1547.001", "T1486", "T1071.001"],
+    "associated_tools": ["X-Agent", "X-Tunnel", "VPNFilter", "Industroyer"],
+    "notable_campaigns": [
+      {"name": "DNC Hack / Guccifer 2.0", "year": 2016, "description": "ABD Demokratik Ulusal Komitesi'ne spear-phishing ile sızan ve seçim sürecini etkilemeye çalışan operasyon."},
+      {"name": "Ukrayna Enerji Şebekesi Saldırısı", "year": 2015, "description": "Ukrayna'daki elektrik dağıtım şirketlerine yönelik Industroyer zararlısı ile gerçekleştirilen ve 230.000 kişiyi etkileyen saldırı."}
+    ],
+    "description": "APT28, Rusya Askeri İstihbarat Servisi (GRU) ile bağlantılı, 2004'ten beri aktif olan bir siber casusluk grubudur. Askeri, diplomatik ve enerji sektörlerini hedef alır.\n\nGrubun imza yöntemi: zararlı ek içeren spear-phishing e-postaları, PowerShell tabanlı payload dağıtımı ve Registry Run key kalıcılığı. APT29'un aksine APT28 daha agresiftir — gerektiğinde destructive saldırılar da düzenler (Industroyer, VPNFilter).\n\nAPT28, operational security'de APT29 kadar disiplinli değildir; aynı altyapıyı birden fazla operasyonda kullandığı ve hata yaptığı bilinir. Bu, attribution'u kolaylaştıran faktörlerden biridir.",
+    "references": ["https://attack.mitre.org/groups/G0007/"],
+    "glyph": {"color": "#dc2626", "icon": "flame"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0006", "ttp_overlap_percent": 78, "rationale": "T1566.001 + T1059.005 + T1547.001 + T1071.001 — makro → PowerShell → kalıcılık → C2 zinciri APT28 imzası."}
+    ]
+  },
+  {
+    "id": "lazarus", "name": "Lazarus Group", "aliases": ["HIDDEN COBRA", "Zinc", "APT38"],
+    "origin": {"country": "Kuzey Kore", "attribution_confidence": "high", "suspected_sponsor": "RGB"},
+    "motivation": ["espionage", "financial"], "active_since": "2009", "status": "active",
+    "targeted_sectors": ["Finans", "Kripto Para", "Savunma", "Enerji"],
+    "targeted_geographies": ["Güney Kore", "ABD", "Asya-Pasifik", "Küresel"],
+    "associated_techniques": ["T1566.001", "T1059.005", "T1547.001", "T1071.001", "T1486"],
+    "associated_tools": ["AppleJeus", "WannaCry", "FallChill", "ELECTRICFISH"],
+    "notable_campaigns": [
+      {"name": "Bangladesh Bank Heist", "year": 2016, "description": "SWIFT mesajlaşma sistemini hedef alarak Bangladesh Bank'tan 81 milyon dolar çalınmasıyla sonuçlanan siber soygun."},
+      {"name": "WannaCry Ransomware", "year": 2017, "description": "EternalBlue exploit'ini kullanarak 150 ülkede 230.000'den fazla bilgisayarı etkileyen küresel fidye yazılımı saldırısı."}
+    ],
+    "description": "Lazarus Grubu, Kuzey Kore Keşif Genel Bürosu (RGB) ile ilişkilendirilen çok yönlü bir tehdit aktörüdür. 2009'dan beri hem siyasi casusluk hem de finansal motivasyonlu saldırılar düzenlemektedir.\n\nGrubun çift yönlü motivasyonu — hem devlet-sponsorlu casusluk hem de doğrudan finansal kazanç — onu diğer APT gruplarından ayırır. Kripto para borsaları ve merkeziyetsiz finans (DeFi) platformları son yıllarda Lazarus'un en önemli hedefleri haline gelmiştir.\n\nLazarus, teknik çeşitlilik açısından en zengin gruplardan biridir: spear-phishing, watering hole, supply chain, ve hatta sosyal mühendislik ile sahte iş teklifleri üzerinden geliştiricileri hedef alır.",
+    "references": ["https://attack.mitre.org/groups/G0032/"],
+    "glyph": {"color": "#a855f7", "icon": "ghost"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0006", "ttp_overlap_percent": 55, "rationale": "Makro → C2 zinciri örtüşmesi. Lazarus WannaCry operasyonunda benzer initial access vektörü kullandı."},
+      {"incident_id": "INC-2026-0005", "ttp_overlap_percent": 48, "rationale": "BEC / finansal sahtekarlık patern'i — Lazarus'un Bangladesh Bank operasyonundaki SWIFT saldırısı ile paralel."}
+    ]
+  },
+  {
+    "id": "apt34", "name": "APT34", "aliases": ["OilRig", "Helix Kitten"],
+    "origin": {"country": "İran", "attribution_confidence": "high", "suspected_sponsor": "IRGC"},
+    "motivation": ["espionage"], "active_since": "2014", "status": "active",
+    "targeted_sectors": ["Enerji", "Finans", "Telekomünikasyon", "Devlet"],
+    "targeted_geographies": ["Orta Doğu", "Türkiye", "Suudi Arabistan"],
+    "associated_techniques": ["T1566.002", "T1078", "T1114.002", "T1059.001", "T1098"],
+    "associated_tools": ["BONDUPDATER", "POWBAT", "DNSpionage", "Glimpse"],
+    "notable_campaigns": [
+      {"name": "Orta Doğu Enerji Sektörü Kampanyası", "year": 2019, "description": "Kuveyt, Suudi Arabistan ve Türkiye'deki enerji şirketlerine yönelik BONDUPDATER zararlısı ile gerçekleştirilen casusluk operasyonu."},
+      {"name": "DNSpionage", "year": 2018, "description": "DNS protokolü üzerinden C2 iletişimi kuran ve Orta Doğu'daki telekomünikasyon şirketlerini hedef alan operasyon."}
+    ],
+    "description": "APT34, İran Devrim Muhafızları (IRGC) ile ilişkilendirilen ve 2014'ten beri Orta Doğu'da faaliyet gösteren bir siber casusluk grubudur. Enerji, finans ve telekomünikasyon sektörlerini hedef alır.\n\nGrubun Türkiye'yi hedef alan operasyonları, onu bölgedeki en ilgili APT grubu yapar. Tipik TTPs'leri arasında spear-phishing, DNS tünelleme ile C2 ve PowerShell tabanlı payload dağıtımı yer alır.\n\nAPT34, teknik sofistikasyon açısından APT29 veya Lazarus seviyesinde olmasa da, hedef profili ve coğrafi odağı nedeniyle Orta Doğu ve Türkiye'deki SOC ekipleri için kritik bir tehdit aktörüdür.",
+    "references": ["https://attack.mitre.org/groups/G0049/"],
+    "glyph": {"color": "#22c55e", "icon": "binary"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0001", "ttp_overlap_percent": 68, "rationale": "T1566.002 + T1078 + T1098 + T1114.002 — phishing-persistence-exfil zinciri APT34 DNSpionage operasyonu ile örtüşüyor."},
+      {"incident_id": "INC-2026-0004", "ttp_overlap_percent": 52, "rationale": "T1110.003 + T1114.002 — parola püskürtme → e-posta sızdırma zinciri."}
+    ]
+  },
+  {
+    "id": "muddywater", "name": "MuddyWater", "aliases": ["TEMP.Zagros", "Seedworm"],
+    "origin": {"country": "İran", "attribution_confidence": "medium", "suspected_sponsor": "MOIS"},
+    "motivation": ["espionage"], "active_since": "2017", "status": "active",
+    "targeted_sectors": ["Telekomünikasyon", "Devlet", "Enerji"],
+    "targeted_geographies": ["Orta Doğu", "Türkiye", "Pakistan"],
+    "associated_techniques": ["T1566.002", "T1059.001", "T1071.001", "T1572"],
+    "associated_tools": ["PowerShell backdoor", "Cobalt Strike", "CrackMapExec"],
+    "notable_campaigns": [
+      {"name": "Orta Doğu Telekom Operasyonu", "year": 2020, "description": "Türkiye dahil Orta Doğu ülkelerindeki telekom operatörlerine yönelik PowerShell tabanlı backdoor kampanyası."}
+    ],
+    "description": "MuddyWater, İran İstihbarat ve Güvenlik Bakanlığı (MOIS) ile ilişkilendirilen, 2017'den beri aktif bir siber casusluk grubudur. APT34'ten daha az sofistike araçlar kullanır ama bölgesel hedefleri onu Türkiye'deki SOC ekipleri için önemli kılar.\n\nGrup genellikle açık kaynak kodlu araçları ve PowerShell script'lerini tercih eder — bu, tespit edilmesini zorlaştırmaz ancak attribution'u karmaşıklaştırır. Cobalt Strike kullanımı son yıllarda artmıştır.",
+    "references": ["https://attack.mitre.org/groups/G0069/"],
+    "glyph": {"color": "#16a34a", "icon": "droplets"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0001", "ttp_overlap_percent": 62, "rationale": "Phishing → PowerShell kalıbı ve Orta Doğu/Türkiye hedef profili örtüşmesi."}
+    ]
+  },
+  {
+    "id": "apt41", "name": "APT41", "aliases": ["Winnti", "BARIUM", "Wicked Panda"],
+    "origin": {"country": "Çin", "attribution_confidence": "high"},
+    "motivation": ["espionage", "financial"], "active_since": "2012", "status": "active",
+    "targeted_sectors": ["Teknoloji", "Sağlık", "Oyun", "Telekomünikasyon"],
+    "targeted_geographies": ["ABD", "Avrupa", "Asya-Pasifik", "Küresel"],
+    "associated_techniques": ["T1195.002", "T1059.001", "T1071.001", "T1566.002"],
+    "associated_tools": ["ShadowPad", "Winnti", "PlugX", "Crosswalk"],
+    "notable_campaigns": [
+      {"name": "Supply Chain via Pirated Software", "year": 2021, "description": "Korsan yazılım yükleyicilerine yerleştirilen zararlı kod ile oyun ve yazılım endüstrisini hedef alan tedarik zinciri operasyonu."}
+    ],
+    "description": "APT41, Çin menşeli ve çift motivasyonlu (hem devlet-sponsorlu casusluk hem finansal kazanç) bir tehdit grubudur. 2012'den beri aktif olan grup, sağlık, oyun ve teknoloji sektörlerini hedef alır.\n\nGrubun ayırt edici özelliği: tedarik zinciri saldırıları. Özellikle korsan yazılım ve oyun modifikasyonları üzerinden yayılan zararlı kod, APT41'in en bilinen operasyon vektörüdür. Lazarus ile birlikte, hem devlet-sponsorlu hem finansal motivasyonlu nadir APT gruplarındandır.",
+    "references": ["https://attack.mitre.org/groups/G0096/"],
+    "glyph": {"color": "#eab308", "icon": "package-search"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0006", "ttp_overlap_percent": 45, "rationale": "Tedarik zinciri vektörü ve PowerShell kullanımı örtüşmesi."}
+    ]
+  },
+  {
+    "id": "volt-typhoon", "name": "Volt Typhoon", "aliases": ["VANGUARD PANDA", "Storm-0501"],
+    "origin": {"country": "Çin", "attribution_confidence": "high", "suspected_sponsor": "MSS"},
+    "motivation": ["espionage"], "active_since": "2021", "status": "active",
+    "targeted_sectors": ["Kritik Altyapı", "Enerji", "Su", "Ulaşım"],
+    "targeted_geographies": ["ABD", "Asya-Pasifik"],
+    "associated_techniques": ["T1078", "T1059.001", "T1047", "T1072", "T1572"],
+    "associated_tools": ["FRP (Fast Reverse Proxy)", "Mimikatz", "PowerShell"],
+    "notable_campaigns": [
+      {"name": "ABD Kritik Altyapı Hedefleme", "year": 2023, "description": "ABD'deki su, enerji ve ulaşım sektörlerine yönelik, özellikle LOTL (Living Off the Land) teknikleri kullanarak uzun süreli erişim sağlamaya odaklanan operasyon."}
+    ],
+    "description": "Volt Typhoon, 2021'den beri ABD'nin kritik altyapı sektörlerini hedef alan bir Çin devlet-sponsorlu APT grubudur. Modus operandi'si 'living off the land' (LOTL) tekniklerine dayanır — yani meşru sistem araçlarını kullanarak tespit edilmekten kaçınır.\n\nGrup, uzun süreli sessiz erişim (dwell time) konusunda uzmanlaşmıştır. Hedef ağlarda aylarca kalıp veri sızdırabilir. Fast Reverse Proxy (FRP) aracı, C2 iletişimi için grubun kullandığı belirgin tekniklerden biridir.",
+    "references": ["https://attack.mitre.org/groups/G1017/"],
+    "glyph": {"color": "#ca8a04", "icon": "zap"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0007", "ttp_overlap_percent": 50, "rationale": "T1078.004 + T1098.001 — LOTL pattern'i ve admin rol atama örtüşmesi."}
+    ]
+  },
+  {
+    "id": "sandworm", "name": "Sandworm", "aliases": ["Unit 74455", "Voodoo Bear", "IRON VIKING"],
+    "origin": {"country": "Rusya", "attribution_confidence": "high", "suspected_sponsor": "GRU"},
+    "motivation": ["destruction", "espionage"], "active_since": "2014", "status": "active",
+    "targeted_sectors": ["Enerji", "Kritik Altyapı", "Devlet", "Medya"],
+    "targeted_geographies": ["Ukrayna", "ABD", "Avrupa Birliği"],
+    "associated_techniques": ["T1486", "T1059.001", "T1072", "T1572", "T1047"],
+    "associated_tools": ["Industroyer2", "NotPetya", "Olympic Destroyer", "BlackEnergy"],
+    "notable_campaigns": [
+      {"name": "Ukrayna Elektrik Kesintisi", "year": 2016, "description": "Ukrayna'nın başkenti Kiev'de INDUSTROYER2 zararlısı ile elektrik şebekesine yapılan saldırı sonucu büyük çaplı elektrik kesintisi."},
+      {"name": "NotPetya / EternalPetya", "year": 2017, "description": "Ukrayna vergi yazılımı üzerinden yayılan ve küresel çapta 10 milyar doların üzerinde zarara yol açan destruktif zararlı yazılım saldırısı."}
+    ],
+    "description": "Sandworm, Rusya GRU'suna bağlı Unit 74455 ile ilişkilendirilen destruktif siber saldırı grubudur. 2014'ten beri aktif olan grup, dünyanın en tehlikeli ICS/SCADA hedefleme kabiliyetine sahip aktörlerinden biridir.\n\nGrubun tarihindeki en yıkıcı saldırı NotPetya (2017) — başlangıçta Ukrayna'yı hedefleyen vergi yazılımı güncellemesi üzerinden yayılan zararlı kod, hızla küresel çapa ulaştı ve Maersk, Merck, FedEx gibi şirketleri etkiledi.",
+    "references": ["https://attack.mitre.org/groups/G0034/"],
+    "glyph": {"color": "#b91c1c", "icon": "skull"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0008", "ttp_overlap_percent": 38, "rationale": "T1567.002 (bulut depolama sızdırma) — destruktif aktörler genelde sızdırma da yapar."}
+    ]
+  },
+  {
+    "id": "fin7", "name": "FIN7", "aliases": ["Carbanak", "Anunak", "NAVIGATOR"],
+    "origin": {"country": "Rusya", "attribution_confidence": "high"},
+    "motivation": ["financial"], "active_since": "2013", "status": "active",
+    "targeted_sectors": ["Finans", "Perakende", "Konaklama", "Restoran"],
+    "targeted_geographies": ["ABD", "Avrupa", "Küresel"],
+    "associated_techniques": ["T1566.001", "T1059.001", "T1547.001", "T1071.001", "T1114.002"],
+    "associated_tools": ["Carbanak", "Cobalt Strike", "Lizar", "BIRDDOG"],
+    "notable_campaigns": [
+      {"name": "ABD Restoran POS Saldırıları", "year": 2019, "description": "ABD'de Chipotle, Chili's ve Arby's dahil yüzlerce restoran zincirinin POS (Point of Sale) sistemlerini hedef alan kredi kartı verisi hırsızlığı."}
+    ],
+    "description": "FIN7, 2013'ten beri aktif olan ve finansal motivasyonlu en sofistike siber suç gruplarından biridir. Rusya bağlantılı olan grup, özellikle ABD perakende ve konaklama sektörlerini hedef alır.\n\nGrubun imza özelliği: son derece profesyonel operasyon güvenliği. FIN7, yıllarca kendi sahte güvenlik şirketini (Combi Security) paravan olarak kullanarak hem kurbanlarını kandırmış hem de yetenekli hacker'ları işe almıştır.",
+    "references": ["https://attack.mitre.org/groups/G0046/"],
+    "glyph": {"color": "#64748b", "icon": "banknote"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0005", "ttp_overlap_percent": 60, "rationale": "BEC / finansal sahtekarlık — FIN7'nin POS ve kredi kartı odaklı operasyonları ile paralel."}
+    ]
+  },
+  {
+    "id": "conti", "name": "Conti / Black Basta", "aliases": ["Wizard Spider", "Ryuk", "UNC1878"],
+    "origin": {"country": "Rusya", "attribution_confidence": "high"},
+    "motivation": ["financial"], "active_since": "2019", "status": "active",
+    "targeted_sectors": ["Sağlık", "Devlet", "Eğitim", "Üretim"],
+    "targeted_geographies": ["ABD", "Avrupa", "Küresel"],
+    "associated_techniques": ["T1486", "T1059.001", "T1072", "T1562.001", "T1048.003"],
+    "associated_tools": ["Conti ransomware", "Ryuk", "Trickbot", "Emotet", "Cobalt Strike"],
+    "notable_campaigns": [
+      {"name": "İrlanda HSE Saldırısı", "year": 2021, "description": "İrlanda Sağlık Hizmetleri İdaresi'ne (HSE) yapılan fidye yazılımı saldırısı, ülke çapında sağlık hizmetlerini haftalarca aksattı."},
+      {"name": "Kosta Rika Devlet Saldırısı", "year": 2022, "description": "Kosta Rika hükümetine yapılan saldırı sonucu ülke tarihinde ilk kez ulusal acil durum ilan edildi."}
+    ],
+    "description": "Conti/Black Basta, Rusya bağlantılı ransomware-as-a-service (RaaS) operasyonudur. 2019'dan beri aktif olan grup, Trickbot/Emotet botnet altyapısı üzerinden kurbanlara ulaşır.\n\nConti, double extortion modelinin öncülerindendir: önce veriyi çalar, sonra şifreler. Kurban ödeme yapmazsa hem verileri sızdırmakla hem de sistemleri kilitli bırakmakla tehdit eder. 2022'de grup iç yapısını yeniden organize ederek Black Basta markası altında faaliyet göstermeye devam etmektedir.",
+    "references": ["https://attack.mitre.org/groups/G1015/"],
+    "glyph": {"color": "#475569", "icon": "lock"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0006", "ttp_overlap_percent": 58, "rationale": "T1562.001 (antivirüs durdurma) ve T1486 (şifreleme) Conti RaaS operasyonlarıyla uyumlu."}
+    ]
+  },
+  {
+    "id": "scattered-spider", "name": "Scattered Spider", "aliases": ["UNC3944", "Octo Tempest"],
+    "origin": {"country": "ABD / İngiltere", "attribution_confidence": "medium"},
+    "motivation": ["financial"], "active_since": "2022", "status": "active",
+    "targeted_sectors": ["Teknoloji", "Telekomünikasyon", "Finans", "Oyun"],
+    "targeted_geographies": ["ABD", "Avrupa", "Küresel"],
+    "associated_techniques": ["T1556", "T1078", "T1528", "T1098.001", "T1566.002"],
+    "associated_tools": ["SIM swapping", "MFA bombing", "Okta session hijacking"],
+    "notable_campaigns": [
+      {"name": "MGM Resorts + Caesars", "year": 2023, "description": "Sosyal mühendislik ile IT helpdesk'i arayarak parola sıfırlatan ve MGM Grand'in sistemlerini 10 gün boyunca felç eden saldırı. 100 milyon doların üzerinde zarar."}
+    ],
+    "description": "Scattered Spider, 2022'de ortaya çıkan genç ve son derece agresif bir siber suç grubudur. Geleneksel APT'lerden farklı olarak ana vektörleri teknik exploit değil, sosyal mühendisliktir: SIM swapping, MFA fatigue (bombardıman), helpdesk aramaları ile identity takeover.\n\nGrubun 2023'te MGM Resorts ve Caesars Entertainment'a yaptığı saldırılar, sosyal mühendislik bazlı siber saldırıların hala ne kadar etkili olabileceğini gösterdi. Teknik olarak en sofistike grup olmasalar da, operasyonel cesaretleri onları benzersiz kılar.",
+    "references": ["https://attack.mitre.org/groups/G1021/"],
+    "glyph": {"color": "#f97316", "icon": "message-circle"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0003", "ttp_overlap_percent": 85, "rationale": "T1556 (MFA fatigue) — Scattered Spider'ın imza saldırı vektörü."}
+    ]
+  },
+  {
+    "id": "lapsus", "name": "Lapsus$", "aliases": ["DEV-0537", "LAPSUS$ Group"],
+    "origin": {"country": "Birleşik Krallık / Brezilya", "attribution_confidence": "high"},
+    "motivation": ["financial", "hacktivism"], "active_since": "2021", "status": "disrupted",
+    "targeted_sectors": ["Teknoloji", "Oyun", "Telekomünikasyon"],
+    "targeted_geographies": ["Küresel"],
+    "associated_techniques": ["T1078", "T1098.001", "T1539", "T1566.002", "T1556"],
+    "associated_tools": ["Telegram", "Redline stealer", "SOC-masquerade"],
+    "notable_campaigns": [
+      {"name": "NVIDIA + Samsung + Microsoft", "year": 2022, "description": "Üç büyük teknoloji devini peş peşe hedef alan ve kaynak kodu çalarak Telegram kanalında paylaşan sansasyonel operasyon serisi."}
+    ],
+    "description": "Lapsus$, 2021-2022'de büyük teknoloji şirketlerine yaptığı yüksek profilli saldırılarla ünlenen, genç (bazı üyeleri reşit değil) bir siber suç grubudur. NVIDIA, Samsung, Microsoft, Okta ve Uber'i hedef almıştır.\n\nGrubun modus operandi'si: sosyal mühendislik ile çalışanları ikna ederek MFA'yı geçme, VPN credential'ları çalma, ve Redline stealer ile bilgi toplama. Lapsus$'un en çarpıcı özelliği: saldırılarını Telegram kanalında neredeyse canlı yayın gibi paylaşmaları.",
+    "references": ["https://attack.mitre.org/groups/G1004/"],
+    "glyph": {"color": "#f43f5e", "icon": "eye"},
+    "matched_incidents": [
+      {"incident_id": "INC-2026-0003", "ttp_overlap_percent": 70, "rationale": "MFA bypass + session token theft + privilege escalation — Lapsus$ modus operandi'si ile yüksek örtüşme."},
+      {"incident_id": "INC-2026-0007", "ttp_overlap_percent": 55, "rationale": "T1098.001 (admin rol atama) Lapsus$ saldırılarında sık görülen post-exploitation adımı."}
+    ]
+  }
+]
