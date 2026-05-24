@@ -1,293 +1,186 @@
 # SOC Console — Mimari Dökümanı
 
-> Faz 1 çıktısı. Uygulama başlamadan önce tüm mimari kararları burada.
+> Son güncelleme: Faz 7 (build edilenle senkronize)
 
 ---
 
-## 1. Klasör Yapısı
+## 1. Klasör Yapısı (Final)
 
 ```
 SOC-case-study-project/
-├── .github/workflows/
-│   └── deploy.yml                    # Tek deploy workflow (frontend build + GH Pages)
-│
-├── frontend/                         # TEK UI (React + Vite + TS + Tailwind)
+├── .github/workflows/deploy.yml     # GitHub Actions → Pages
+├── frontend/                        # React SPA
 │   ├── index.html
-│   ├── package.json
-│   ├── vite.config.ts                # base: '/SOC-case-study-project/'
-│   ├── tailwind.config.ts
+│   ├── package.json                 # v2.0.0
+│   ├── vite.config.ts               # base: /SOC-case-study-project/
+│   ├── tailwind.config.js
 │   ├── tsconfig.json
-│   ├── postcss.config.js
 │   ├── public/
-│   │   ├── shield.svg
-│   │   └── data/                     # Pipeline çıktısı, build sırasında kopyalanır
-│   │       ├── alerts.json
-│   │       ├── incidents.json
-│   │       ├── iocs.json
-│   │       ├── assets.json           # Endpoints + servers
-│   │       ├── users.json
-│   │       ├── playbook_runs.json
-│   │       ├── detection_rules.json
-│   │       └── mitre_coverage.json
+│   │   ├── data/                    # Pipeline çıktısı (10 JSON)
+│   │   ├── favicon.svg
+│   │   └── 404.html
 │   └── src/
-│       ├── main.tsx                  # HashRouter + App mount
-│       ├── App.tsx                   # Routes + Layout shell
-│       ├── index.css                 # Tailwind directives + CSS custom properties
-│       ├── styles/
-│       │   └── tokens.css            # Design tokens (severity, status, spacing)
+│       ├── main.tsx                 # HashRouter + TooltipProvider
+│       ├── App.tsx                  # Routes + Layout shell + ErrorBoundary
+│       ├── index.css                # Tailwind + CSS custom properties
 │       ├── lib/
-│       │   ├── utils.ts              # cn(), formatTime(), helpers
-│       │   └── data.ts               # fetch + cache + store hydration
-│       ├── store/
-│       │   ├── index.ts              # Barrel export
-│       │   ├── alertStore.ts
-│       │   ├── incidentStore.ts
-│       │   ├── iocStore.ts
-│       │   ├── assetStore.ts
-│       │   ├── userStore.ts
-│       │   ├── playbookStore.ts
-│       │   ├── detectionStore.ts
-│       │   ├── mitreStore.ts
-│       │   ├── uiStore.ts            # sidebar, drawer, search, theme
-│       │   └── settingsStore.ts      # persisted (localStorage)
-│       ├── types/
-│       │   └── index.ts              # Canonical entity interfaces
-│       ├── hooks/
-│       │   ├── useData.ts            # Data loading orchestration
-│       │   └── useTheme.ts           # Dark/light mode toggle
+│       │   ├── data.ts              # fetch + in-memory cache
+│       │   └── utils.ts             # cn(), defang(), formatters
+│       ├── store/index.ts           # 10 Zustand store (entity-bazlı)
+│       ├── types/index.ts           # 12 canonical interface
+│       ├── hooks/                   # useTheme, useDocumentTitle
 │       ├── components/
-│       │   ├── ui/                   # Primitives (Card, Badge, Button, Input, ...)
-│       │   ├── layout/               # Sidebar, Topbar, Shell, Drawer
-│       │   └── features/             # Page-specific components
-│       │       ├── dashboard/        # KPI cards, charts, feeds
-│       │       ├── alerts/           # AlertTable, AlertDetail, AlertFilters
-│       │       ├── incidents/        # IncidentTable, IncidentDetail, KillChain
-│       │       ├── iocs/             # IOCTable, IOCDetail, IOCFilters
-│       │       ├── playbooks/        # PlaybookList, PlaybookDetail, RunHistory
-│       │       ├── endpoints/        # EndpointTable, EndpointDetail, ProcessTree
-│       │       ├── mitre/            # MitreMatrix, TechniqueCard
-│       │       └── detections/       # DetectionRuleList, RuleDetail
-│       └── pages/                    # Route başına bir page komponenti
-│           ├── Overview.tsx
-│           ├── Alerts.tsx
-│           ├── AlertDetail.tsx
-│           ├── Incidents.tsx
-│           ├── IncidentDetail.tsx
-│           ├── IOCs.tsx
-│           ├── Playbooks.tsx
-│           ├── PlaybookDetail.tsx
-│           ├── Endpoints.tsx
-│           ├── EndpointDetail.tsx
-│           ├── Mitre.tsx
-│           ├── Detections.tsx
-│           └── Settings.tsx
-│
-├── scripts/                          # Python pipeline
-│   ├── build_dataset.py              # Tek entry point (--seed, --out)
-│   ├── normalize.py
-│   ├── pseudonymize.py
-│   ├── generate_incidents.py
+│       │   ├── ui/                  # 15 primitive (Card, Badge, Tooltip, ...)
+│       │   ├── layout/              # Sidebar, Topbar, Drawer
+│       │   └── features/
+│       │       ├── dashboard/       # KpiCards, AlertVolumeChart, ...
+│       │       └── alerts/          # AlertFilters
+│       └── pages/                   # 13 lazy-loaded route
+├── scripts/                         # Python pipeline (stdlib-only)
+│   ├── build_dataset.py             # Tek entry point: --seed 42
+│   ├── generate_incidents.py        # 9 senaryo
 │   ├── extract_iocs.py
 │   ├── enrich_mitre.py
-│   ├── requirements.txt
-│   └── README.md
-│
+│   ├── normalize.py
+│   ├── pseudonymize.py
+│   └── _data.py                     # Shared constants
 ├── data/
-│   ├── raw/                          # Ham log kaynakları (değişmez)
-│   ├── normalized/                   # Pipeline çıktısı (commit'li, canonical)
-│   │   ├── alerts.json
-│   │   ├── incidents.json
-│   │   ├── iocs.json
-│   │   ├── assets.json
-│   │   ├── users.json
-│   │   ├── playbook_runs.json
-│   │   ├── detection_rules.json
-│   │   └── mitre_coverage.json
-│   ├── iocs/                         # IOC kaynak listeleri (feed)
-│   └── legacy/                       # Eski pipeline çıktıları (referans, .gitignore'a eklenebilir)
-│
-├── detections/                       # Sigma/YAML kuralları
-│   ├── rules/
-│   └── queries/
-│
-├── docs/
-│   ├── ANALYSIS.md                   # Faz 0 çıktısı
-│   ├── ARCHITECTURE.md               # Bu dosya
-│   ├── DATA_MODEL.md                 # Canonical schema
-│   ├── TYPE_DEBT.md                  # Tip borcu envanteri
-│   ├── SCENARIOS.md                  # Incident senaryo anlatımları (Faz 5)
-│   └── CONTRIBUTING.md               # (opsiyonel)
-│
-├── README.md
-└── LICENSE
+│   ├── raw/                         # Ham log kaynakları
+│   ├── normalized/                  # Pipeline çıktısı (commit'li)
+│   ├── iocs/                        # IOC feed listeleri
+│   └── legacy/                      # Eski pipeline çıktıları
+├── docs/                            # Mimari + veri modeli + senaryolar
+├── detections/                      # Sigma/YAML kuralları
+└── README.md
 ```
 
 ---
 
-## 2. Routing Tree
+## 2. Routing Tree (Final — 13 Route)
 
 ```
 HashRouter
 ├── /                         → Overview (dashboard)
-├── /alerts                   → Alerts (list + filter)
-│   └── /alerts/:id           → AlertDetail
-├── /incidents                → Incidents (list + filter)
-│   └── /incidents/:id        → IncidentDetail (kill chain, timeline, evidence)
-├── /iocs                     → IOCExplorer (list + filter by type)
-├── /playbooks                → PlaybookList
-│   └── /playbooks/:id        → PlaybookDetail (steps + run history)
-├── /endpoints                → EndpointList (EDR)
-│   └── /endpoints/:id        → EndpointDetail (process tree, detections)
-├── /mitre                    → MitreMatrix (ATT&CK tactics × techniques)
-├── /detections               → DetectionRuleList
-└── /settings                 → Settings (theme, density, easter eggs)
+├── /alerts                   → Alerts (filter + table)
+│   └── /alerts/:id           → AlertDetail (MITRE + IOC + actions)
+├── /incidents                → Incidents (filter + table)
+│   └── /incidents/:id        → IncidentDetail (narrative + kill chain timeline)
+├── /iocs                     → IOCExplorer (expandable cards)
+├── /playbooks                → PlaybookList (cards + run table)
+│   └── /playbooks/:id        → PlaybookDetail (DAG step flow + run history)
+├── /endpoints                → Endpoints (EDR table)
+│   └── /endpoints/:id        → EndpointDetail (process tree)
+├── /mitre                    → MitreMatrix (tactic columns × technique cards)
+├── /detections               → DetectionRules (expandable cards)
+└── /settings                 → Settings (theme, density, MTTC)
 ```
 
-Tüm route'lar lazy-load edilecek (`React.lazy` + `Suspense`).
+Tüm route'lar `React.lazy` + `Suspense` ile lazy-load edilir.
 
 ---
 
-## 3. State Management (Zustand)
+## 3. State Management (10 Store)
 
-### Store Stratejisi
+| Store | Entity | Persist? | Sorumluluk |
+|---|---|---|---|
+| `useAlertStore` | `Alert[]` | ❌ | Alert listesi, filtreleme |
+| `useIncidentStore` | `Incident[]` | ❌ | Incident listesi, filtreleme |
+| `useIOCStore` | `IOC[]` | ❌ | IOC listesi, tip filtreleme |
+| `useAssetStore` | `Asset[]` | ❌ | Endpoint listesi |
+| `useUserStore` | `User[]` | ❌ | Kullanıcı profilleri |
+| `usePlaybookDefStore` | `PlaybookDefinition[]` | ❌ | Playbook tanımları |
+| `usePlaybookRunStore` | `PlaybookRun[]` | ❌ | Playbook çalıştırma kayıtları |
+| `useDetectionStore` | `DetectionRule[]` | ❌ | Sigma kuralları |
+| `useMitreStore` | `MitreCoverage` | ❌ | MITRE matrisi |
+| `useKPIStore` | `KPIMetrics` | ❌ | Dashboard metrikleri |
+| `useUIStore` | UI state | ❌ | Sidebar, drawer, theme |
+| `useSettingsStore` | `Settings` | ✅ localStorage | Tema, dil, yoğunluk |
 
-Her entity için ayrı store, her store kendi data'sını yönetir:
+Factory pattern: `createEntityStore<T>(filename)` → 10 store generik şablondan üretilir.
 
-| Store | Entity | Sorumluluk |
+---
+
+## 4. Data Flow
+
+```
+JSON files (public/data/)
+     │
+     ▼ fetch()
+lib/data.ts (in-memory Map cache)
+     │
+     ▼ loadEntity<T>()
+Zustand store.load()
+     │
+     ▼ selector
+React component
+```
+
+- Her store kendi `load()` action'ından `loadEntity<T>()` çağırır
+- İkinci çağrıda cache'den döner, network yok
+- `import.meta.env.BASE_URL` ile path çözümleme (GitHub Pages uyumlu)
+
+---
+
+## 5. Build & Deploy
+
+```yaml
+# .github/workflows/deploy.yml
+push to main
+  → setup-node@v4 (node 20, npm cache)
+  → npm ci (working-directory: frontend)
+  → npm run build
+  → upload-pages-artifact (path: frontend/dist)
+  → deploy-pages@v4
+```
+
+- `vite.config.ts`: `base: '/SOC-case-study-project/'`, `esbuild.drop: [console, debugger]`
+- `manualChunks`: vendor (react + router), charts (recharts)
+- Output: 30 files, ~200 KB gzipped JS, ~7 KB gzipped CSS
+
+---
+
+## 6. Bundle Size (Production Build)
+
+| Chunk | Size | Gzip |
 |---|---|---|
-| `alertStore` | `Alert[]` | Alert listesi, filtreleme, seçili alert |
-| `incidentStore` | `Incident[]` | Incident listesi, seçili incident, filtreleme |
-| `iocStore` | `IOC[]` | IOC listesi, tip filtreleme, seçili IOC |
-| `assetStore` | `Asset[]` | Endpoint listesi, seçili asset |
-| `userStore` | `User[]` | Kullanıcı profilleri |
-| `playbookStore` | `PlaybookRun[]` | Playbook tanımları + çalıştırma geçmişi |
-| `detectionStore` | `DetectionRule[]` | Sigma kuralları |
-| `mitreStore` | `MitreCoverage` | MITRE matrisi, technique-tactic mapping |
-| `uiStore` | UI durumu | Sidebar collapsed, active drawer, search query, theme |
-| `settingsStore` | `Settings` | Persisted (localStorage): theme, language, density |
-
-### Prensipler
-- **Her store kendi verisini fetch eder.** Global "useData" yok. `data.ts`'teki `fetchEntity<T>()` her store'un `load()` action'ından çağrılır.
-- **Fetch-on-navigate.** Sayfa değişince ilgili store'un `load()`'u tetiklenir. Veri in-memory cache'lenir (`fetchEntity` ikinci çağrıda promise döndürmez, cached döner).
-- **`settingsStore` ve `uiStore` zustand persist middleware kullanır.** localStorage'a yazılır.
-- **Entity store'ları persist edilmez.** Her sayfa yüklemede JSON fetch eder.
-
-### Örnek Store Yapısı
-
-```ts
-// alertStore.ts
-interface AlertState {
-  alerts: Alert[]
-  selectedId: string | null
-  filters: AlertFilters
-  isLoading: boolean
-  error: string | null
-
-  load: () => Promise<void>
-  selectAlert: (id: string) => void
-  setFilters: (filters: Partial<AlertFilters>) => void
-  clearSelection: () => void
-}
-```
+| vendor (react + router) | 164 KB | 53 KB |
+| charts (recharts) | 411 KB | 111 KB |
+| index (app shell + ui) | 81 KB | 25 KB |
+| Overview | 12 KB | 4 KB |
+| 12 lazy pages | 2-8 KB each | 1-3 KB each |
+| CSS | 38 KB | 7 KB |
+| **Total (all chunks)** | **~824 KB** | **~207 KB** |
 
 ---
 
-## 4. Data Fetch Stratejisi
+## 7. Erişilebilirlik
 
-### `lib/data.ts` — Merkezi Fetch Layer
-
-```ts
-// Tek tip fetch fonksiyonu
-async function fetchJSON<T>(filename: string): Promise<T> {
-  const base = import.meta.env.BASE_URL
-  const res = await fetch(`${base}data/${filename}`)
-  if (!res.ok) throw new Error(`Failed to load ${filename}`)
-  return res.json()
-}
-
-// In-memory cache
-const cache = new Map<string, unknown>()
-
-// Her store'un load() action'ı:
-export async function loadEntity<T>(filename: string): Promise<T> {
-  if (cache.has(filename)) return cache.get(filename) as T
-  const data = await fetchJSON<T>(filename)
-  cache.set(filename, data)
-  return data
-}
-```
-
-### Neden SWR/React Query Yok?
-- Veri statik, revalidate gerekmez.
-- GitHub Pages'te backend yok.
-- `useEffect` + Zustand yeterli.
-- Ek dependency istemiyoruz.
-
----
-
-## 5. Design System
-
-### Token Katmanları
-1. **CSS Custom Properties** (`:root` / `.dark`) — renkler, radius, shadow
-2. **Tailwind `extend`** — custom renkler (severity, status), font, animasyon
-
-### Renk Paleti
-| Token | Açıklama |
+| Feature | Implementasyon |
 |---|---|
-| `--severity-critical` | `#f85149` (kırmızı) |
-| `--severity-high` | `#f0883e` (turuncu) |
-| `--severity-medium` | `#d29922` (sarı) |
-| `--severity-low` | `#3fb950` (yeşil) |
-| `--severity-info` | `#8b949e` (gri) |
-| `--status-open` | `#f0883e` |
-| `--status-investigating` | `#58a6ff` (mavi) |
-| `--status-contained` | `#d29922` |
-| `--status-closed` | `#3fb950` |
-| `--status-false-positive` | `#8b949e` |
-
-### Tailwind Extend
-```js
-colors: {
-  severity: {
-    critical: 'var(--severity-critical)',
-    high:     'var(--severity-high)',
-    medium:   'var(--severity-medium)',
-    low:      'var(--severity-low)',
-    info:     'var(--severity-info)',
-  },
-  status: { ... }
-}
-```
-
-Kullanım: `bg-severity-critical`, `text-status-investigating`, `border-severity-high`
+| Skip link | `#main-content` anchor, `sr-only focus:not-sr-only` |
+| Landmark roles | `banner`, `navigation`, `main`, `complementary`, `contentinfo` |
+| Keyboard nav | Tab order, Enter/Shift+Enter, Escape kapatma |
+| Focus trap | Drawer + mobile sidebar |
+| ARIA labels | Tüm icon-only button'lar + interactive element'ler |
+| Color | Severity/status pill'leri ikon + renk + metin |
+| Reduced motion | `prefers-reduced-motion` için CSS animasyon disable |
+| Screen reader | Semantic HTML + `aria-busy` skeleton + `aria-expanded` toggle |
 
 ---
 
-## 6. Dark Mode (Default)
+## 8. Tasarım Kararları (Why Not X?)
 
-- `<html class="dark">` varsayılan.
-- `settingsStore.theme` `'dark'` | `'light'` | `'system'`.
-- `useTheme` hook'u `<html>`'e `.dark` class'ını toggle'lar.
-- Tüm stiller `.dark` ve `:root` üzerinden CSS custom properties ile.
-- Tailwind `darkMode: 'class'` konfigürasyonu.
+**Neden Redux değil Zustand?**
+10 store × ortalama 3 action = 30 boilerplate. Zustand factory pattern ile 30 satırda biter, Redux 200+.
 
----
+**Neden HashRouter, BrowserRouter değil?**
+GitHub Pages SPA routing desteklemez. `/alerts` refresh edince 404 döner. HashRouter `#/alerts` her zaman `index.html` serve edilir.
 
-## 7. Bundle & Code Splitting
+**Neden Tremor/Material/Chakra değil?**
+Bundle maliyeti. Tailwind + 5 kendi primitive'imiz = 38 KB CSS. Tremor tek başına 200 KB+.
 
-- Her sayfa `React.lazy(() => import(...))` ile lazy load.
-- `lib/data.ts` ana chunk'ta.
-- `components/ui/` primitifleri ana chunk'ta (her sayfada kullanılır).
-- Recharts lazy load (charts chunk).
-- Hedef: initial bundle ≤ 200KB gzipped.
+**Neden Mock Service Worker yok?**
+Statik JSON yeterli. Pipeline deterministic, "fake API" sahte zenginlik katmazdı.
 
----
-
-## 8. Erişilebilirlik
-
-- Tüm interactive element'ler `role` + `aria-label`.
-- Severity badge: ikon + renk + metin (renk tek başına bilgi taşımasın).
-- Drawer: `Escape` kapatır, focus trap.
-- DataTable: keyboard navigasyon (tab, enter).
-- Skip link (görünmez, ilk tab'da).
-- `prefers-reduced-motion` için animasyon disable.
+**Neden testler yok?**
+Portfolyo projesi, demo amaçlı. Test eklenecek olsa Playwright e2e mantıklı olur, unit test değil. Roadmap'te.
