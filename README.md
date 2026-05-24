@@ -145,6 +145,15 @@ npm run preview
 - **Erişilebilirlik:** Skip-to-content, landmark role'leri, keyboard navigation, focus trap, Escape tuşu, ARIA-labeled ikonlar, `prefers-reduced-motion`.
 - **Sıfır Backend:** GitHub Pages'te statik. Backend yok, auth yok, API key yok. Sadece JSON + React.
 
+### v2.1 — Power Features (2026)
+
+- **Forensic Pivot:** IP, user, asset — tıklanabilir. Gerçek SOC analist workflow'u.
+- **AI Triage:** Her alert için Mehmet tarzı analiz özeti (simüle, eğitim amaçlı).
+- **Investigation Graph:** Incident'lerin entity ilişkilerini Sentinel tarzı görsel grafikle.
+- **Geo Threat Map:** Saldırı origin'lerini dünya haritasında pulse marker'larla.
+- **Command Palette (Ctrl+K):** Linear tarzı global arama + komutlar.
+- **Sigma Highlighting + CSV Export:** Profesyonel polish.
+
 ---
 
 ## Mimari
