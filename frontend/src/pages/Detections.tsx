@@ -3,7 +3,9 @@ import { useDetectionStore } from '@/store'
 import { SkeletonTable } from '@/components/ui/skeleton-card'
 import { SeverityPill } from '@/components/ui/severity-pill'
 import { EmptyState } from '@/components/ui/empty-state'
-import { Crosshair } from 'lucide-react'
+import { highlightYAML } from '@/lib/highlight'
+import { toast } from 'sonner'
+import { Crosshair, Copy } from 'lucide-react'
 
 export default function Detections() {
   const { data: rules, isLoading, load } = useDetectionStore()
@@ -51,11 +53,21 @@ export default function Detections() {
                 </div>
               )}
 
-              <details className="mt-3">
+              <details className="mt-3 group/sigma">
                 <summary className="text-[10px] text-muted-foreground cursor-pointer hover:text-foreground transition-colors">Sigma Kuralını Göster</summary>
-                <pre className="mt-2 p-3 bg-muted/30 rounded text-[10px] font-mono overflow-x-auto whitespace-pre-wrap border border-border">
-                  {rule.sigma_rule}
-                </pre>
+                <div className="relative mt-2">
+                  <button
+                    onClick={(e) => { e.preventDefault(); navigator.clipboard.writeText(rule.sigma_rule); toast('Sigma kuralı panoya kopyalandı.') }}
+                    className="absolute top-2 right-2 p-1.5 rounded bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors z-10"
+                    aria-label="Sigma kuralını kopyala"
+                  >
+                    <Copy className="w-3 h-3" />
+                  </button>
+                  <pre
+                    className="p-3 bg-muted/30 rounded text-[10px] font-mono overflow-x-auto whitespace-pre-wrap border border-border leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: highlightYAML(rule.sigma_rule) }}
+                  />
+                </div>
               </details>
             </div>
           ))}

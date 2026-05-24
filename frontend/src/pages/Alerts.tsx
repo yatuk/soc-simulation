@@ -8,7 +8,9 @@ import { EmptyState } from '@/components/ui/empty-state'
 import { PivotLink } from '@/components/ui/pivot-link'
 import { AlertFilters, type AlertFilterState } from '@/components/features/alerts/AlertFilters'
 import { defang } from '@/lib/utils'
-import { AlertTriangle, X } from 'lucide-react'
+import { exportCSV, exportJSON, exportFilename } from '@/lib/highlight'
+import { toast } from 'sonner'
+import { AlertTriangle, X, Download } from 'lucide-react'
 
 function parseSearchParams(sp: URLSearchParams): Partial<AlertFilterState> {
   const f: Partial<AlertFilterState> = {}
@@ -103,6 +105,16 @@ export default function Alerts() {
           )}
         </div>
       )}
+
+      {/* Export */}
+      <div className="flex items-center justify-end gap-2">
+        <button onClick={() => { const rows = filtered.map(({ evidence_event_ids, mitre_technique_ids, recommended_actions, ...r }) => ({ ...r, mitre_technique_ids: (r as Record<string, unknown>).mitre_technique_ids })) as unknown as Record<string, unknown>[]; exportCSV(rows, exportFilename('alerts')); toast(`${filtered.length} kayıt CSV olarak dışa aktarıldı.`) }} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md border border-border text-[10px] text-muted-foreground hover:bg-accent transition-colors">
+          <Download className="w-3 h-3" />CSV
+        </button>
+        <button onClick={() => { exportJSON(filtered as unknown as Record<string, unknown>[], exportFilename('alerts').replace('.csv', '.json')); toast(`${filtered.length} kayıt JSON olarak dışa aktarıldı.`) }} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md border border-border text-[10px] text-muted-foreground hover:bg-accent transition-colors">
+          <Download className="w-3 h-3" />JSON
+        </button>
+      </div>
 
       {filtered.length === 0 ? (
         <EmptyState
