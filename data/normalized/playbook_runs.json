@@ -1,0 +1,378 @@
+[
+  {
+    "run_id": "RUN-1001",
+    "playbook_id": "PB-PHISHING-01",
+    "incident_id": "INC-2026-0001",
+    "status": "completed",
+    "step_results": [
+      {
+        "step_id": "s1",
+        "status": "completed",
+        "started_at": "2026-05-19T10:00:00",
+        "finished_at": "2026-05-19T10:00:11",
+        "output": "Gönderici Repütasyon Kontrolü başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s2",
+        "status": "completed",
+        "started_at": "2026-05-19T10:00:00",
+        "finished_at": "2026-05-19T10:00:57",
+        "output": "E-postayı Karantinaya Al başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s3",
+        "status": "completed",
+        "started_at": "2026-05-19T10:00:00",
+        "finished_at": "2026-05-19T10:00:27",
+        "output": "Parola Sıfırla başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s4",
+        "status": "completed",
+        "started_at": "2026-05-19T10:00:00",
+        "finished_at": "2026-05-19T10:00:25",
+        "output": "Kullanıcıyı Bilgilendir başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s5",
+        "status": "completed",
+        "started_at": "2026-05-19T10:00:00",
+        "finished_at": "2026-05-19T10:00:24",
+        "output": "Kapatma Onayı başarıyla tamamlandı"
+      }
+    ],
+    "started_at": "2026-05-19T10:00:00",
+    "finished_at": "2026-05-19T10:01:28",
+    "duration_seconds": 88,
+    "notes": "Oltalama Yanıt — kullanıcıya eğitim verildi.",
+    "triggered_by": "auto"
+  },
+  {
+    "run_id": "RUN-1002",
+    "playbook_id": "PB-ACCOUNT-01",
+    "incident_id": "INC-2026-0002",
+    "status": "completed",
+    "step_results": [
+      {
+        "step_id": "s1",
+        "status": "completed",
+        "started_at": "2026-05-20T02:00:00",
+        "finished_at": "2026-05-20T02:00:16",
+        "output": "Oturumları Sonlandır başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s2",
+        "status": "completed",
+        "started_at": "2026-05-20T02:00:00",
+        "finished_at": "2026-05-20T02:00:53",
+        "output": "Parola Sıfırla ve MFA Zorla başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s3",
+        "status": "completed",
+        "started_at": "2026-05-20T02:00:00",
+        "finished_at": "2026-05-20T02:00:57",
+        "output": "Yanal Hareket Kontrolü başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s4",
+        "status": "completed",
+        "started_at": "2026-05-20T02:00:00",
+        "finished_at": "2026-05-20T02:00:44",
+        "output": "İzolasyon Kararı başarıyla tamamlandı"
+      }
+    ],
+    "started_at": "2026-05-20T02:00:00",
+    "finished_at": "2026-05-20T02:04:08",
+    "duration_seconds": 248,
+    "notes": "Otomatik Hesap Ele Geçirme Yanıtı çalıştırıldı.",
+    "triggered_by": "Emre Korkmaz"
+  },
+  {
+    "run_id": "RUN-1003",
+    "playbook_id": "PB-MALWARE-01",
+    "incident_id": "INC-2026-0003",
+    "status": "completed",
+    "step_results": [
+      {
+        "step_id": "s1",
+        "status": "completed",
+        "started_at": "2026-05-21T01:00:00",
+        "finished_at": "2026-05-21T01:00:37",
+        "output": "Uç Noktayı İzole Et başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s2",
+        "status": "completed",
+        "started_at": "2026-05-21T01:00:00",
+        "finished_at": "2026-05-21T01:00:12",
+        "output": "Adli Bilişim Topla başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s3",
+        "status": "completed",
+        "started_at": "2026-05-21T01:00:00",
+        "finished_at": "2026-05-21T01:00:11",
+        "output": "IOC'leri Engelle başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s4",
+        "status": "completed",
+        "started_at": "2026-05-21T01:00:00",
+        "finished_at": "2026-05-21T01:00:15",
+        "output": "Benzer Cihazları Tara başarıyla tamamlandı"
+      }
+    ],
+    "started_at": "2026-05-21T01:00:00",
+    "finished_at": "2026-05-21T01:03:31",
+    "duration_seconds": 211,
+    "notes": "Otomatik Zararlı Yazılım İzolasyonu çalıştırıldı.",
+    "triggered_by": "auto"
+  },
+  {
+    "run_id": "RUN-1004",
+    "playbook_id": "PB-EXFIL-01",
+    "incident_id": "INC-2026-0004",
+    "status": "completed",
+    "step_results": [
+      {
+        "step_id": "s1",
+        "status": "completed",
+        "started_at": "2026-05-22T03:00:00",
+        "finished_at": "2026-05-22T03:00:42",
+        "output": "Paylaşımı İptal Et başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s2",
+        "status": "completed",
+        "started_at": "2026-05-22T03:00:00",
+        "finished_at": "2026-05-22T03:00:48",
+        "output": "Erişim Denetimi başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s3",
+        "status": "completed",
+        "started_at": "2026-05-22T03:00:00",
+        "finished_at": "2026-05-22T03:00:11",
+        "output": "Yasal Bildirim başarıyla tamamlandı"
+      }
+    ],
+    "started_at": "2026-05-22T03:00:00",
+    "finished_at": "2026-05-22T03:01:59",
+    "duration_seconds": 119,
+    "notes": "Otomatik Veri Sızdırma Yanıtı çalıştırıldı.",
+    "triggered_by": "Emre Korkmaz"
+  },
+  {
+    "run_id": "RUN-1005",
+    "playbook_id": "PB-PHISHING-01",
+    "incident_id": "INC-2026-0005",
+    "status": "completed",
+    "step_results": [
+      {
+        "step_id": "s1",
+        "status": "completed",
+        "started_at": "2026-05-23T08:00:00",
+        "finished_at": "2026-05-23T08:00:55",
+        "output": "Gönderici Repütasyon Kontrolü başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s2",
+        "status": "completed",
+        "started_at": "2026-05-23T08:00:00",
+        "finished_at": "2026-05-23T08:00:51",
+        "output": "E-postayı Karantinaya Al başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s3",
+        "status": "completed",
+        "started_at": "2026-05-23T08:00:00",
+        "finished_at": "2026-05-23T08:00:54",
+        "output": "Parola Sıfırla başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s4",
+        "status": "completed",
+        "started_at": "2026-05-23T08:00:00",
+        "finished_at": "2026-05-23T08:00:44",
+        "output": "Kullanıcıyı Bilgilendir başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s5",
+        "status": "completed",
+        "started_at": "2026-05-23T08:00:00",
+        "finished_at": "2026-05-23T08:00:36",
+        "output": "Kapatma Onayı başarıyla tamamlandı"
+      }
+    ],
+    "started_at": "2026-05-23T08:00:00",
+    "finished_at": "2026-05-23T08:01:50",
+    "duration_seconds": 110,
+    "notes": "Otomatik Oltalama Yanıt çalıştırıldı.",
+    "triggered_by": "auto"
+  },
+  {
+    "run_id": "RUN-1006",
+    "playbook_id": "PB-ACCOUNT-01",
+    "incident_id": "INC-2026-0006",
+    "status": "completed",
+    "step_results": [
+      {
+        "step_id": "s1",
+        "status": "completed",
+        "started_at": "2026-05-24T03:00:00",
+        "finished_at": "2026-05-24T03:00:47",
+        "output": "Oturumları Sonlandır başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s2",
+        "status": "completed",
+        "started_at": "2026-05-24T03:00:00",
+        "finished_at": "2026-05-24T03:00:27",
+        "output": "Parola Sıfırla ve MFA Zorla başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s3",
+        "status": "completed",
+        "started_at": "2026-05-24T03:00:00",
+        "finished_at": "2026-05-24T03:00:10",
+        "output": "Yanal Hareket Kontrolü başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s4",
+        "status": "completed",
+        "started_at": "2026-05-24T03:00:00",
+        "finished_at": "2026-05-24T03:00:58",
+        "output": "İzolasyon Kararı başarıyla tamamlandı"
+      }
+    ],
+    "started_at": "2026-05-24T03:00:00",
+    "finished_at": "2026-05-24T03:02:54",
+    "duration_seconds": 174,
+    "notes": "Otomatik Hesap Ele Geçirme Yanıtı çalıştırıldı.",
+    "triggered_by": "Emre Korkmaz"
+  },
+  {
+    "run_id": "RUN-1007",
+    "playbook_id": "PB-MALWARE-01",
+    "incident_id": "INC-2026-0007",
+    "status": "completed",
+    "step_results": [
+      {
+        "step_id": "s1",
+        "status": "completed",
+        "started_at": "2026-05-25T12:00:00",
+        "finished_at": "2026-05-25T12:00:54",
+        "output": "Uç Noktayı İzole Et başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s2",
+        "status": "completed",
+        "started_at": "2026-05-25T12:00:00",
+        "finished_at": "2026-05-25T12:00:37",
+        "output": "Adli Bilişim Topla başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s3",
+        "status": "completed",
+        "started_at": "2026-05-25T12:00:00",
+        "finished_at": "2026-05-25T12:00:31",
+        "output": "IOC'leri Engelle başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s4",
+        "status": "completed",
+        "started_at": "2026-05-25T12:00:00",
+        "finished_at": "2026-05-25T12:00:27",
+        "output": "Benzer Cihazları Tara başarıyla tamamlandı"
+      }
+    ],
+    "started_at": "2026-05-25T12:00:00",
+    "finished_at": "2026-05-25T12:01:40",
+    "duration_seconds": 100,
+    "notes": "Otomatik Zararlı Yazılım İzolasyonu çalıştırıldı.",
+    "triggered_by": "auto"
+  },
+  {
+    "run_id": "RUN-1008",
+    "playbook_id": "PB-EXFIL-01",
+    "incident_id": "INC-2026-0008",
+    "status": "completed",
+    "step_results": [
+      {
+        "step_id": "s1",
+        "status": "completed",
+        "started_at": "2026-05-26T02:00:00",
+        "finished_at": "2026-05-26T02:00:58",
+        "output": "Paylaşımı İptal Et başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s2",
+        "status": "completed",
+        "started_at": "2026-05-26T02:00:00",
+        "finished_at": "2026-05-26T02:00:31",
+        "output": "Erişim Denetimi başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s3",
+        "status": "completed",
+        "started_at": "2026-05-26T02:00:00",
+        "finished_at": "2026-05-26T02:00:16",
+        "output": "Yasal Bildirim başarıyla tamamlandı"
+      }
+    ],
+    "started_at": "2026-05-26T02:00:00",
+    "finished_at": "2026-05-26T02:01:55",
+    "duration_seconds": 115,
+    "notes": "Otomatik Veri Sızdırma Yanıtı çalıştırıldı.",
+    "triggered_by": "Emre Korkmaz"
+  },
+  {
+    "run_id": "RUN-1009",
+    "playbook_id": "PB-PHISHING-01",
+    "incident_id": "INC-2026-0009",
+    "status": "completed",
+    "step_results": [
+      {
+        "step_id": "s1",
+        "status": "completed",
+        "started_at": "2026-05-27T01:00:00",
+        "finished_at": "2026-05-27T01:00:16",
+        "output": "Gönderici Repütasyon Kontrolü başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s2",
+        "status": "completed",
+        "started_at": "2026-05-27T01:00:00",
+        "finished_at": "2026-05-27T01:00:32",
+        "output": "E-postayı Karantinaya Al başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s3",
+        "status": "completed",
+        "started_at": "2026-05-27T01:00:00",
+        "finished_at": "2026-05-27T01:00:32",
+        "output": "Parola Sıfırla başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s4",
+        "status": "completed",
+        "started_at": "2026-05-27T01:00:00",
+        "finished_at": "2026-05-27T01:00:48",
+        "output": "Kullanıcıyı Bilgilendir başarıyla tamamlandı"
+      },
+      {
+        "step_id": "s5",
+        "status": "completed",
+        "started_at": "2026-05-27T01:00:00",
+        "finished_at": "2026-05-27T01:00:26",
+        "output": "Kapatma Onayı başarıyla tamamlandı"
+      }
+    ],
+    "started_at": "2026-05-27T01:00:00",
+    "finished_at": "2026-05-27T01:02:37",
+    "duration_seconds": 157,
+    "notes": "Otomatik Oltalama Yanıt çalıştırıldı.",
+    "triggered_by": "auto"
+  }
+]

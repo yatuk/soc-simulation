@@ -1,0 +1,1702 @@
+[
+  {
+    "asset_id": "AST-001",
+    "hostname": "IST-WS-001",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-a1b2c3d4",
+    "location": "İstanbul",
+    "risk_score": 35,
+    "isolation_status": "normal",
+    "open_alert_count": 1,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 3568,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T00:16:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 4568,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T01:35:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 5568,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T02:55:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-11T00:00:00"
+      },
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.1.51",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-11T02:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-11T04:00:00"
+      }
+    ],
+    "first_seen": "2026-04-09T00:00:00",
+    "last_seen": "2026-05-22T00:00:00"
+  },
+  {
+    "asset_id": "AST-002",
+    "hostname": "IST-WS-002",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-b2c3d4e5",
+    "location": "İstanbul",
+    "risk_score": 35,
+    "isolation_status": "normal",
+    "open_alert_count": 1,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 4969,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T00:48:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 5969,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T01:11:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 6969,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T02:32:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-12T00:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-12T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.50",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-12T04:00:00"
+      }
+    ],
+    "first_seen": "2025-10-27T00:00:00",
+    "last_seen": "2026-05-23T00:00:00"
+  },
+  {
+    "asset_id": "AST-003",
+    "hostname": "ANK-LT-001",
+    "type": "laptop",
+    "os": "macOS 14 Sonoma",
+    "owner_user_id": "usr-c3d4e5f6",
+    "location": "Ankara",
+    "risk_score": 20,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 2858,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-11T00:07:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 3858,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-11T01:59:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 4858,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-11T02:23:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T00:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.1.50",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.2.100",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T04:00:00"
+      }
+    ],
+    "first_seen": "2026-03-06T00:00:00",
+    "last_seen": "2026-05-24T00:00:00"
+  },
+  {
+    "asset_id": "AST-004",
+    "hostname": "IST-WS-003",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-d4e5f6a7",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 4763,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T00:08:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 5763,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T01:08:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 6763,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T02:42:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T00:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T02:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T04:00:00"
+      }
+    ],
+    "first_seen": "2025-12-29T00:00:00",
+    "last_seen": "2026-05-22T00:00:00"
+  },
+  {
+    "asset_id": "AST-005",
+    "hostname": "IST-WS-004",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-e5f6a7b8",
+    "location": "İstanbul",
+    "risk_score": 95,
+    "isolation_status": "isolated",
+    "open_alert_count": 3,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 3678,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T00:42:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 4678,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T01:41:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 5678,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T02:23:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T00:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.50",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T04:00:00"
+      }
+    ],
+    "first_seen": "2025-07-01T00:00:00",
+    "last_seen": "2026-05-21T00:00:00"
+  },
+  {
+    "asset_id": "AST-006",
+    "hostname": "IZM-LT-001",
+    "type": "laptop",
+    "os": "macOS 14 Sonoma",
+    "owner_user_id": "usr-f6a7b8c9",
+    "location": "İzmir",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 3671,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T00:14:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 4671,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T01:00:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 5671,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T02:04:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T00:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.1.50",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T02:00:00"
+      },
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T04:00:00"
+      }
+    ],
+    "first_seen": "2025-08-05T00:00:00",
+    "last_seen": "2026-05-21T00:00:00"
+  },
+  {
+    "asset_id": "AST-007",
+    "hostname": "IST-WS-005",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-a7b8c9d0",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 4232,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T00:08:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 5232,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T01:46:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 6232,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T02:59:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.51",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T00:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.50",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.50",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T04:00:00"
+      }
+    ],
+    "first_seen": "2025-09-02T00:00:00",
+    "last_seen": "2026-05-22T00:00:00"
+  },
+  {
+    "asset_id": "AST-008",
+    "hostname": "IST-EXC-001",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-b8c9d0e1",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 2084,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T00:26:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 3084,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T01:29:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 4084,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T02:55:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.51",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T00:00:00"
+      },
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T02:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.50",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T04:00:00"
+      }
+    ],
+    "first_seen": "2026-01-03T00:00:00",
+    "last_seen": "2026-05-24T00:00:00"
+  },
+  {
+    "asset_id": "AST-009",
+    "hostname": "ANK-LT-002",
+    "type": "laptop",
+    "os": "macOS 14 Sonoma",
+    "owner_user_id": "usr-c9d0e1f2",
+    "location": "Ankara",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 4860,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T00:08:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 5860,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T01:27:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 6860,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T02:11:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.51",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T00:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.1.50",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T04:00:00"
+      }
+    ],
+    "first_seen": "2026-04-03T00:00:00",
+    "last_seen": "2026-05-20T00:00:00"
+  },
+  {
+    "asset_id": "AST-010",
+    "hostname": "IST-SEC-001",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-d0e1f2a3",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 3674,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T00:54:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 4674,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T01:15:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 5674,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T02:10:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T00:00:00"
+      },
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T04:00:00"
+      }
+    ],
+    "first_seen": "2025-11-26T00:00:00",
+    "last_seen": "2026-05-23T00:00:00"
+  },
+  {
+    "asset_id": "AST-011",
+    "hostname": "IST-DEV-001",
+    "type": "workstation",
+    "os": "Ubuntu 22.04 LTS",
+    "owner_user_id": "usr-e1f2a3b4",
+    "location": "İstanbul",
+    "risk_score": 35,
+    "isolation_status": "normal",
+    "open_alert_count": 1,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 4389,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T00:27:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 5389,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T01:44:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 6389,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T02:46:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T00:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.50",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T04:00:00"
+      }
+    ],
+    "first_seen": "2025-07-07T00:00:00",
+    "last_seen": "2026-05-20T00:00:00"
+  },
+  {
+    "asset_id": "AST-012",
+    "hostname": "BRS-WS-001",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-f2a3b4c5",
+    "location": "Bursa",
+    "risk_score": 23,
+    "isolation_status": "normal",
+    "open_alert_count": 1,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 2952,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T00:20:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 3952,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T01:03:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 4952,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T02:03:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.2.100",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T00:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.1.50",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.2.100",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T04:00:00"
+      }
+    ],
+    "first_seen": "2025-12-11T00:00:00",
+    "last_seen": "2026-05-23T00:00:00"
+  },
+  {
+    "asset_id": "AST-013",
+    "hostname": "IST-WS-006",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-a3b4c5d6",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 3420,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-12T00:56:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 4420,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-12T01:36:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 5420,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-12T02:15:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T00:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T02:00:00"
+      },
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T04:00:00"
+      }
+    ],
+    "first_seen": "2025-10-31T00:00:00",
+    "last_seen": "2026-05-22T00:00:00"
+  },
+  {
+    "asset_id": "AST-014",
+    "hostname": "IST-WS-007",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-b4c5d6e7",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 1324,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-14T00:42:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 2324,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-14T01:45:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 3324,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-14T02:20:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-14T00:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.51",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-14T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-14T04:00:00"
+      }
+    ],
+    "first_seen": "2026-04-06T00:00:00",
+    "last_seen": "2026-05-23T00:00:00"
+  },
+  {
+    "asset_id": "AST-015",
+    "hostname": "IST-WS-008",
+    "type": "workstation",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-c5d6e7f8",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 3836,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T00:36:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 4836,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T01:06:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 5836,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-20T02:04:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T00:00:00"
+      },
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T02:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T04:00:00"
+      }
+    ],
+    "first_seen": "2025-08-29T00:00:00",
+    "last_seen": "2026-05-24T00:00:00"
+  },
+  {
+    "asset_id": "AST-016",
+    "hostname": "IST-DC-001",
+    "type": "server",
+    "os": "Windows Server 2022",
+    "owner_user_id": "usr-b2c3d4e5",
+    "location": "İstanbul DC",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 4558,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T00:19:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 5558,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T01:39:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 6558,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T02:51:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.2.100",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-21T00:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.2.100",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-21T02:00:00"
+      },
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-21T04:00:00"
+      }
+    ],
+    "first_seen": "2026-02-10T00:00:00",
+    "last_seen": "2026-05-20T00:00:00"
+  },
+  {
+    "asset_id": "AST-017",
+    "hostname": "IST-MAIL-001",
+    "type": "server",
+    "os": "Windows Server 2022",
+    "owner_user_id": "usr-b2c3d4e5",
+    "location": "İstanbul DC",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 2774,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T00:35:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 3774,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T01:09:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 4774,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T02:17:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T00:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T02:00:00"
+      },
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.1.51",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T04:00:00"
+      }
+    ],
+    "first_seen": "2025-08-03T00:00:00",
+    "last_seen": "2026-05-22T00:00:00"
+  },
+  {
+    "asset_id": "AST-018",
+    "hostname": "IST-WEB-001",
+    "type": "server",
+    "os": "Ubuntu 22.04 LTS",
+    "owner_user_id": "usr-b2c3d4e5",
+    "location": "İstanbul DC",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 2324,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-11T00:05:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 3324,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-11T01:40:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 4324,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-11T02:27:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.50",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T00:00:00"
+      },
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T02:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.2.100",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-15T04:00:00"
+      }
+    ],
+    "first_seen": "2025-07-02T00:00:00",
+    "last_seen": "2026-05-23T00:00:00"
+  },
+  {
+    "asset_id": "AST-019",
+    "hostname": "ANK-VDI-001",
+    "type": "laptop",
+    "os": "Windows 11 Enterprise",
+    "owner_user_id": "usr-b2c3d4e5",
+    "location": "Ankara DC",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 1583,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T00:00:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 2583,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T01:07:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 3583,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-19T02:04:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T00:00:00"
+      },
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T02:00:00"
+      },
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-22T04:00:00"
+      }
+    ],
+    "first_seen": "2025-11-04T00:00:00",
+    "last_seen": "2026-05-22T00:00:00"
+  },
+  {
+    "asset_id": "AST-020",
+    "hostname": "IST-MOB-001",
+    "type": "mobile",
+    "os": "iOS 17",
+    "owner_user_id": "usr-b8c9d0e1",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 3557,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T00:55:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 4557,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T01:02:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 5557,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T02:57:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-16T00:00:00"
+      },
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.2.100",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-16T02:00:00"
+      },
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-16T04:00:00"
+      }
+    ],
+    "first_seen": "2026-01-21T00:00:00",
+    "last_seen": "2026-05-21T00:00:00"
+  },
+  {
+    "asset_id": "AST-021",
+    "hostname": "IST-MOB-002",
+    "type": "mobile",
+    "os": "Android 14",
+    "owner_user_id": "usr-d4e5f6a7",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 2516,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-13T00:51:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 3516,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-13T01:51:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 4516,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-13T02:11:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.51",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T00:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T02:00:00"
+      },
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T04:00:00"
+      }
+    ],
+    "first_seen": "2026-01-19T00:00:00",
+    "last_seen": "2026-05-20T00:00:00"
+  },
+  {
+    "asset_id": "AST-022",
+    "hostname": "IZM-WS-001",
+    "type": "workstation",
+    "os": "Windows 10 Pro",
+    "owner_user_id": "usr-b2c3d4e5",
+    "location": "İzmir",
+    "risk_score": 35,
+    "isolation_status": "normal",
+    "open_alert_count": 1,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 2113,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T00:55:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 3113,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T01:02:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 4113,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T02:54:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.1.51",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T00:00:00"
+      },
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.1.50",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T02:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.50",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-18T04:00:00"
+      }
+    ],
+    "first_seen": "2026-01-02T00:00:00",
+    "last_seen": "2026-05-23T00:00:00"
+  },
+  {
+    "asset_id": "AST-023",
+    "hostname": "ANT-LT-001",
+    "type": "laptop",
+    "os": "Windows 11 Pro",
+    "owner_user_id": "usr-f2a3b4c5",
+    "location": "Antalya",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 3174,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-16T00:17:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 4174,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-16T01:55:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 5174,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-16T02:04:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "teams.microsoft.com",
+        "dst_ip": "10.10.2.100",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T00:00:00"
+      },
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.2.100",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T02:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-23T04:00:00"
+      }
+    ],
+    "first_seen": "2026-02-10T00:00:00",
+    "last_seen": "2026-05-22T00:00:00"
+  },
+  {
+    "asset_id": "AST-024",
+    "hostname": "IST-KIOSK-001",
+    "type": "other",
+    "os": "Windows 10 LTSC",
+    "owner_user_id": "usr-b2c3d4e5",
+    "location": "İstanbul Şube",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 4729,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-13T00:37:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 5729,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-13T01:16:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 6729,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-13T02:02:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "update.microsoft.com",
+        "dst_ip": "10.10.2.100",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-12T00:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.1.51",
+        "port": 8080,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-12T02:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.2.100",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-12T04:00:00"
+      }
+    ],
+    "first_seen": "2025-09-25T00:00:00",
+    "last_seen": "2026-05-24T00:00:00"
+  },
+  {
+    "asset_id": "AST-025",
+    "hostname": "IST-PRINT-001",
+    "type": "other",
+    "os": "Embedded Linux",
+    "owner_user_id": "usr-b2c3d4e5",
+    "location": "İstanbul",
+    "risk_score": 0,
+    "isolation_status": "normal",
+    "open_alert_count": 0,
+    "recent_processes": [
+      {
+        "process_name": "explorer.exe",
+        "pid": 3548,
+        "parent_process_name": null,
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-14T00:16:00"
+      },
+      {
+        "process_name": "outlook.exe",
+        "pid": 4548,
+        "parent_process_name": "explorer.exe",
+        "command_line": "C:\\Program Files\\Microsoft Office\\Office16\\OUTLOOK.EXE",
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-14T01:02:00"
+      },
+      {
+        "process_name": "chrome.exe",
+        "pid": 5548,
+        "parent_process_name": "explorer.exe",
+        "command_line": null,
+        "file_hash": null,
+        "is_suspicious": false,
+        "timestamp": "2026-05-14T02:45:00"
+      }
+    ],
+    "recent_network_connections": [
+      {
+        "domain": "login.microsoftonline.com",
+        "dst_ip": "10.10.1.51",
+        "port": 443,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T00:00:00"
+      },
+      {
+        "domain": "outlook.office365.com",
+        "dst_ip": "10.10.2.100",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T02:00:00"
+      },
+      {
+        "domain": "github.com",
+        "dst_ip": "10.10.2.100",
+        "port": 80,
+        "protocol": "TCP",
+        "is_suspicious": false,
+        "timestamp": "2026-05-17T04:00:00"
+      }
+    ],
+    "first_seen": "2026-02-06T00:00:00",
+    "last_seen": "2026-05-22T00:00:00"
+  }
+]

@@ -1,0 +1,2 @@
+# SOC Dataset Pipeline — pinned dependencies
+# Python 3.10+ (stdlib-only, no external deps)

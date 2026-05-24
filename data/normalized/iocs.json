@@ -1,0 +1,418 @@
+[
+  {
+    "ioc_id": "IOC-DOMAIN-d3a4ed22",
+    "type": "domain",
+    "value": "anadolu-giris-dogrula.example.tk",
+    "label": "Oltalama giriş sayfası",
+    "severity": "high",
+    "confidence": 76,
+    "threat_score": 93,
+    "tags": [
+      "phishing"
+    ],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-b2a1e049",
+    "type": "domain",
+    "value": "finans-portal-guvenli.example.ml",
+    "label": "Finans teması oltalama",
+    "severity": "medium",
+    "confidence": 89,
+    "threat_score": 87,
+    "tags": [
+      "phishing"
+    ],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-800c2b25",
+    "type": "domain",
+    "value": "microsoft-tr-auth.example.cf",
+    "label": "Microsoft sahte domain",
+    "severity": "high",
+    "confidence": 78,
+    "threat_score": 82,
+    "tags": [
+      "phishing"
+    ],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-527f09d1",
+    "type": "domain",
+    "value": "sharepoint-dosya-indir.example.ga",
+    "label": "SharePoint sahte domain",
+    "severity": "medium",
+    "confidence": 77,
+    "threat_score": 87,
+    "tags": [
+      "phishing"
+    ],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-e39b6593",
+    "type": "domain",
+    "value": "onedrive-paylasim.example.tk",
+    "label": "Şüpheli domain",
+    "severity": "medium",
+    "confidence": 84,
+    "threat_score": 90,
+    "tags": [],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-96add0bc",
+    "type": "domain",
+    "value": "outlook-guvenlik.example.ml",
+    "label": "Outlook sahte domain",
+    "severity": "high",
+    "confidence": 94,
+    "threat_score": 81,
+    "tags": [
+      "phishing"
+    ],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-feab0643",
+    "type": "domain",
+    "value": "fatura-odeme-sistemi.example.cf",
+    "label": "Fatura sahte domain",
+    "severity": "critical",
+    "confidence": 93,
+    "threat_score": 76,
+    "tags": [
+      "bec"
+    ],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-a73afa9a",
+    "type": "domain",
+    "value": "ik-maas-guncelleme.example.ga",
+    "label": "C2 beacon domain",
+    "severity": "critical",
+    "confidence": 77,
+    "threat_score": 71,
+    "tags": [
+      "c2"
+    ],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-0e496f9e",
+    "type": "domain",
+    "value": "yonetim-portal.example.tk",
+    "label": "Sahte yönetim portalı",
+    "severity": "medium",
+    "confidence": 82,
+    "threat_score": 94,
+    "tags": [],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-cceeb854",
+    "type": "domain",
+    "value": "cdn-guncelleme.example.cf",
+    "label": "C2 beacon domain",
+    "severity": "critical",
+    "confidence": 84,
+    "threat_score": 72,
+    "tags": [
+      "c2"
+    ],
+    "description": "Oltalama veya C2 domain'i. SOC simülasyonu için kurgusal.",
+    "source": "malicious_domain_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-IP-d6c46589",
+    "type": "ip",
+    "value": "198.51.100.45",
+    "label": "Şüpheli ip",
+    "severity": "high",
+    "confidence": 77,
+    "threat_score": 68,
+    "tags": [
+      "attacker"
+    ],
+    "description": "Saldırgan IP adresi. SOC simülasyonu için kurgusal (TEST-NET/IPv4).",
+    "source": "malicious_ip_feed",
+    "related_alert_ids": [
+      "ALR-0001-002",
+      "ALR-0001-003"
+    ],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-IP-f66ee8f8",
+    "type": "ip",
+    "value": "203.0.113.180",
+    "label": "Şüpheli ip",
+    "severity": "high",
+    "confidence": 82,
+    "threat_score": 73,
+    "tags": [
+      "attacker"
+    ],
+    "description": "Saldırgan IP adresi. SOC simülasyonu için kurgusal (TEST-NET/IPv4).",
+    "source": "malicious_ip_feed",
+    "related_alert_ids": [
+      "ALR-0002-002"
+    ],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-IP-5a36ce5a",
+    "type": "ip",
+    "value": "198.51.100.91",
+    "label": "Şüpheli ip",
+    "severity": "high",
+    "confidence": 84,
+    "threat_score": 85,
+    "tags": [
+      "attacker"
+    ],
+    "description": "Saldırgan IP adresi. SOC simülasyonu için kurgusal (TEST-NET/IPv4).",
+    "source": "malicious_ip_feed",
+    "related_alert_ids": [
+      "ALR-0003-001",
+      "ALR-0003-002"
+    ],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-IP-ea3f6e88",
+    "type": "ip",
+    "value": "203.0.113.195",
+    "label": "Şüpheli ip",
+    "severity": "high",
+    "confidence": 81,
+    "threat_score": 70,
+    "tags": [
+      "attacker"
+    ],
+    "description": "Saldırgan IP adresi. SOC simülasyonu için kurgusal (TEST-NET/IPv4).",
+    "source": "malicious_ip_feed",
+    "related_alert_ids": [
+      "ALR-0004-001",
+      "ALR-0004-002",
+      "ALR-0007-001",
+      "ALR-0007-002"
+    ],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-IP-f341fbef",
+    "type": "ip",
+    "value": "198.51.100.54",
+    "label": "Şüpheli ip",
+    "severity": "high",
+    "confidence": 81,
+    "threat_score": 76,
+    "tags": [
+      "attacker"
+    ],
+    "description": "Saldırgan IP adresi. SOC simülasyonu için kurgusal (TEST-NET/IPv4).",
+    "source": "malicious_ip_feed",
+    "related_alert_ids": [
+      "ALR-0005-001",
+      "ALR-0005-002"
+    ],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-IP-19f5652b",
+    "type": "ip",
+    "value": "203.0.113.78",
+    "label": "Şüpheli ip",
+    "severity": "high",
+    "confidence": 76,
+    "threat_score": 86,
+    "tags": [
+      "attacker"
+    ],
+    "description": "Saldırgan IP adresi. SOC simülasyonu için kurgusal (TEST-NET/IPv4).",
+    "source": "malicious_ip_feed",
+    "related_alert_ids": [
+      "ALR-0006-003"
+    ],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-acd144b7",
+    "type": "domain",
+    "value": "micros0ft-secure.info",
+    "label": "Şüpheli domain",
+    "severity": "medium",
+    "confidence": 82,
+    "threat_score": 79,
+    "tags": [],
+    "description": "Harici tehdit istihbaratı feed'inden.",
+    "source": "external_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-8eb7dc41",
+    "type": "domain",
+    "value": "verify-account.top",
+    "label": "Şüpheli domain",
+    "severity": "high",
+    "confidence": 79,
+    "threat_score": 70,
+    "tags": [],
+    "description": "Harici tehdit istihbaratı feed'inden.",
+    "source": "external_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-e9b4adb0",
+    "type": "domain",
+    "value": "login-microsoftonline.verify-account.top",
+    "label": "Microsoft sahte domain",
+    "severity": "high",
+    "confidence": 77,
+    "threat_score": 73,
+    "tags": [
+      "phishing"
+    ],
+    "description": "Harici tehdit istihbaratı feed'inden.",
+    "source": "external_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-0d0225d9",
+    "type": "domain",
+    "value": "temp-mail.io",
+    "label": "Şüpheli domain",
+    "severity": "high",
+    "confidence": 65,
+    "threat_score": 64,
+    "tags": [],
+    "description": "Harici tehdit istihbaratı feed'inden.",
+    "source": "external_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-DOMAIN-2e986e41",
+    "type": "domain",
+    "value": "external-archive.temp-mail.io",
+    "label": "Şüpheli domain",
+    "severity": "medium",
+    "confidence": 68,
+    "threat_score": 79,
+    "tags": [],
+    "description": "Harici tehdit istihbaratı feed'inden.",
+    "source": "external_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-IP-18c051e0",
+    "type": "ip",
+    "value": "89.34.126.77",
+    "label": "Şüpheli ip",
+    "severity": "high",
+    "confidence": 81,
+    "threat_score": 60,
+    "tags": [
+      "attacker"
+    ],
+    "description": "Harici tehdit istihbaratı feed'inden.",
+    "source": "external_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-IP-4c779be1",
+    "type": "ip",
+    "value": "185.220.101.45",
+    "label": "Şüpheli ip",
+    "severity": "high",
+    "confidence": 67,
+    "threat_score": 76,
+    "tags": [
+      "attacker"
+    ],
+    "description": "Harici tehdit istihbaratı feed'inden.",
+    "source": "external_feed",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  },
+  {
+    "ioc_id": "IOC-HASH-0eecdfff",
+    "type": "hash",
+    "value": "a1b2c3d4e5f6789012345678901234567890abcd",
+    "label": "Zararlı yazılım hash'i (SHA256)",
+    "severity": "critical",
+    "confidence": 95,
+    "threat_score": 92,
+    "tags": [
+      "malware",
+      "sha256",
+      "c2"
+    ],
+    "description": "guncelleme.exe payload SHA256 hash'i. C2 beacon iletişimi yapan zararlı yazılım.",
+    "source": "pipeline_extract",
+    "related_alert_ids": [],
+    "first_seen": "2026-05-10T00:00:00",
+    "last_seen": "2026-05-10T00:00:00"
+  }
+]

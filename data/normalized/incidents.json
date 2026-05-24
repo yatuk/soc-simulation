@@ -1,0 +1,514 @@
+[
+  {
+    "incident_id": "INC-2026-0001",
+    "title": "Oltalama Kaynaklı Hesap Ele Geçirme",
+    "severity": "critical",
+    "status": "investigating",
+    "summary": "Kullanıcı oltalama e-postası aldı, zararlı bağlantıya tıkladı ve kimlik bilgilerini girdi. Saldırgan yabancı IP'den giriş yaparak posta kutusu yönlendirme kuralı oluşturdu.",
+    "narrative": "10 Mayıs 2026 sabahı, Ayşe Demir (Finans departmanı) gelen kutusunda 'Acil: Hesap Doğrulama Gerekli' konulu bir e-posta buldu. E-posta, kurumsal BT departmanından geliyormuş gibi görünüyordu ve anadolu-giris-dogrula.example.tk adresine yönlendiren bir bağlantı içeriyordu.\n\nKullanıcı bağlantıya tıkladı ve Office 365 giriş sayfasının birebir kopyasına kimlik bilgilerini girdi. 55 dakika sonra saldırgan, Romanya merkezli bir IP'den (198.51.100.45) hesaba erişti ve otomatik yönlendirme kuralı oluşturdu.\n\nOlay, SIEM'deki imkansız seyahat kuralı sayesinde tespit edildi. Hesap derhal kilitlendi, oturumlar sonlandırıldı ve posta kutusu kuralları temizlendi. Kullanıcıya güvenlik farkındalık eğitimi verildi.",
+    "assignee": "Emre Korkmaz",
+    "affected_user_ids": [
+      "usr-a1b2c3d4"
+    ],
+    "affected_asset_ids": [
+      "AST-001"
+    ],
+    "mitre_technique_ids": [
+      "T1566.002",
+      "T1078",
+      "T1098",
+      "T1114.002"
+    ],
+    "kill_chain_steps": [
+      {
+        "step_id": "INC-2026-0001-k1",
+        "tactic": "Initial Access",
+        "technique_id": "T1566.002",
+        "description": "Oltalama e-postası teslim edildi ve kullanıcı bağlantıya tıkladı",
+        "alert_id": "ALR-0001-001",
+        "timestamp": "2026-05-11T00:05:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0001-k2",
+        "tactic": "Credential Access",
+        "technique_id": "T1078",
+        "description": "Çalınan kimlik bilgileriyle imkansız seyahat girişi",
+        "alert_id": "ALR-0001-002",
+        "timestamp": "2026-05-11T01:00:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0001-k3",
+        "tactic": "Persistence",
+        "technique_id": "T1098",
+        "description": "Posta kutusu yönlendirme kuralı ile kalıcılık sağlandı",
+        "alert_id": "ALR-0001-003",
+        "timestamp": "2026-05-11T01:30:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0001-k4",
+        "tactic": "Collection",
+        "technique_id": "T1114.002",
+        "description": "E-postalar harici adrese yönlendiriliyor",
+        "alert_id": "ALR-0001-003",
+        "timestamp": "2026-05-11T01:30:00",
+        "status": "pending"
+      }
+    ],
+    "alert_ids": [
+      "ALR-0001-001",
+      "ALR-0001-002",
+      "ALR-0001-003"
+    ],
+    "playbook_run_ids": [
+      "RUN-1001"
+    ],
+    "created_at": "2026-05-11T00:00:00",
+    "updated_at": "2026-05-11T03:00:00",
+    "resolved_at": null
+  },
+  {
+    "incident_id": "INC-2026-0002",
+    "title": "OAuth Onay Oltalaması - Token Kötüye Kullanımı",
+    "severity": "high",
+    "status": "contained",
+    "summary": "Kullanıcı zararlı OAuth uygulamasına izin verdi. Saldırgan tokeni kullanarak posta kutusuna erişti ve e-postaları dışarı aktardı.",
+    "narrative": "11 Mayıs 2026'da Mehmet Kaya, 'MailSyncPro — E-posta Yedekleme Aracı' adlı bir uygulamanın OAuth onay isteğini kabul etti. Uygulama, kurumsal bir çözüm gibi görünüyordu ancak Rusya merkezli bir tehdit aktörü tarafından kontrol ediliyordu.\n\nOnaydan sonra saldırgan, OAuth token'ı kullanarak kullanıcının posta kutusundaki tüm e-postaları programatik olarak okudu. Toplamda 200'den fazla e-posta dışarı sızdırıldı. Olay, anormal API çağrı hacmi sayesinde tespit edildi.\n\nUygulama izni iptal edildi, OAuth token'ları geçersiz kılındı ve tenant genelinde OAuth onay politikaları sıkılaştırıldı.",
+    "assignee": "Emre Korkmaz",
+    "affected_user_ids": [
+      "usr-b2c3d4e5"
+    ],
+    "affected_asset_ids": [
+      "AST-002"
+    ],
+    "mitre_technique_ids": [
+      "T1566.002",
+      "T1528",
+      "T1114.002"
+    ],
+    "kill_chain_steps": [
+      {
+        "step_id": "INC-2026-0002-k1",
+        "tactic": "Initial Access",
+        "technique_id": "T1566.002",
+        "description": "OAuth onay isteği e-postası alındı",
+        "alert_id": "ALR-0002-001",
+        "timestamp": "2026-05-12T00:00:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0002-k2",
+        "tactic": "Credential Access",
+        "technique_id": "T1528",
+        "description": "Kullanıcı zararlı uygulamaya izin verdi",
+        "alert_id": "ALR-0002-001",
+        "timestamp": "2026-05-12T00:10:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0002-k3",
+        "tactic": "Collection",
+        "technique_id": "T1114.002",
+        "description": "OAuth token ile toplu e-posta erişimi",
+        "alert_id": "ALR-0002-002",
+        "timestamp": "2026-05-12T01:00:00",
+        "status": "completed"
+      }
+    ],
+    "alert_ids": [
+      "ALR-0002-001",
+      "ALR-0002-002"
+    ],
+    "playbook_run_ids": [
+      "RUN-1002"
+    ],
+    "created_at": "2026-05-12T00:00:00",
+    "updated_at": "2026-05-12T04:00:00",
+    "resolved_at": null
+  },
+  {
+    "incident_id": "INC-2026-0003",
+    "title": "MFA Yorgunluk Saldırısı - Oturum Ele Geçirme",
+    "severity": "critical",
+    "status": "contained",
+    "summary": "Saldırgan kullanıcıyı MFA bildirimleriyle bombardıman etti. Onay alınınca admin portalına erişip yetki yükseltti.",
+    "narrative": "12 Mayıs 2026 akşamı, Elif Yılmaz telefonuna art arda MFA onay bildirimleri gelmeye başladı. 15. denemede, muhtemelen 'yanlışlıkla' veya 'bildirimleri susturmak için' onay verdi.\n\nSaldırgan, Çin merkezli IP (198.51.100.91) üzerinden hesaba giriş yaptı ve 8 dakika içinde hesaba GlobalAdmin rolü atadı.\n\nSIEM korelasyon kuralı, MFA push hacmindeki anormalliği tespit etti ve alert üretti. Rol ataması geri alındı, tüm oturumlar sonlandırıldı ve MFA politikası gözden geçirildi.",
+    "assignee": "Deniz Aydın",
+    "affected_user_ids": [
+      "usr-c3d4e5f6"
+    ],
+    "affected_asset_ids": [
+      "AST-003"
+    ],
+    "mitre_technique_ids": [
+      "T1556",
+      "T1078",
+      "T1098.001"
+    ],
+    "kill_chain_steps": [
+      {
+        "step_id": "INC-2026-0003-k1",
+        "tactic": "Credential Access",
+        "technique_id": "T1556",
+        "description": "15 MFA push bombardımanı",
+        "alert_id": "ALR-0003-001",
+        "timestamp": "2026-05-13T00:15:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0003-k2",
+        "tactic": "Defense Evasion",
+        "technique_id": "T1078",
+        "description": "MFA onayı alındı, hesaba giriş yapıldı",
+        "alert_id": "ALR-0003-001",
+        "timestamp": "2026-05-13T00:32:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0003-k3",
+        "tactic": "Persistence",
+        "technique_id": "T1098.001",
+        "description": "GlobalAdmin rolü atandı",
+        "alert_id": "ALR-0003-002",
+        "timestamp": "2026-05-13T00:40:00",
+        "status": "completed"
+      }
+    ],
+    "alert_ids": [
+      "ALR-0003-001",
+      "ALR-0003-002"
+    ],
+    "playbook_run_ids": [
+      "RUN-1003"
+    ],
+    "created_at": "2026-05-13T00:00:00",
+    "updated_at": "2026-05-13T01:00:00",
+    "resolved_at": null
+  },
+  {
+    "incident_id": "INC-2026-0004",
+    "title": "Parola Püskürtme - E-posta Sızdırma",
+    "severity": "high",
+    "status": "investigating",
+    "summary": "Saldırgan parola püskürtme ile satış müdürünün hesabına erişti ve hassas e-postaları dışarı aktardı.",
+    "narrative": "13 Mayıs 2026 sabahı, Nijerya merkezli bir IP adresinden (203.0.113.195) 6 farklı kurumsal hesaba 'Password123' ve 'Anadolu2024' gibi yaygın parolalarla giriş denemesi yapıldı. Mustafa Arslan hesabı başarıyla ele geçirildi.\n\nSaldırgan, posta kutusunda 'fatura', 'havale' ve 'sözleşme' anahtar kelimeleriyle arama yaptı ve PST formatında toplu dışa aktarım başlattı.\n\nOlay, SIEM'deki 'Çoklu Başarısız Giriş + Posta Kutusu Aktivitesi' korelasyon kuralıyla tespit edildi. Hesap kilitlendi ve parola politikası gözden geçirildi.",
+    "assignee": "Emre Korkmaz",
+    "affected_user_ids": [
+      "usr-d4e5f6a7",
+      "usr-a1b2c3d4",
+      "usr-e5f6a7b8",
+      "usr-f6a7b8c9",
+      "usr-a7b8c9d0",
+      "usr-b8c9d0e1"
+    ],
+    "affected_asset_ids": [],
+    "mitre_technique_ids": [
+      "T1110.003",
+      "T1078",
+      "T1114.002"
+    ],
+    "kill_chain_steps": [
+      {
+        "step_id": "INC-2026-0004-k1",
+        "tactic": "Credential Access",
+        "technique_id": "T1110.003",
+        "description": "6 hesaba parola püskürtme denemesi",
+        "alert_id": "ALR-0004-001",
+        "timestamp": "2026-05-14T00:06:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0004-k2",
+        "tactic": "Defense Evasion",
+        "technique_id": "T1078",
+        "description": "Püskürtme başarılı, hesaba giriş yapıldı",
+        "alert_id": "ALR-0004-001",
+        "timestamp": "2026-05-14T00:15:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0004-k3",
+        "tactic": "Collection",
+        "technique_id": "T1114.002",
+        "description": "Posta kutusu arandı ve dışa aktarıldı",
+        "alert_id": "ALR-0004-002",
+        "timestamp": "2026-05-14T00:45:00",
+        "status": "pending"
+      }
+    ],
+    "alert_ids": [
+      "ALR-0004-001",
+      "ALR-0004-002"
+    ],
+    "playbook_run_ids": [
+      "RUN-1004"
+    ],
+    "created_at": "2026-05-14T00:00:00",
+    "updated_at": "2026-05-14T02:00:00",
+    "resolved_at": null
+  },
+  {
+    "incident_id": "INC-2026-0005",
+    "title": "İş E-postası Ele Geçirme (BEC) - Havale Dolandırıcılığı",
+    "severity": "critical",
+    "status": "investigating",
+    "summary": "Muhasebe müdürünün hesabı ele geçirildi. Saldırgan tedarikçilere sahte havale talebi gönderdi.",
+    "narrative": "14 Mayıs 2026'da Fatma Şahin, 'Fatura Ödeme Sistemi Güncellemesi' konulu bir e-posta aldı ve fatura-odeme-sistemi.example.cf domain'indeki sahte portala kimlik bilgilerini girdi.\n\nSaldırgan, Brezilya IP'si (198.51.100.54) üzerinden hesaba erişti. İlk iş olarak 'dolandırıcılık' ve 'şüpheli' kelimelerini içeren e-postaları silen bir kural oluşturdu — böylece güvenlik ekibinin uyarıları kullanıcıya ulaşamayacaktı.\n\nArdından 3 tedarikçiye 'banka hesap numaramız değişti' içerikli sahte e-postalar gönderdi. Hedef IBAN Litvanya'daki bir banka hesabıydı. Olay, tedarikçilerden birinin telefonla teyit istemesi üzerine ortaya çıktı.",
+    "assignee": "Ceren Erdoğan",
+    "affected_user_ids": [
+      "usr-a7b8c9d0"
+    ],
+    "affected_asset_ids": [],
+    "mitre_technique_ids": [
+      "T1566.002",
+      "T1078",
+      "T1098",
+      "T1114.002"
+    ],
+    "kill_chain_steps": [
+      {
+        "step_id": "INC-2026-0005-k1",
+        "tactic": "Initial Access",
+        "technique_id": "T1566.002",
+        "description": "Finans temalı oltalama e-postası",
+        "alert_id": "ALR-0005-001",
+        "timestamp": "2026-05-15T00:00:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0005-k2",
+        "tactic": "Defense Evasion",
+        "technique_id": "T1078",
+        "description": "Brezilya IP'den başarılı giriş",
+        "alert_id": "ALR-0005-001",
+        "timestamp": "2026-05-15T00:10:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0005-k3",
+        "tactic": "Persistence",
+        "technique_id": "T1098",
+        "description": "Anti-forensic posta kutusu kuralı",
+        "alert_id": "ALR-0005-001",
+        "timestamp": "2026-05-15T00:20:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0005-k4",
+        "tactic": "Collection",
+        "technique_id": "T1114.002",
+        "description": "Tedarikçilere sahte havale e-postası",
+        "alert_id": "ALR-0005-002",
+        "timestamp": "2026-05-15T01:00:00",
+        "status": "completed"
+      }
+    ],
+    "alert_ids": [
+      "ALR-0005-001",
+      "ALR-0005-002"
+    ],
+    "playbook_run_ids": [
+      "RUN-1005"
+    ],
+    "created_at": "2026-05-15T00:00:00",
+    "updated_at": "2026-05-15T05:00:00",
+    "resolved_at": null
+  },
+  {
+    "incident_id": "INC-2026-0006",
+    "title": "Zararlı Yazılım Enfeksiyonu - C2 İletişimi (Simülasyon)",
+    "severity": "critical",
+    "status": "investigating",
+    "summary": "Kullanıcı VBA makro içeren zararlı eki açtı. Zararlı yazılım kalıcılık sağladı ve C2 iletişimi başlattı.",
+    "narrative": "15 Mayıs 2026'da Zeynep Çelik, 'İş Başvurusu - CV ve Referans Mektubu' konulu bir e-postadaki .docm ekini açtı. Belge, kullanıcıya 'içeriği görüntülemek için makroları etkinleştirin' mesajını gösteriyordu.\n\nMakro etkinleştirildiğinde, WINWORD.EXE process'i PowerShell başlattı ve Temp klasörüne 'guncelleme.exe' adlı bir payload bıraktı. Bu payload, Registry Run anahtarına kendini ekleyerek kalıcılık sağladı ve cdn-guncelleme.example.cf adresine her 10 dakikada bir HTTPS beacon göndermeye başladı.\n\nEDR çözümü, Word'den PowerShell spawn edilmesini tespit ederek SOC ekibini uyardı. Uç nokta izole edildi ve adli bilişim süreci başlatıldı.",
+    "assignee": "Deniz Aydın",
+    "affected_user_ids": [
+      "usr-e5f6a7b8"
+    ],
+    "affected_asset_ids": [
+      "AST-005"
+    ],
+    "mitre_technique_ids": [
+      "T1566.001",
+      "T1059.005",
+      "T1547.001",
+      "T1071.001"
+    ],
+    "kill_chain_steps": [
+      {
+        "step_id": "INC-2026-0006-k1",
+        "tactic": "Initial Access",
+        "technique_id": "T1566.001",
+        "description": "Zararlı ek içeren e-posta teslim edildi",
+        "alert_id": "ALR-0006-001",
+        "timestamp": "2026-05-16T00:00:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0006-k2",
+        "tactic": "Execution",
+        "technique_id": "T1059.005",
+        "description": "VBA makro PowerShell çalıştırdı",
+        "alert_id": "ALR-0006-001",
+        "timestamp": "2026-05-16T00:06:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0006-k3",
+        "tactic": "Persistence",
+        "technique_id": "T1547.001",
+        "description": "Registry Run key kalıcılığı",
+        "alert_id": "ALR-0006-002",
+        "timestamp": "2026-05-16T00:08:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0006-k4",
+        "tactic": "Command and Control",
+        "technique_id": "T1071.001",
+        "description": "C2 beacon iletişimi",
+        "alert_id": "ALR-0006-003",
+        "timestamp": "2026-05-16T00:15:00",
+        "status": "pending"
+      }
+    ],
+    "alert_ids": [
+      "ALR-0006-001",
+      "ALR-0006-002",
+      "ALR-0006-003"
+    ],
+    "playbook_run_ids": [
+      "RUN-1006"
+    ],
+    "created_at": "2026-05-16T00:00:00",
+    "updated_at": "2026-05-16T03:00:00",
+    "resolved_at": null
+  },
+  {
+    "incident_id": "INC-2026-0007",
+    "title": "Yeni Cihaz Anomalisi - Admin Rol Atama",
+    "severity": "high",
+    "status": "contained",
+    "summary": "CFO hesabına Nijerya'da yeni bir cihaz kaydedildi ve admin rolü atandı.",
+    "narrative": "16 Mayıs 2026'da, CFO Ahmet Yıldız hesabına İzmir ofisinde kayıtlı görünen ancak daha önce hiç kullanılmamış bir cihazla (IZM-WS-001) giriş yapıldı. Giriş IP'si Nijerya (203.0.113.195) olarak görünüyordu.\n\nGirişten 10 dakika sonra hesaba Exchange Administrator rolü atandı ve diğer yöneticilerin posta kutularına erişim denemesi yapıldı.\n\nSIEM'deki 'VIP Kullanıcı Anomalisi' kuralı olayı tespit etti. CFO ile telefonda doğrulama yapıldı ve kendisinin böyle bir giriş yapmadığı teyit edildi. Rol geri alındı, oturum sonlandırıldı.",
+    "assignee": "Ceren Erdoğan",
+    "affected_user_ids": [
+      "usr-b8c9d0e1"
+    ],
+    "affected_asset_ids": [
+      "AST-022"
+    ],
+    "mitre_technique_ids": [
+      "T1078.004",
+      "T1098.001"
+    ],
+    "kill_chain_steps": [
+      {
+        "step_id": "INC-2026-0007-k1",
+        "tactic": "Defense Evasion",
+        "technique_id": "T1078.004",
+        "description": "Bilinmeyen cihazdan CFO hesabına giriş",
+        "alert_id": "ALR-0007-001",
+        "timestamp": "2026-05-17T00:05:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0007-k2",
+        "tactic": "Persistence",
+        "technique_id": "T1098.001",
+        "description": "Exchange Administrator rolü atandı",
+        "alert_id": "ALR-0007-002",
+        "timestamp": "2026-05-17T00:15:00",
+        "status": "completed"
+      }
+    ],
+    "alert_ids": [
+      "ALR-0007-001",
+      "ALR-0007-002"
+    ],
+    "playbook_run_ids": [
+      "RUN-1007"
+    ],
+    "created_at": "2026-05-17T00:00:00",
+    "updated_at": "2026-05-17T01:00:00",
+    "resolved_at": null
+  },
+  {
+    "incident_id": "INC-2026-0008",
+    "title": "Bulut Paylaşımı ile Veri Sızdırma",
+    "severity": "high",
+    "status": "investigating",
+    "summary": "DevOps mühendisi hassas dosyalar için herkese açık paylaşım bağlantıları oluşturdu. Dosyalara harici IP'den erişildi.",
+    "narrative": "17 Mayıs 2026'da Deniz Aydın, OneDrive üzerinde 5 hassas dosya için 'herkes erişebilir' bağlantıları oluşturdu. Paylaşılan dosyalar arasında müşteri listesi, veritabanı yedeği, kullanıcı parolaları CSV'si, sözleşmeler ve maaş bordro dosyası bulunuyordu.\n\nKısa süre sonra Hollanda merkezli bir IP'den bu dosyalara erişildi ve 3 tanesi indirildi. Olay, DLP alarmı ile tespit edildi.\n\nYapılan incelemede kullanıcının departman içi paylaşım yaparken yanlışlıkla 'herkes' seçeneğini işaretlediği anlaşıldı. Paylaşım bağlantıları iptal edildi ve DLP politikaları gözden geçirildi.",
+    "assignee": "Ceren Erdoğan",
+    "affected_user_ids": [
+      "usr-e1f2a3b4"
+    ],
+    "affected_asset_ids": [
+      "AST-011"
+    ],
+    "mitre_technique_ids": [
+      "T1567.002"
+    ],
+    "kill_chain_steps": [
+      {
+        "step_id": "INC-2026-0008-k1",
+        "tactic": "Exfiltration",
+        "technique_id": "T1567.002",
+        "description": "Hassas dosyalar herkese açık paylaşıldı",
+        "alert_id": "ALR-0008-001",
+        "timestamp": "2026-05-18T00:50:00",
+        "status": "completed"
+      },
+      {
+        "step_id": "INC-2026-0008-k2",
+        "tactic": "Exfiltration",
+        "technique_id": "T1567.002",
+        "description": "Harici IP'den dosya indirildi",
+        "alert_id": "ALR-0008-002",
+        "timestamp": "2026-05-18T01:00:00",
+        "status": "completed"
+      }
+    ],
+    "alert_ids": [
+      "ALR-0008-001",
+      "ALR-0008-002"
+    ],
+    "playbook_run_ids": [
+      "RUN-1008"
+    ],
+    "created_at": "2026-05-18T00:00:00",
+    "updated_at": "2026-05-18T02:00:00",
+    "resolved_at": null
+  },
+  {
+    "incident_id": "INC-2026-0009",
+    "title": "Yanlış Pozitif - VPN İmkansız Seyahat",
+    "severity": "low",
+    "status": "closed",
+    "summary": "Kullanıcının VPN kullanımı nedeniyle imkansız seyahat uyarısı tetiklendi. İnceleme sonrası yanlış pozitif olarak belirlendi.",
+    "narrative": "18 Mayıs 2026'da Burak Polat için imkansız seyahat alarmı tetiklendi. Kullanıcı 5 dakika içinde İstanbul ve Amsterdam'dan giriş yapmış görünüyordu.\n\nİncelemede Amsterdam IP'sinin (192.0.2.100) bilinen bir kurumsal VPN çıkış noktası olduğu tespit edildi. Kullanıcı VPN bağlantısı üzerinden çalışıyordu ve coğrafi uyumsuzluk normaldi.\n\nAlert false positive olarak kapatıldı. VPN çıkış IP'leri SIEM whitelist'ine eklendi ve benzer false positive'lerin önüne geçildi.",
+    "assignee": "Emre Korkmaz",
+    "affected_user_ids": [
+      "usr-f2a3b4c5"
+    ],
+    "affected_asset_ids": [
+      "AST-012"
+    ],
+    "mitre_technique_ids": [
+      "T1078"
+    ],
+    "kill_chain_steps": [],
+    "alert_ids": [
+      "ALR-0009-001"
+    ],
+    "playbook_run_ids": [
+      "RUN-1009"
+    ],
+    "created_at": "2026-05-19T00:00:00",
+    "updated_at": "2026-05-19T00:30:00",
+    "resolved_at": "2026-05-19T00:30:00"
+  }
+]
