@@ -18,16 +18,11 @@
 ![Overview Dashboard](./docs/screenshots/overview.png)
 *KPI'lar, alert trendi, severity dağılımı, top MITRE techniques.*
 
-![Incident Detail — Kill Chain Timeline](./docs/screenshots/incident-killchain.png)
-*"Pazartesi 14:00" senaryosu: phishing → mailbox rule exfil.*
-
-![MITRE Coverage Matrix](./docs/screenshots/mitre-matrix.png)
-*14 tactic × 50+ technique. Cover edilenler dolu, edilmeyenler boş.*
-
 ![Alerts — Filter + Table](./docs/screenshots/alerts.png)
 *Filter, search, severity breakdown, IOC defanging.*
 
-> **Ekranlar gelmedi mi?** Demo henüz canlıda olmayabilir. Canlı demoya ulaşmak için [buraya tıklayın](https://yatuk.github.io/SOC-case-study-project/).
+![SOAR Playbook — Adım Akışı](./docs/screenshots/playbook.png)
+*Playbook adımları, DAG-benzeri flow, run history.*
 
 ---
 
