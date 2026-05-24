@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useAssetStore } from '@/store'
 import { SkeletonTable } from '@/components/ui/skeleton-card'
 import { EmptyState } from '@/components/ui/empty-state'
+import { PivotLink } from '@/components/ui/pivot-link'
 import { Wifi, WifiOff, Monitor, ShieldBan, ShieldCheck } from 'lucide-react'
 import type { AssetType } from '@/types'
 
@@ -60,12 +60,10 @@ export default function Endpoints() {
                 return (
                   <tr key={ast.asset_id} className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors">
                     <td className="px-3 py-2">
-                      <Link to={`/endpoints/${ast.asset_id}`} className="hover:text-primary transition-colors">
-                        <div className="flex items-center gap-1.5">
-                          <Icon className="w-3 h-3 text-muted-foreground shrink-0" />
-                          <span className="font-mono text-[10px] font-medium">{ast.hostname}</span>
-                        </div>
-                      </Link>
+                      <div className="flex items-center gap-1.5">
+                        <Icon className="w-3 h-3 text-muted-foreground shrink-0" />
+                        <PivotLink to={`/alerts?asset=${ast.asset_id}`} className="font-mono text-[10px] font-medium">{ast.hostname}</PivotLink>
+                      </div>
                     </td>
                     <td className="px-3 py-2 text-muted-foreground hidden sm:table-cell text-[10px]">{ast.os}</td>
                     <td className="px-3 py-2 text-muted-foreground hidden md:table-cell text-[10px]">{ast.location}</td>

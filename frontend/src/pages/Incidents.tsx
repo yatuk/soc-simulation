@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useIncidentStore } from '@/store'
 import { SkeletonTable } from '@/components/ui/skeleton-card'
 import { SeverityPill } from '@/components/ui/severity-pill'
+import { PivotLink } from '@/components/ui/pivot-link'
 import { StatusPill } from '@/components/ui/status-pill'
 import { EmptyState } from '@/components/ui/empty-state'
 import { FileSearch } from 'lucide-react'
@@ -68,7 +69,9 @@ export default function Incidents() {
                   </td>
                   <td className="px-3 py-2"><SeverityPill severity={inc.severity} /></td>
                   <td className="px-3 py-2"><StatusPill status={inc.status} /></td>
-                  <td className="px-3 py-2 text-muted-foreground hidden md:table-cell">{inc.assignee ?? '—'}</td>
+                  <td className="px-3 py-2 text-muted-foreground hidden md:table-cell">
+                    {inc.assignee ? <PivotLink to={`/alerts?q=${encodeURIComponent(inc.assignee)}`} className="text-[10px]">{inc.assignee}</PivotLink> : '—'}
+                  </td>
                   <td className="px-3 py-2 hidden lg:table-cell">
                     <div className="flex items-center gap-1 flex-wrap">
                       {inc.mitre_technique_ids.slice(0, 3).map((tid) => <span key={tid} className="font-mono text-[9px] bg-muted px-1 rounded">{tid}</span>)}

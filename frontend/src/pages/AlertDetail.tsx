@@ -6,7 +6,8 @@ import { SkeletonCard } from '@/components/ui/skeleton-card'
 import { SeverityPill } from '@/components/ui/severity-pill'
 import { StatusPill } from '@/components/ui/status-pill'
 import { defang } from '@/lib/utils'
-import { ArrowLeft, Shield, Target, ArrowUpRight, Copy, CheckCircle } from 'lucide-react'
+import { PivotLink } from '@/components/ui/pivot-link'
+import { ArrowLeft, Shield, Target, ArrowUpRight, Copy, CheckCircle, User, Monitor, Globe } from 'lucide-react'
 
 export default function AlertDetail() {
   const { id } = useParams<{ id: string }>()
@@ -150,6 +151,39 @@ export default function AlertDetail() {
           </div>
         </section>
       )}
+
+      {/* Pivot sidebar — Related Entities */}
+      <section className="border-t border-border pt-4">
+        <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+          <Globe className="w-3.5 h-3.5" /> İlişkili Entity'ler
+        </h3>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+          {alert.source_ip && (
+            <PivotLink to={`/alerts?ip=${alert.source_ip}`} className="flex items-center gap-2 p-2.5 rounded-lg border border-border bg-card hover:bg-accent transition-colors">
+              <Globe className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+              <div className="min-w-0"><div className="text-[10px] text-muted-foreground">IP</div><div className="font-mono text-[10px] truncate">{alert.source_ip}</div></div>
+            </PivotLink>
+          )}
+          {alert.affected_user_id && (
+            <PivotLink to={`/alerts?user=${alert.affected_user_id}`} className="flex items-center gap-2 p-2.5 rounded-lg border border-border bg-card hover:bg-accent transition-colors">
+              <User className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+              <div className="min-w-0"><div className="text-[10px] text-muted-foreground">Kullanıcı</div><div className="font-mono text-[10px] truncate">{alert.affected_user_id}</div></div>
+            </PivotLink>
+          )}
+          {alert.affected_asset_id && (
+            <PivotLink to={`/alerts?asset=${alert.affected_asset_id}`} className="flex items-center gap-2 p-2.5 rounded-lg border border-border bg-card hover:bg-accent transition-colors">
+              <Monitor className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+              <div className="min-w-0"><div className="text-[10px] text-muted-foreground">Cihaz</div><div className="font-mono text-[10px] truncate">{alert.affected_asset_id}</div></div>
+            </PivotLink>
+          )}
+          {relatedIncident && (
+            <PivotLink to={`/incidents/${relatedIncident.incident_id}`} className="flex items-center gap-2 p-2.5 rounded-lg border border-border bg-card hover:bg-accent transition-colors">
+              <Shield className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+              <div className="min-w-0"><div className="text-[10px] text-muted-foreground">Olay</div><div className="font-mono text-[10px] truncate">{relatedIncident.incident_id}</div></div>
+            </PivotLink>
+          )}
+        </div>
+      </section>
 
       {/* Recommended Actions */}
       {alert.recommended_actions.length > 0 && (
