@@ -1,3 +1,12 @@
+// ── AI Summary ─────────────────────────────────────────────
+export interface AiSummaryData {
+  verdict: string
+  confidence: number
+  summary: string
+  related_techniques?: string[]
+  next_steps: string[]
+}
+
 // ── Enums ──────────────────────────────────────────────────
 export type Severity = 'critical' | 'high' | 'medium' | 'low' | 'info'
 export type IncidentStatus = 'open' | 'investigating' | 'contained' | 'closed'

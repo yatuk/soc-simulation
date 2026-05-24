@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useAlertStore, useIOCStore, useMitreStore, useIncidentStore } from '@/store'
@@ -7,11 +7,19 @@ import { SeverityPill } from '@/components/ui/severity-pill'
 import { StatusPill } from '@/components/ui/status-pill'
 import { defang } from '@/lib/utils'
 import { PivotLink } from '@/components/ui/pivot-link'
-import { ArrowLeft, Shield, Target, ArrowUpRight, Copy, CheckCircle, User, Monitor, Globe } from 'lucide-react'
+import { AiSummary } from '@/components/features/ai/AiSummary'
+import { loadEntity } from '@/lib/data'
+import { ArrowLeft, Shield, Target, ArrowUpRight, Copy, CheckCircle, User, Monitor, Globe, Sparkles } from 'lucide-react'
+import type { AiSummaryData } from '@/types'
+
+interface AiPayload { alerts: Record<string, unknown>; incidents: Record<string, unknown>; generic: Record<string, unknown> }
 
 export default function AlertDetail() {
   const { id } = useParams<{ id: string }>()
   const { data: alerts, isLoading, load: loadAlerts } = useAlertStore()
+  const [showAi, setShowAi] = useState(false)
+  const [aiData, setAiData] = useState<Record<string, unknown> | null>(null)
+  const [aiLoading, setAiLoading] = useState(false)
   const { data: iocs, load: loadIocs } = useIOCStore()
   const { data: mitre, load: loadMitre } = useMitreStore()
   const { data: incidents, load: loadInc } = useIncidentStore()
@@ -58,6 +66,22 @@ export default function AlertDetail() {
           <ArrowLeft className="w-3 h-3" /> Uyarılara dön
         </Link>
         <div className="flex items-center gap-2">
+          <button
+            onClick={async () => {
+              setShowAi(!showAi)
+              if (!aiData && !showAi) {
+                setAiLoading(true)
+                const payload = await loadEntity<AiPayload>('ai_summaries.json')
+                setAiData((payload.alerts as Record<string, Record<string, unknown>>)?.[alert.alert_id] ?? (payload.generic as Record<string, unknown>))
+                setAiLoading(false)
+              }
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-medium hover:bg-purple-500/20 transition-colors"
+            aria-label="AI Özet"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            AI Özet
+          </button>
           <button
             onClick={handlePromoteToIncident}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-primary/10 border border-primary/30 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
@@ -150,6 +174,14 @@ export default function AlertDetail() {
             })}
           </div>
         </section>
+      )}
+
+      {/* AI Summary */}
+      {showAi && (
+        <AiSummary
+          data={aiData as unknown as AiSummaryData | null}
+          isLoading={aiLoading}
+        />
       )}
 
       {/* Pivot sidebar — Related Entities */}

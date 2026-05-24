@@ -1,0 +1,78 @@
+{
+  "alerts": {
+    "ALR-0001-001": {
+      "verdict": "true_positive_likely",
+      "confidence": 0.87,
+      "summary": "Finans departmanından Ayşe Demir'in hesabına yönelik klasik bir oltalama saldırısı tespit edildi. Saldırgan, şirket domain'inin görsel taklidi olan anadolu-giris-dogrula[.]example[.]tk adresini kullanmış — bu tam bir typosquatting örneği.\n\nDikkat çeken: tıklama saati sabah 09:00 civarı. Kullanıcı muhtemelen sabah kahvesiyle birlikte e-postalarını kontrol ederken tuzağa düştü. Sosyal mühendislik açısından en verimli saat dilimi.\n\nSaldırı yüzeyi analizi: Bu kullanıcı Finans departmanında, yani fatura onayları ve ödeme emirlerine erişimi var. Saldırganın hedefi büyük ihtimalle BEC (Business Email Compromise). İlk erişimi aldıktan sonra fatura yönlendirme veya sahte ödeme talebi aşamasına geçecektir.",
+      "related_techniques": ["T1566.002"],
+      "next_steps": [
+        "Kullanıcının tüm aktif oturumlarını sonlandır",
+        "Parola ve MFA bilgilerini sıfırla",
+        "Son 24 saatteki posta kutusu aktivitesini tara",
+        "Inbox rule ve forward ayarlarını kontrol et",
+        "Kullanıcıya hedefli güvenlik farkındalık e-postası gönder"
+      ]
+    },
+    "ALR-0001-002": {
+      "verdict": "true_positive_likely",
+      "confidence": 0.91,
+      "summary": "Bu alert, ALR-0001-001 ile zincirleme. Kullanıcının kimlik bilgileri çalındıktan 55 dakika sonra Romanya IP'sinden giriş yapılmış. İstanbul → Romanya rotası fiziksel olarak imkansız — uçakla bile 1 saat 15 dakika sürer.\n\nIP adresi 198.51.100.45, bilinen bir tehdit aktörü altyapısına ait. Daha önce 3 farklı SOC vakasında aynı IP'den benzer giriş pattern'i görüldü. Bu bir fırsatçı saldırgan değil, organize bir phishing kampanyasının parçası.\n\nÖnerim: Bu IP'yi sadece bu kullanıcı için değil, tüm tenant için riskli IP listesine ekleyin. Aynı IP'den başka başarılı giriş var mı kontrol edin.",
+      "related_techniques": ["T1078"],
+      "next_steps": ["IP'yi tenant genelinde engelle", "Aynı IP'den diğer girişleri tara", "Kullanıcıyla telefonla iletişime geçerek doğrula", "VPN kullanımını sorgula (false positive olabilir)"]
+    },
+    "ALR-0001-003": {
+      "verdict": "true_positive_likely",
+      "confidence": 0.94,
+      "summary": "Saldırgan hesaba girdikten sonra klasik kalıcılık adımını atmış: tüm gelen e-postaları harici adrese yönlendiren bir inbox rule. Bu, 'görünmez olma' taktiğidir — kullanıcı gelen kutusunda bir şey olduğunu fark etmez çünkü mailler normal şekilde düşmeye devam eder, ama bir kopyası da saldırgana gider.\n\nBu aşamada artık 'önleme' değil 'müdahale' aşamasındasınız. Hesap zaten ele geçirilmiş durumda. Öncelik: kuralı kaldırmak değil (o da önemli), bu kuralın aktif olduğu süre boyunca hangi e-postaların sızdığını tespit etmek.\n\nMail flow log'larını kontrol edin. 'Forward to external' event'i arayın. Hangi e-postaların yönlendirildiğini çıkardıktan sonra veri sızıntısı boyutunu değerlendirin. KVKK/GDPR bildirimi gerekebilir.",
+      "related_techniques": ["T1098", "T1114.002"],
+      "next_steps": ["Yönlendirme kuralını kaydet (kanıt) ve kaldır", "Mail flow log'larından sızan e-postaları çıkar", "Veri sızıntısı boyutunu değerlendir", "Gerekirse KVKK bildirimi hazırla", "Kullanıcıyı bilgilendir"]
+    },
+    "ALR-0003-001": {
+      "verdict": "true_positive_likely",
+      "confidence": 0.82,
+      "summary": "MFA push bombardımanı. 15 push isteği, 30 dakika içinde, aynı IP'den. Bu bir insan hatası değil, hedefli bir saldırı. Saldırgan kullanıcıyı Psikolojik olarak 'tamam tamam ne halin varsa gör' noktasına getirmeyi hedeflemiş.\n\nMFA fatigue saldırıları son 2 yılda %300 arttı. Microsoft, Google, Cisco — hepsi bu yöntemle hedef alındı ve bazıları başarılı oldu. Tek savunma: number-matching MFA veya FIDO2.\n\nBu olaydan sonra MFA politikanızı gözden geçirmenizi şiddetle öneririm. Push notification → number matching geçişi, bu tür saldırıların %99'unu engeller.",
+      "related_techniques": ["T1556"],
+      "next_steps": ["MFA politikasını number-matching olarak güncelle", "Etkilenen kullanıcıyla görüş", "Aynı IP'den başka MFA denemesi var mı kontrol et", "15 push isteğini kanıt olarak logla"]
+    },
+    "ALR-0006-003": {
+      "verdict": "true_positive_likely",
+      "confidence": 0.89,
+      "summary": "C2 beacon tespiti. cdn-guncelleme[.]example[.]cf adresine her 10 dakikada bir HTTPS isteği — bu tam bir beacon pattern'i. Normal yazılımlar bu kadar düzenli davranmaz. Özellikle de Temp klasöründen çalışan 'guncelleme.exe' adlı bir binary'den geliyorsa.\n\nZararlı yazılım büyük ihtimalle dün gelen 'CV.pdf_______________________________________________.exe' ekiyle bulaştı. Klasik bir initial access vektörü: sahte CV, fatura, ya da 'acil ödeme' temalı ek.\n\nC2 domain'inin WHOIS kaydına baktım: 3 gün önce kaydedilmiş, Panama'da bir registrar üzerinden. Tipik fast-flux altyapısı. Bu domain'i sadece bu cihazda değil, tüm ağda engelleyin.",
+      "related_techniques": ["T1071.001"],
+      "next_steps": ["Uç noktayı izole et", "C2 domain'ini tüm ağda engelle", "Memory dump ve adli bilişim başlat", "Aynı IOC'leri diğer endpoint'lerde tara"]
+    },
+    "ALR-0009-001": {
+      "verdict": "false_positive",
+      "confidence": 0.12,
+      "summary": "Bu alert neredeyse kesin bir false positive. Kullanıcı VPN üzerinden bağlanıyor ve Amsterdam çıkış noktası kullanıyor. Coğrafi olarak İstanbul'dan Amsterdam'a 5 dakikada gitmek imkansız — ama VPN ile gayet mümkün.\n\nBu tür alert'ler SOC analistlerinin günlük ekmeği. 'İmkansız seyahat' kuralları, VPN kullanıcıları için sürekli false positive üretir. Önerim: bilinen VPN çıkış IP'lerini bir whitelist'te toplayın ve imkansız seyahat kuralına exception olarak ekleyin.\n\nKullanıcıyı rahatsız etmeyin. Ama VPN log'larından gerçekten o kullanıcının o saatte bağlı olduğunu doğrulayın. (5 dakikalık iş, içiniz rahat etsin.)",
+      "related_techniques": ["T1078"],
+      "next_steps": ["VPN kullanımını doğrula", "VPN çıkış IP'lerini whitelist'e ekle", "False positive olarak işaretle ve kapat"]
+    }
+  },
+  "incidents": {
+    "INC-2026-0001": {
+      "verdict": "true_positive_likely",
+      "confidence": 0.93,
+      "summary": "Bu incident, klasik bir 'phishing-to-exfil' zinciri. Saldırgan önce oltalama ile credential çaldı, sonra o credential'larla hesaba girdi, kalıcılık sağladı ve veri sızdırmaya başladı. Toplam saldırı süresi: yaklaşık 90 dakika. MTTC (Mean Time To Containment): 38 dakika — fena değil, ama hedef 15 dakika olmalı.\n\nBu senaryoda en kritik kaçırılan nokta: phishing e-postası kurumsal spam filtresini nasıl geçti? SPF/DKIM/DMARC kontrolü yapıldı mı? Oltalama domain'i (anadolu-giris-dogrula[.]example[.]tk) kaydedildikten sadece 2 saat sonra kullanılmış — tipik 'zero-day phishing'.\n\nBu incident'tan çıkarılacak ders: Kullanıcı eğitimi tek başına yeterli değil. Teknik kontroller (MFA, conditional access, inbox rule monitoring) olmadan, bir gün mutlaka biri o linke tıklar.",
+      "next_steps": ["Spam filtresi log'larını incele", "DMARC politikasını 'reject' olarak güncelle", "Kullanıcı farkındalık eğitimini yenile", "Inbox rule monitoring'i production'a al"]
+    },
+    "INC-2026-0003": {
+      "verdict": "true_positive_likely",
+      "confidence": 0.88,
+      "summary": "MFA fatigue — en sinsi saldırı vektörlerinden biri. Teknik bir açık yok, saldırgan MFA'yı 'bypass' etmedi, kullanıcıya onaylattı. Bu, MFA'nın zayıf halkasının her zaman insan olduğunu gösteriyor.\n\nSaldırgan 15 push isteği gönderdikten sonra kullanıcı pes etti ve onayladı. Ardından 8 dakika içinde GlobalAdmin rolü atadı — yani saldırganın script'i hazırdı, manuel değil otomatik bir saldırı.\n\nBu incident, MFA politikanızda number-matching veya FIDO2 zorunluluğu olmadığı sürece MFA'nın tek başına yeterli olmadığını kanıtlıyor.",
+      "next_steps": ["MFA'yı number-matching + FIDO2'ye yükselt", "Admin rol atamalarına onay akışı ekle", "Anormal MFA push hacmi için alert kuralı oluştur", "Saldırgan IP'sini global blocklist'e ekle"]
+    },
+    "INC-2026-0006": {
+      "verdict": "true_positive_likely",
+      "confidence": 0.95,
+      "summary": "Makro tabanlı zararlı yazılım enfeksiyonu. WINWORD.EXE → PowerShell → Temp klasörüne binary → Registry kalıcılığı → C2 beacon. Klasik zincir. Her adım tespit edilebilirdi ama saldırgan zinciri tamamlamayı başarmış — bu da EDR'ınızın imza bazlı çalıştığını, davranışsal analiz yapmadığını gösteriyor.\n\nC2 domain'i 3 gün önce kaydedilmiş, Panama registrar. Fast-flux altyapısı kullanıyor olabilir — IP'si her 10 dakikada bir değişiyor olabilir. DNS log'larınızı kontrol edin, aynı domain'e farklı IP'lerden istek gidiyor mu?\n\nİyi haber: C2 beacon periyodu 10 dakika. Kötü haber: saldırgan zaten içeride. İzole edin, forensics toplayın, IOC'leri tüm ortamda tarayın.",
+      "next_steps": ["C2 domain'ini DNS sinkhole'a ekle", "Tüm endpoint'lerde aynı hash'i tara", "Macro execution policy'yi 'disable all' yap", "Kullanıcıya 'CV.pdf_______________________________________________.exe' hakkında eğitim ver"]
+    }
+  },
+  "generic": {
+    "verdict": "inconclusive",
+    "confidence": 0.4,
+    "summary": "Bu alert için manuel inceleme önerilir. AI analizi için yeterli context henüz oluşmadı — ya alert çok yeni, ya da ilişkili entity'ler hakkında yeterli veri yok.\n\nBir SOC analistinin göz atması ve alert'in bağlamını değerlendirmesi gerekir. Unutmayın: AI bir asistandır, karar verici değil.",
+    "next_steps": ["Alert'i manuel incele", "İlişkili entity'leri kontrol et", "Gerekirse incident'a yükselt"]
+  }
+}
