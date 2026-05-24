@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState, Suspense, lazy } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useIncidentStore, useAlertStore, usePlaybookRunStore } from '@/store'
@@ -6,7 +6,9 @@ import { SkeletonCard } from '@/components/ui/skeleton-card'
 import { SeverityPill } from '@/components/ui/severity-pill'
 import { StatusPill } from '@/components/ui/status-pill'
 import { EmptyState } from '@/components/ui/empty-state'
-import { ArrowLeft, Lock, Play, CheckCircle, Target, FileSearch } from 'lucide-react'
+import { ArrowLeft, Lock, Play, CheckCircle, Target, FileSearch, Share2 } from 'lucide-react'
+
+const InvestigationGraph = lazy(() => import('@/components/features/investigation/InvestigationGraph'))
 
 export default function IncidentDetail() {
   const { id } = useParams<{ id: string }>()
@@ -25,6 +27,7 @@ export default function IncidentDetail() {
   const incident = incidents.find((i) => i.incident_id === id)
   if (!incident) return <div className="p-6 text-center text-muted-foreground">Olay bulunamadı. <Link to="/incidents" className="text-primary hover:underline">Listeye dön</Link></div>
 
+  const [activeTab, setActiveTab] = useState<'timeline' | 'graph'>('timeline')
   const linkedAlerts = alerts.filter((a) => incident.alert_ids.includes(a.alert_id))
   const linkedRuns = runs.filter((r) => incident.playbook_run_ids.includes(r.run_id))
 
@@ -64,6 +67,22 @@ export default function IncidentDetail() {
         <div className="text-sm leading-relaxed whitespace-pre-line text-foreground/90">{incident.narrative}</div>
       </section>
 
+      {/* Tabs: Timeline | Investigation Graph */}
+      <div className="flex items-center gap-2 border-b border-border pb-2">
+        <button onClick={() => setActiveTab('timeline')} className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${activeTab === 'timeline' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-accent'}`}>
+          <Target className="w-3.5 h-3.5 inline mr-1" />Kill Chain
+        </button>
+        <button onClick={() => setActiveTab('graph')} className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${activeTab === 'graph' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-accent'}`}>
+          <Share2 className="w-3.5 h-3.5 inline mr-1" />Investigation Graph
+        </button>
+      </div>
+
+      {activeTab === 'graph' ? (
+        <Suspense fallback={<div className="h-64 rounded-lg bg-muted animate-pulse" />}>
+          <InvestigationGraph incident={incident} />
+        </Suspense>
+      ) : (
+        <>
       {/* Kill Chain Timeline */}
       {incident.kill_chain_steps.length > 0 && (
         <section>
@@ -146,6 +165,9 @@ export default function IncidentDetail() {
           </div>
         )}
       </section>
+
+        </>
+      )}
 
       {/* Metadata */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs p-4 rounded-lg border border-border bg-card">
