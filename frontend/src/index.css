@@ -4,79 +4,69 @@
 
 @layer base {
   :root {
-    /* Light Mode Defaults */
+    /* Light Mode */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-    
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    
-    --primary: 161 94% 30%; /* Emerald Green */
+    --primary: 161 94% 30%;
     --primary-foreground: 144 100% 98%;
-    
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-    
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-    
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 161 94% 30%;
-    
     --radius: 0.5rem;
-
-    /* Custom Neon Colors (Darker for Light Mode visibility) */
-    --neon-cyan: 190 100% 40%;
-    --neon-pink: 330 100% 50%;
-    --neon-yellow: 60 100% 40%;
-    --neon-blue: 200 100% 50%;
   }
 
   .dark {
-    /* Cyberpunk / SOC Theme (Dark Mode) */
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
-    
     --card: 224 71% 4%;
     --card-foreground: 213 31% 91%;
-    
     --popover: 224 71% 4%;
     --popover-foreground: 213 31% 91%;
-    
     --primary: 161 94% 30%;
     --primary-foreground: 144 100% 98%;
-    
     --secondary: 222 47% 11%;
     --secondary-foreground: 210 40% 98%;
-    
     --muted: 223 47% 11%;
     --muted-foreground: 215.4 16.3% 56.9%;
-    
     --accent: 216 34% 17%;
     --accent-foreground: 210 40% 98%;
-    
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    
     --border: 216 34% 17%;
     --input: 216 34% 17%;
     --ring: 161 94% 30%;
+  }
 
-    /* Custom Neon Colors (Bright for Dark Mode) */
-    --neon-cyan: 190 100% 50%;
-    --neon-pink: 330 100% 60%;
-    --neon-yellow: 60 100% 60%;
-    --neon-blue: 200 100% 60%;
+  /* Severity tokens — same in both modes (SOC standard) */
+  :root,
+  .dark {
+    --severity-critical: #f85149;
+    --severity-high:     #f0883e;
+    --severity-medium:   #d29922;
+    --severity-low:      #3fb950;
+    --severity-info:     #8b949e;
+
+    --status-open:            #f0883e;
+    --status-investigating:   #58a6ff;
+    --status-contained:       #d29922;
+    --status-closed:          #3fb950;
+    --status-false-positive:  #8b949e;
+    --status-pending:         #8b949e;
+    --status-running:         #58a6ff;
+    --status-completed:       #3fb950;
+    --status-failed:          #f85149;
   }
 }
 
@@ -87,10 +77,9 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    /* Dot Matrix Texture Background */
-    background-image: 
-      radial-gradient(hsla(var(--primary) / 0.1) 1px, transparent 1px),
-      radial-gradient(hsla(var(--primary) / 0.05) 1px, transparent 1px);
+    background-image:
+      radial-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px),
+      radial-gradient(hsl(var(--primary) / 0.04) 1px, transparent 1px);
     background-size: 50px 50px, 20px 20px;
     background-position: 0 0, 25px 25px;
     background-attachment: fixed;
@@ -98,39 +87,18 @@
 }
 
 @layer utilities {
-  /* Text Glows */
-  .text-glow-cyan {
-    text-shadow: 0 0 10px hsla(var(--neon-cyan) / 0.7), 0 0 20px hsla(var(--neon-cyan) / 0.5);
-  }
-  .text-glow-green {
-    text-shadow: 0 0 10px hsla(var(--primary) / 0.7), 0 0 20px hsla(var(--primary) / 0.5);
-  }
-  .text-glow-pink {
-    text-shadow: 0 0 10px hsla(var(--neon-pink) / 0.7), 0 0 20px hsla(var(--neon-pink) / 0.5);
-  }
-  
-  /* Box Glows */
-  .box-glow-cyan {
-    box-shadow: 0 0 15px hsla(var(--neon-cyan) / 0.2), inset 0 0 15px hsla(var(--neon-cyan) / 0.1);
-  }
-  .box-glow-green {
-    box-shadow: 0 0 15px hsla(var(--primary) / 0.2), inset 0 0 15px hsla(var(--primary) / 0.1);
-  }
-  
-  /* Glassmorphism Panel */
   .glass-panel {
     @apply bg-black/40 backdrop-blur-md border border-white/10;
   }
-  
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    @apply bg-transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    @apply bg-primary/30 rounded-full hover:bg-primary/50 transition-colors;
-  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
 }
