@@ -93,3 +93,10 @@
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--primary) / 0.5);
 }
+
+/* Geo threat map pulse */
+@keyframes threat-pulse {
+  0%, 100% { opacity: 0.25; r: 6; }
+  50% { opacity: 0.05; r: 16; }
+}
+.threat-pulse { animation: threat-pulse 2s ease-in-out infinite; }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
 import { Globe } from 'lucide-react'
 
 interface ThreatOrigin {
@@ -14,12 +15,7 @@ const SEVERITY_FILL: Record<string, string> = {
   low: '#3fb950',
 }
 
-function latLngToXY(lat: number, lng: number, w: number, h: number): { x: number; y: number } {
-  return {
-    x: ((lng + 180) / 360) * w,
-    y: ((90 - lat) / 180) * h,
-  }
-}
+const GEO_URL = `${import.meta.env.BASE_URL}countries-110m.json`
 
 interface Props {
   origins: ThreatOrigin[]
@@ -28,8 +24,7 @@ interface Props {
 
 export function GeoMap({ origins, isLoading }: Props) {
   const navigate = useNavigate()
-  const [hovered, setHovered] = useState<number | null>(null)
-  const W = 640; const H = 360
+  const [hovered, setHovered] = useState<string | null>(null)
 
   if (isLoading) {
     return <div className="rounded-lg border border-border bg-card p-4 h-80 animate-pulse"><div className="h-4 w-32 bg-muted rounded mb-4" /><div className="h-64 bg-muted rounded" /></div>
@@ -41,63 +36,76 @@ export function GeoMap({ origins, isLoading }: Props) {
         <Globe className="w-3.5 h-3.5" /> Tehdit Origin Haritası
       </h3>
 
-      <div className="relative bg-[#0d1525] rounded-lg border border-border overflow-hidden" style={{ aspectRatio: '16/9' }}>
-        {/* Simplified world map SVG — continent silhouettes */}
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full opacity-60" aria-label="Dünya haritası — tehdit origin'leri">
-          {/* North America */}
-          <path d="M80,40 L180,30 L200,50 L220,40 L240,60 L210,110 L150,130 L100,120 L60,110 L50,80 Z" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="0.5" />
-          {/* South America */}
-          <path d="M150,140 L170,135 L185,150 L175,180 L160,220 L145,240 L135,200 L130,160 Z" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="0.5" />
-          {/* Europe */}
-          <path d="M280,50 L320,40 L340,50 L350,45 L360,55 L355,65 L340,70 L320,75 L300,80 L285,70 Z" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="0.5" />
-          {/* Africa */}
-          <path d="M300,85 L330,80 L350,85 L360,100 L355,140 L340,170 L320,180 L300,160 L290,130 Z" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="0.5" />
-          {/* Asia */}
-          <path d="M360,50 L440,30 L500,35 L540,45 L560,60 L550,80 L520,85 L480,90 L440,80 L400,75 L370,60 Z" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="0.5" />
-          {/* Australia */}
-          <path d="M480,180 L510,175 L525,190 L515,210 L490,215 Z" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="0.5" />
-        </svg>
+      <div className="rounded-lg border border-border overflow-hidden bg-[#0d1625]">
+        <ComposableMap
+          projection="geoEqualEarth"
+          projectionConfig={{ scale: 155 }}
+          style={{ width: '100%', height: 'auto' }}
+        >
+          <Geographies geography={GEO_URL}>
+            {({ geographies }) =>
+              geographies.map((geo) => {
+                const name = geo.properties?.name as string | undefined
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    onMouseEnter={() => setHovered(name ?? null)}
+                    onMouseLeave={() => setHovered(null)}
+                    style={{
+                      default: {
+                        fill: '#1a2540',
+                        stroke: 'hsl(var(--muted-foreground) / 0.3)',
+                        strokeWidth: 0.5,
+                        outline: 'none',
+                      },
+                      hover: {
+                        fill: '#243355',
+                        stroke: 'hsl(var(--muted-foreground) / 0.6)',
+                        strokeWidth: 0.5,
+                        outline: 'none',
+                        cursor: 'pointer',
+                      },
+                    }}
+                  />
+                )
+              })
+            }
+          </Geographies>
 
-        {/* Markers */}
-        {origins.map((o, i) => {
-          const { x, y } = latLngToXY(o.lat, o.lng, W, H)
-          const r = Math.max(4, Math.min(14, o.count * 1.2))
-          const isHovered = hovered === i
-          return (
-            <button
-              key={o.country}
-              onClick={() => navigate(`/alerts?q=${encodeURIComponent(o.country)}`)}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-              className="absolute group"
-              style={{ left: `${(x / W) * 100}%`, top: `${(y / H) * 100}%`, transform: 'translate(-50%, -50%)' }}
-              aria-label={`${o.country}: ${o.count} tehdit, ${o.severity}`}
-            >
-              {/* Pulse ring */}
-              <span className="absolute inset-0 rounded-full animate-ping opacity-30" style={{
-                width: r * 2.5, height: r * 2.5, left: -(r * 1.25), top: -(r * 1.25),
-                backgroundColor: SEVERITY_FILL[o.severity] ?? '#8b949e',
-              }} />
-              {/* Dot */}
-              <span className="block rounded-full border-2 border-background" style={{
-                width: r, height: r,
-                backgroundColor: SEVERITY_FILL[o.severity] ?? '#8b949e',
-              }} />
+          {origins.map((o) => (
+            <Marker key={o.country} coordinates={[o.lng, o.lat]}>
+              <g
+                onMouseEnter={() => setHovered(o.city)}
+                onMouseLeave={() => setHovered(null)}
+                onClick={() => navigate(`/alerts?q=${encodeURIComponent(o.country)}`)}
+                className="cursor-pointer"
+              >
+                {/* Pulse ring for critical */}
+                {o.severity === 'critical' && (
+                  <circle r={Math.min(6 + Math.sqrt(o.count) * 1.2, 16)} className="threat-pulse" fill={SEVERITY_FILL[o.severity]} opacity={0.25} />
+                )}
+                {/* Marker dot */}
+                <circle r={Math.min(3 + Math.sqrt(o.count) * 0.7, 10)} fill={SEVERITY_FILL[o.severity]} opacity={0.9} />
 
-              {/* Tooltip */}
-              {isHovered && (
-                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-popover border border-border text-[10px] whitespace-nowrap shadow-lg z-10 pointer-events-none">
-                  <span className="font-medium">{o.city}, {o.country}</span>
-                  <span className="text-muted-foreground ml-1">{o.count} tehdit</span>
-                </span>
-              )}
-            </button>
-          )
-        })}
+                {/* Tooltip */}
+                {hovered === o.city && (
+                  <foreignObject x={10} y={-18} width={160} height={36} style={{ overflow: 'visible' }}>
+                    <div className="bg-popover border border-border rounded-md px-2 py-1 text-[10px] whitespace-nowrap shadow-lg pointer-events-none">
+                      <span className="font-medium">{o.city}, {o.country}</span>
+                      <span className="text-muted-foreground ml-1">{o.count} IOC</span>
+                    </div>
+                  </foreignObject>
+                )}
+              </g>
+            </Marker>
+          ))}
+        </ComposableMap>
       </div>
 
       <div className="flex items-center justify-between mt-2 text-[10px] text-muted-foreground">
         <span>{origins.length} ülke, {origins.reduce((s, o) => s + o.count, 0)} IOC</span>
+        {hovered && !origins.find(o => o.city === hovered) && <span>{hovered}</span>}
         <span className="italic">Türkiye marker'ı: Yerel tehdit. Daha sinsi, daha az egzotik.</span>
       </div>
     </div>
