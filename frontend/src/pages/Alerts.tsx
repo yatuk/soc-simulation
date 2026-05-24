@@ -1,52 +1,60 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlertStore } from '@/store'
 import { SkeletonTable } from '@/components/ui/skeleton-card'
 import { SeverityPill } from '@/components/ui/severity-pill'
 import { StatusPill } from '@/components/ui/status-pill'
 import { EmptyState } from '@/components/ui/empty-state'
+import { AlertFilters, type AlertFilterState } from '@/components/features/alerts/AlertFilters'
 import { AlertTriangle } from 'lucide-react'
-import type { Severity } from '@/types'
 
 export default function Alerts() {
   const { data: alerts, isLoading, load } = useAlertStore()
-  const [sevFilter, setSevFilter] = useState<Severity | 'all'>('all')
+  const [filters, setFilters] = useState<AlertFilterState>({ severity: 'all', status: 'all', source: 'all', search: '' })
 
   useEffect(() => { load() }, [load])
 
-  const filtered = sevFilter === 'all' ? alerts : alerts.filter((a) => a.severity === sevFilter)
+  const sources = useMemo(() => [...new Set(alerts.map((a) => a.source))].sort(), [alerts])
 
-  if (isLoading) return <div className="p-6"><SkeletonTable rows={8} /></div>
+  const updateFilters = (partial: Partial<AlertFilterState>) => setFilters((f) => ({ ...f, ...partial }))
+
+  const filtered = useMemo(() => {
+    return alerts.filter((a) => {
+      if (filters.severity !== 'all' && a.severity !== filters.severity) return false
+      if (filters.status !== 'all' && a.status !== filters.status) return false
+      if (filters.source !== 'all' && a.source !== filters.source) return false
+      if (filters.search) {
+        const q = filters.search.toLowerCase()
+        const haystack = [a.title, a.description, a.source, a.source_ip ?? '', a.alert_id].join(' ').toLowerCase()
+        if (!haystack.includes(q)) return false
+      }
+      return true
+    })
+  }, [alerts, filters])
+
+  if (isLoading) return <div className="p-6"><SkeletonTable rows={12} /></div>
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center gap-2 flex-wrap">
-        <h2 className="text-sm font-semibold mr-2">Filtre:</h2>
-        {(['all', 'critical', 'high', 'medium', 'low'] as const).map((s) => (
-          <button
-            key={s}
-            onClick={() => setSevFilter(s)}
-            className={`px-2.5 py-1 rounded-md text-xs border transition-colors ${sevFilter === s ? 'bg-primary/10 border-primary/30 text-primary' : 'border-border text-muted-foreground hover:bg-accent'}`}
-            aria-pressed={sevFilter === s}
-          >
-            {s === 'all' ? 'Tümü' : <SeverityPill severity={s} className="border-0 bg-transparent p-0" />}
-          </button>
-        ))}
-        <span className="text-xs text-muted-foreground ml-auto">{filtered.length} uyarı</span>
-      </div>
+      <AlertFilters filters={filters} onChange={updateFilters} sources={sources} totalCount={alerts.length} filteredCount={filtered.length} />
 
       {filtered.length === 0 ? (
-        <EmptyState icon={<AlertTriangle className="w-8 h-8" />} title="Hiç uyarı yok" description="Ya gerçekten sakin bir gün, ya da SIEM'iniz ölmüş." />
+        <EmptyState
+          icon={<AlertTriangle className="w-8 h-8" />}
+          title={alerts.length === 0 ? 'Hiç uyarı yok' : 'Eşleşen uyarı bulunamadı'}
+          description={alerts.length === 0 ? 'Ya gerçekten sakin bir gün, ya da SIEM\'iniz ölmüş.' : 'Filtreleri değiştirmeyi deneyin.'}
+        />
       ) : (
         <div className="rounded-lg border border-border overflow-hidden">
           <table className="w-full text-xs">
             <thead className="bg-muted/50 border-b border-border">
               <tr>
-                <th className="text-left px-3 py-2 font-medium">Uyarı</th>
+                <th className="text-left px-3 py-2 font-medium w-[30%]">Uyarı</th>
                 <th className="text-left px-3 py-2 font-medium">Önem</th>
                 <th className="text-left px-3 py-2 font-medium">Durum</th>
                 <th className="text-left px-3 py-2 font-medium hidden md:table-cell">Kaynak</th>
-                <th className="text-left px-3 py-2 font-medium hidden lg:table-cell">Tarih</th>
+                <th className="text-left px-3 py-2 font-medium hidden lg:table-cell">IP</th>
+                <th className="text-left px-3 py-2 font-medium hidden xl:table-cell">Tarih</th>
               </tr>
             </thead>
             <tbody>
@@ -61,7 +69,8 @@ export default function Alerts() {
                   <td className="px-3 py-2"><SeverityPill severity={a.severity} /></td>
                   <td className="px-3 py-2"><StatusPill status={a.status} /></td>
                   <td className="px-3 py-2 text-muted-foreground hidden md:table-cell">{a.source}</td>
-                  <td className="px-3 py-2 text-muted-foreground font-mono text-[10px] hidden lg:table-cell">
+                  <td className="px-3 py-2 font-mono text-[10px] text-muted-foreground hidden lg:table-cell">{a.source_ip ?? '—'}</td>
+                  <td className="px-3 py-2 text-muted-foreground font-mono text-[10px] hidden xl:table-cell">
                     {new Date(a.detected_at).toLocaleDateString('tr-TR')}
                   </td>
                 </tr>

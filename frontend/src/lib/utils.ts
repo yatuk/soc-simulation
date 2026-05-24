@@ -159,6 +159,20 @@ export function copyToClipboard(text: string): Promise<void> {
   return navigator.clipboard.writeText(text)
 }
 
+// ── IOC Defanging ───────────────────────────────────────────
+const DEFANG_MAP: Record<string, (v: string) => string> = {
+  url:    (v) => v.replace(/^https?:\/\//i, 'hxxp://').replace(/\./g, '[.]'),
+  domain: (v) => v.replace(/\./g, '[.]'),
+  ip:     (v) => v.replace(/\./g, '[.]'),
+  email:  (v) => v.replace('@', '[@]').replace(/\./g, '[.]'),
+  hash:   (v) => v,
+}
+
+export function defang(value: string, type: string): string {
+  const fn = DEFANG_MAP[type]
+  return fn ? fn(value) : value
+}
+
 export function downloadFile(content: string, filename: string, type: string = 'application/json'): void {
   const blob = new Blob([content], { type })
   const url = URL.createObjectURL(blob)
