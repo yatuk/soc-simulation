@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { AlertTriangle, FileSearch, Clock, Activity, TrendingUp, TrendingDown, Minus } from 'lucide-react'
+import { Abbr } from '@/components/ui/abbreviation'
 import type { KPIMetrics } from '@/types'
 
 interface Props {
@@ -18,19 +19,21 @@ export function KpiCards({ kpi, isLoading }: Props) {
   }, [kpi])
 
   const cards = [
-    { icon: AlertTriangle, label: 'Açık Uyarı', value: kpi?.open_alerts ?? '—', sub: `${kpi?.critical_alerts ?? 0} kritik`, delta: delta.alerts },
-    { icon: FileSearch, label: 'Aktif Olay', value: kpi?.active_incidents ?? '—', sub: `${kpi?.total_incidents ?? 0} toplam`, delta: null },
-    { icon: Clock, label: 'MTTD', value: kpi ? `${Math.round(kpi.mttd_seconds / 60)} dk` : '—', sub: 'Tespit süresi', delta: null },
-    { icon: Activity, label: 'MTTR', value: kpi ? `${Math.round(kpi.mttr_seconds / 60)} dk` : '—', sub: 'Yanıt süresi', delta: null },
+    { icon: AlertTriangle, label: 'Açık Uyarı', labelFull: undefined as string | undefined, value: kpi?.open_alerts ?? '—', sub: `${kpi?.critical_alerts ?? 0} kritik`, delta: delta.alerts },
+    { icon: FileSearch, label: 'Aktif Olay', labelFull: undefined as string | undefined, value: kpi?.active_incidents ?? '—', sub: `${kpi?.total_incidents ?? 0} toplam`, delta: null },
+    { icon: Clock, label: 'MTTD', labelFull: 'Mean Time To Detect — Tehdidin sistemde var olduğu andan tespit edildiği ana kadar geçen ortalama süre', value: kpi ? `${Math.round(kpi.mttd_seconds / 60)} dk` : '—', sub: 'Tespit süresi', delta: null },
+    { icon: Activity, label: 'MTTR', labelFull: 'Mean Time To Respond — Tespit edilen tehdide müdahale edilene kadar geçen ortalama süre', value: kpi ? `${Math.round(kpi.mttr_seconds / 60)} dk` : '—', sub: 'Yanıt süresi', delta: null },
   ]
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-      {cards.map(({ icon: Icon, label, value, sub, delta: d }) => (
+      {cards.map(({ icon: Icon, label, labelFull, value, sub, delta: d }) => (
         <div key={label} className="rounded-lg border border-border bg-card p-4">
           <div className="flex items-center gap-2 text-muted-foreground mb-2">
             <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
-            <span className="text-xs truncate">{label}</span>
+            <span className="text-xs truncate">
+              {labelFull ? <Abbr abbr={label} term={labelFull} /> : label}
+            </span>
           </div>
           <div className="flex items-baseline gap-2">
             {isLoading ? (

@@ -2,174 +2,129 @@
   {
     "rule_id": "RULE-MAILBOX-FWD",
     "name": "Harici Posta Kutusu Yönlendirme Kuralı",
-    "description": "Kullanıcı posta kutusunda harici adrese yönlendirme kuralı oluşturulduğunda tetiklenir.",
+    "description": "Bir kullanıcı, gelen tüm e-postaları kurum dışındaki bir adrese yönlendiren kural oluşturduğunda tetiklenir. Meşru bir kullanım senaryosu var mı? Var — danışmanlar, ortak projeler. Peki saldırganın ilk işi bu mudur? Evet. Her. Seferinde.",
     "severity": "critical",
     "source": "m365_audit",
     "sigma_rule": "title: External Mailbox Forwarding Rule\ndescription: Detects creation of forwarding rules to external domains\nlogsource:\n  product: m365\n  service: audit\ndetection:\n  keywords: ['New-InboxRule', 'ForwardTo', 'external']\n  condition: keywords",
-    "mitre_technique_ids": [
-      "T1114.002",
-      "T1098"
-    ],
+    "mitre_technique_ids": ["T1114.002", "T1098"],
     "enabled": true,
     "alert_count_14d": 3,
     "false_positive_rate": 5.0,
     "author": "SOC Team",
     "created_at": "2026-02-09T00:00:00",
     "updated_at": "2026-04-10T00:00:00",
-    "tags": [
-      "phishing",
-      "exfiltration",
-      "persistence"
-    ]
+    "tags": ["phishing", "exfiltration", "persistence"]
   },
   {
     "rule_id": "RULE-IMPOSSIBLE",
     "name": "İmkansız Seyahat Tespiti",
-    "description": "Aynı kullanıcı için fiziksel olarak imkansız coğrafi konumlardan girişleri tespit eder.",
+    "description": "Aynı kullanıcı 30 dakika içinde fiziksel olarak imkansız iki konumdan giriş yaptığında alarm verir. VPN kullanıcıları bu kuralın doğal düşmanıdır. Her VPN çıkışı bir 'imkansız seyahat'tir — ta ki whitelist'e ekleyene kadar. False positive oranı yüksektir ama true positive'leri altın değerindedir.",
     "severity": "high",
     "source": "idp_auth",
     "sigma_rule": "title: Impossible Travel Detection\ndescription: Login from geographically impossible locations\nlogsource:\n  product: azure_ad\n  service: signins\ndetection:\n  selection:\n    - location_distance > 1000km\n    - time_difference < 30min\n  condition: selection",
-    "mitre_technique_ids": [
-      "T1078"
-    ],
+    "mitre_technique_ids": ["T1078"],
     "enabled": true,
     "alert_count_14d": 2,
     "false_positive_rate": 15.0,
     "author": "SOC Team",
     "created_at": "2025-11-11T00:00:00",
     "updated_at": "2026-04-10T00:00:00",
-    "tags": [
-      "credential_theft",
-      "geo_anomaly"
-    ]
+    "tags": ["credential_theft", "geo_anomaly"]
   },
   {
     "rule_id": "RULE-MFA-BOMBING",
     "name": "MFA Push Bombardımanı",
-    "description": "Kısa sürede çok sayıda MFA push isteği push bombardıman saldırısını gösterir.",
+    "description": "10 dakika içinde aynı hesaba 5'ten fazla MFA push bildirimi gönderildiğinde tetiklenir. Saldırganın stratejisi basittir: kullanıcıyı o kadar bunalt ki, 'tamam tamam ne halin varsa gör' deyip onaylasın. İşe yarıyor. Şaşırtıcı derecede sık.",
     "severity": "critical",
     "source": "idp_auth",
     "sigma_rule": "title: MFA Push Bombing\ndescription: Multiple MFA push requests in short time\ndetection:\n  timeframe: 10m\n  condition: mfa_push_count > 5",
-    "mitre_technique_ids": [
-      "T1556"
-    ],
+    "mitre_technique_ids": ["T1556"],
     "enabled": true,
     "alert_count_14d": 1,
     "false_positive_rate": 2.0,
     "author": "SOC Team",
     "created_at": "2026-03-11T00:00:00",
     "updated_at": "2026-04-25T00:00:00",
-    "tags": [
-      "mfa",
-      "credential_access"
-    ]
+    "tags": ["mfa", "credential_access"]
   },
   {
     "rule_id": "RULE-PW-SPRAY",
     "name": "Parola Püskürtme Tespiti",
-    "description": "Tek IP'den birden fazla hesaba başarısız giriş denemesi parola püskürtme göstergesidir.",
+    "description": "Tek bir IP'den 5 dakika içinde 5'ten fazla hesaba başarısız giriş denemesi parola püskürtme saldırısı göstergesidir. Saldırgan 'Password123' veya 'Anadolu2024' gibi yaygın parolaları çok sayıda hesapta dener. Birinin tutması an meselesidir. Genellikle tutar da.",
     "severity": "medium",
     "source": "idp_auth",
     "sigma_rule": "title: Password Spray Attack\ndetection:\n  selection:\n    - EventID: 4625\n    - distinct_users > 5\n  timeframe: 5m\n  condition: selection",
-    "mitre_technique_ids": [
-      "T1110.003"
-    ],
+    "mitre_technique_ids": ["T1110.003"],
     "enabled": true,
     "alert_count_14d": 2,
     "false_positive_rate": 10.0,
     "author": "SOC Team",
     "created_at": "2025-11-11T00:00:00",
     "updated_at": "2026-03-11T00:00:00",
-    "tags": [
-      "brute_force",
-      "credential_access"
-    ]
+    "tags": ["brute_force", "credential_access"]
   },
   {
     "rule_id": "RULE-OAUTH-RISKY",
     "name": "Riskli OAuth Uygulama İzni",
-    "description": "Yüksek risk skorlu veya bilinmeyen OAuth uygulamalarına verilen izinleri tespit eder.",
+    "description": "Kullanıcı, posta kutusu okuma/yazma yetkisi isteyen ve risk skoru yüksek bir üçüncü parti uygulamaya OAuth izni verdiğinde tetiklenir. 'MailSyncPro' kulağa profesyonel geliyor, değil mi? Değil. Özellikle de Rusya'dan kaydedilmişse.",
     "severity": "high",
     "source": "idp_auth",
     "sigma_rule": "title: Risky OAuth Application Consent\ndetection:\n  selection:\n    - app_risk_score >= 70\n    - permissions includes 'Mail.ReadWrite'\n  condition: selection",
-    "mitre_technique_ids": [
-      "T1528"
-    ],
+    "mitre_technique_ids": ["T1528"],
     "enabled": true,
     "alert_count_14d": 1,
     "false_positive_rate": 8.0,
     "author": "SOC Team",
     "created_at": "2026-04-10T00:00:00",
     "updated_at": "2026-04-10T00:00:00",
-    "tags": [
-      "oauth",
-      "credential_access"
-    ]
+    "tags": ["oauth", "credential_access"]
   },
   {
     "rule_id": "RULE-MACRO-EXEC",
     "name": "Office Makro Çalıştırma Zinciri",
-    "description": "Office uygulamasından PowerShell veya cmd.exe spawn edilmesini tespit eder.",
+    "description": "WINWORD.EXE veya EXCEL.EXE'den PowerShell, cmd.exe ya da wscript.exe spawn edildiğinde tetiklenir. Normal bir Office belgesinin PowerShell çalıştırması için hiçbir meşru sebep yoktur. Sıfır. 'CV.pdf_______________________________________________.exe' dosyasını açan kullanıcıya sorun.",
     "severity": "critical",
     "source": "endpoint_edr",
     "sigma_rule": "title: Office Macro Spawns Shell\ndetection:\n  selection:\n    parent: ['WINWORD.EXE', 'EXCEL.EXE']\n    process: ['powershell.exe', 'cmd.exe', 'wscript.exe']\n  condition: selection",
-    "mitre_technique_ids": [
-      "T1566.001",
-      "T1059.005"
-    ],
+    "mitre_technique_ids": ["T1566.001", "T1059.005"],
     "enabled": true,
     "alert_count_14d": 1,
     "false_positive_rate": 3.0,
     "author": "SOC Team",
     "created_at": "2025-11-11T00:00:00",
     "updated_at": "2026-02-09T00:00:00",
-    "tags": [
-      "malware",
-      "macro",
-      "execution"
-    ]
+    "tags": ["malware", "macro", "execution"]
   },
   {
     "rule_id": "RULE-C2-BEACON",
     "name": "C2 Beacon İletişimi",
-    "description": "Periyodik dış bağlantılar C2 beacon göstergesi olabilir.",
+    "description": "Bir uç noktadan bilinen zararlı domain'e her 10 dakikada bir HTTPS isteği gidiyorsa, bu büyük ihtimalle C2 beacon'dır. Normal yazılımlar bu kadar düzenli davranmaz. Saldırganın 'heartbeat' sinyali, sizin tespit sinyalinizdir.",
     "severity": "critical",
     "source": "endpoint_edr",
     "sigma_rule": "title: C2 Beacon Detection\ndetection:\n  selection:\n    - connection_interval_seconds: 600\n    - destination_port: 443\n  condition: selection",
-    "mitre_technique_ids": [
-      "T1071.001"
-    ],
+    "mitre_technique_ids": ["T1071.001"],
     "enabled": true,
     "alert_count_14d": 1,
     "false_positive_rate": 5.0,
     "author": "SOC Team",
     "created_at": "2026-02-09T00:00:00",
     "updated_at": "2026-04-10T00:00:00",
-    "tags": [
-      "c2",
-      "malware",
-      "command_and_control"
-    ]
+    "tags": ["c2", "malware", "command_and_control"]
   },
   {
     "rule_id": "RULE-SHARING-BULK",
     "name": "Toplu Dış Paylaşım",
-    "description": "Kısa sürede çok sayıda harici dosya paylaşım bağlantısı oluşturulmasını tespit eder.",
+    "description": "Bir kullanıcı 30 dakika içinde 3'ten fazla 'herkes erişebilir' paylaşım bağlantısı oluşturduğunda alarm çalar. 'Yanlışlıkla herkes seçeneğini işaretledim' — SOC analistlerinin en sık duyduğu 5 cümleden biri. Diğerleri: 'Ben o linke tıklamadım', 'VPN kullanıyorum', 'Şifremi kimseyle paylaşmadım' ve 'Bu alert false positive mi?'",
     "severity": "high",
     "source": "m365_audit",
     "sigma_rule": "title: Bulk External File Sharing\ndetection:\n  timeframe: 30m\n  condition: sharing_link_count > 3 AND sharing_type == 'anonymous'",
-    "mitre_technique_ids": [
-      "T1567.002"
-    ],
+    "mitre_technique_ids": ["T1567.002"],
     "enabled": true,
     "alert_count_14d": 1,
     "false_positive_rate": 12.0,
     "author": "SOC Team",
     "created_at": "2026-03-26T00:00:00",
     "updated_at": "2026-03-26T00:00:00",
-    "tags": [
-      "exfiltration",
-      "dlp"
-    ]
+    "tags": ["exfiltration", "dlp"]
   }
 ]

@@ -63,6 +63,9 @@ function App() {
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </Suspense>
+          <footer className="border-t border-border py-3 px-6 text-[10px] text-muted-foreground">
+            SOC Console — Anadolu Finans Holding (kurgusal) • Tüm veriler simüle edilmiştir • Gerçek dünyayla bağlantısı yoktur
+          </footer>
         </main>
       </div>
     </ErrorBoundary>
