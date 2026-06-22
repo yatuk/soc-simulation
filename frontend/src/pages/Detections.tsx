@@ -8,7 +8,8 @@ import { toast } from 'sonner'
 import { Crosshair, Copy } from 'lucide-react'
 
 export default function Detections() {
-  const { data: rules, isLoading, load } = useDetectionStore()
+  const { data: rawRules, isLoading, load } = useDetectionStore()
+  const rules = Array.isArray(rawRules) ? rawRules : []
 
   useEffect(() => { load() }, [load])
 
@@ -65,7 +66,7 @@ export default function Detections() {
                   </button>
                   <pre
                     className="p-3 bg-muted/30 rounded text-xs font-mono overflow-x-auto whitespace-pre-wrap border border-border leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: highlightYAML(rule.sigma_rule) }}
+                    dangerouslySetInnerHTML={{ __html: highlightYAML(rule.sigma_rule ?? '') }}
                   />
                 </div>
               </details>

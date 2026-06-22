@@ -1,11 +1,7 @@
 import { useTranslation } from '@/i18n'
 import { AlertTriangle, RefreshCw } from 'lucide-react'
 
-interface PageErrorProps {
-  title?: string
-}
-
-export function PageError({ title }: PageErrorProps) {
+export function PageError() {
   const { t } = useTranslation()
 
   return (
@@ -13,7 +9,7 @@ export function PageError({ title }: PageErrorProps) {
       <AlertTriangle className="w-10 h-10 text-muted-foreground" />
       <div className="text-center">
         <h2 className="text-sm font-semibold text-muted-foreground">
-          {title || t('errorBoundary.title')}
+          {t('errorBoundary.title')}
         </h2>
         <p className="text-xs text-muted-foreground mt-1">
           {t('errorBoundary.description')}

@@ -24,7 +24,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const t = useCallback(
     (key: string, fallback?: string): string => {
       const keys = key.split('.')
-      let value: unknown = translations[language]
+      // Defansif: language bozuksa (örn. localStorage corruption) Türkçe'ye geri dön
+      let value: unknown = translations[language] ?? translations['tr']
       for (const k of keys) {
         if (value && typeof value === 'object') {
           value = (value as Record<string, unknown>)[k]

@@ -28,8 +28,9 @@ export default function Correlations() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    loadEntity<CorrEdge[]>('correlations.json')
-      .then(setEdges)
+    loadEntity<{ edges: CorrEdge[] }>('correlations.json')
+      .then(data => setEdges(data.edges ?? []))
+      .catch(() => setEdges([]))
       .finally(() => setLoading(false))
   }, [])
 

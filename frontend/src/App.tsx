@@ -82,27 +82,27 @@ function App() {
         >
           <Suspense fallback={<PageFallback />}>
             <Routes>
-              <Route path="/" element={<ErrorBoundary fallback={<PageError title="Overview" />}><Overview /></ErrorBoundary>} />
-              <Route path="/alerts" element={<ErrorBoundary fallback={<PageError title="Alerts" />}><Alerts /></ErrorBoundary>} />
+              <Route path="/" element={<ErrorBoundary fallback={<PageError />}><Overview /></ErrorBoundary>} />
+              <Route path="/alerts" element={<ErrorBoundary fallback={<PageError />}><Alerts /></ErrorBoundary>} />
               <Route path="/alerts/:id" element={<ErrorBoundary fallback={<PageError />}><AlertDetail /></ErrorBoundary>} />
-              <Route path="/incidents" element={<ErrorBoundary fallback={<PageError title="Incidents" />}><Incidents /></ErrorBoundary>} />
+              <Route path="/incidents" element={<ErrorBoundary fallback={<PageError />}><Incidents /></ErrorBoundary>} />
               <Route path="/incidents/:id" element={<ErrorBoundary fallback={<PageError />}><IncidentDetail /></ErrorBoundary>} />
-              <Route path="/iocs" element={<ErrorBoundary fallback={<PageError title="IOCs" />}><IOCs /></ErrorBoundary>} />
-              <Route path="/playbooks" element={<ErrorBoundary fallback={<PageError title="Playbooks" />}><Playbooks /></ErrorBoundary>} />
+              <Route path="/iocs" element={<ErrorBoundary fallback={<PageError />}><IOCs /></ErrorBoundary>} />
+              <Route path="/playbooks" element={<ErrorBoundary fallback={<PageError />}><Playbooks /></ErrorBoundary>} />
               <Route path="/playbooks/:id" element={<ErrorBoundary fallback={<PageError />}><PlaybookDetail /></ErrorBoundary>} />
-              <Route path="/endpoints" element={<ErrorBoundary fallback={<PageError title="Endpoints" />}><Endpoints /></ErrorBoundary>} />
+              <Route path="/endpoints" element={<ErrorBoundary fallback={<PageError />}><Endpoints /></ErrorBoundary>} />
               <Route path="/endpoints/:id" element={<ErrorBoundary fallback={<PageError />}><EndpointDetail /></ErrorBoundary>} />
-              <Route path="/mitre" element={<ErrorBoundary fallback={<PageError title="MITRE" />}><Mitre /></ErrorBoundary>} />
-              <Route path="/detections" element={<ErrorBoundary fallback={<PageError title="Rules" />}><Detections /></ErrorBoundary>} />
-              <Route path="/settings" element={<ErrorBoundary fallback={<PageError title="Settings" />}><Settings /></ErrorBoundary>} />
-              <Route path="/threat-actors" element={<ErrorBoundary fallback={<PageError title="Threat Actors" />}><ThreatActors /></ErrorBoundary>} />
+              <Route path="/mitre" element={<ErrorBoundary fallback={<PageError />}><Mitre /></ErrorBoundary>} />
+              <Route path="/detections" element={<ErrorBoundary fallback={<PageError />}><Detections /></ErrorBoundary>} />
+              <Route path="/settings" element={<ErrorBoundary fallback={<PageError />}><Settings /></ErrorBoundary>} />
+              <Route path="/threat-actors" element={<ErrorBoundary fallback={<PageError />}><ThreatActors /></ErrorBoundary>} />
               <Route path="/threat-actors/:id" element={<ErrorBoundary fallback={<PageError />}><ThreatActorDetail /></ErrorBoundary>} />
-              <Route path="/users" element={<ErrorBoundary fallback={<PageError title="Users" />}><Users /></ErrorBoundary>} />
+              <Route path="/users" element={<ErrorBoundary fallback={<PageError />}><Users /></ErrorBoundary>} />
               <Route path="/users/:id" element={<ErrorBoundary fallback={<PageError />}><UserDetail /></ErrorBoundary>} />
-              <Route path="/logs" element={<ErrorBoundary fallback={<PageError title="Logs" />}><LogExplorer /></ErrorBoundary>} />
-              <Route path="/cases" element={<ErrorBoundary fallback={<PageError title="Cases" />}><Cases /></ErrorBoundary>} />
+              <Route path="/logs" element={<ErrorBoundary fallback={<PageError />}><LogExplorer /></ErrorBoundary>} />
+              <Route path="/cases" element={<ErrorBoundary fallback={<PageError />}><Cases /></ErrorBoundary>} />
               <Route path="/cases/:id" element={<ErrorBoundary fallback={<PageError />}><CaseDetail /></ErrorBoundary>} />
-              <Route path="/correlations" element={<ErrorBoundary fallback={<PageError title="Correlations" />}><Correlations /></ErrorBoundary>} />
+              <Route path="/correlations" element={<ErrorBoundary fallback={<PageError />}><Correlations /></ErrorBoundary>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
