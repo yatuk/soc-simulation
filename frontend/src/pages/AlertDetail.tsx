@@ -9,7 +9,7 @@ import { defang } from '@/lib/utils'
 import { PivotLink } from '@/components/ui/pivot-link'
 import { AiSummary } from '@/components/features/ai/AiSummary'
 import { loadEntity } from '@/lib/data'
-import { ArrowLeft, Shield, Target, ArrowUpRight, Copy, CheckCircle, User, Monitor, Globe, Sparkles } from 'lucide-react'
+import { ArrowLeft, Shield, Target, ArrowUpRight, Copy, CheckCircle, User, Monitor, Globe, Sparkles, Eye, CheckCheck } from 'lucide-react'
 import type { AiSummaryData } from '@/types'
 
 interface AiPayload { alerts: Record<string, unknown>; incidents: Record<string, unknown>; generic: Record<string, unknown> }
@@ -53,6 +53,20 @@ export default function AlertDetail() {
     })
   }
 
+  const handleAcknowledge = () => {
+    toast.success(`${alert.alert_id} incelenmeye alındı.`, {
+      description: 'Durum "inceleniyor" olarak işaretlendi. (Simülasyon)',
+      duration: 3000,
+    })
+  }
+
+  const handleClose = () => {
+    toast.success(`${alert.alert_id} kapatıldı.`, {
+      description: 'Durum "kapatıldı" olarak işaretlendi. (Simülasyon)',
+      duration: 3000,
+    })
+  }
+
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text)
     toast('Kopyalandı (güvensizleştirilmiş)', { duration: 1500 })
@@ -66,6 +80,27 @@ export default function AlertDetail() {
           <ArrowLeft className="w-3 h-3" /> Uyarılara dön
         </Link>
         <div className="flex items-center gap-2">
+          {/* Triage workflow */}
+          {alert.status === 'new' && (
+            <button
+              onClick={handleAcknowledge}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-medium hover:bg-blue-500/20 transition-colors"
+              aria-label="İncele"
+            >
+              <Eye className="w-3.5 h-3.5" />
+              İncele
+            </button>
+          )}
+          {alert.status === 'acknowledged' && (
+            <button
+              onClick={handleClose}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-medium hover:bg-green-500/20 transition-colors"
+              aria-label="Kapat"
+            >
+              <CheckCheck className="w-3.5 h-3.5" />
+              Kapat
+            </button>
+          )}
           <button
             onClick={async () => {
               setShowAi(!showAi)
@@ -88,7 +123,7 @@ export default function AlertDetail() {
             aria-label="Uyarıyı olaya yükselt"
           >
             <ArrowUpRight className="w-3.5 h-3.5" />
-            Olaya Yükselt
+            Eskale Et
           </button>
         </div>
       </div>

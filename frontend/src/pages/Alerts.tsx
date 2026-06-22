@@ -7,7 +7,7 @@ import { StatusPill } from '@/components/ui/status-pill'
 import { EmptyState } from '@/components/ui/empty-state'
 import { PivotLink } from '@/components/ui/pivot-link'
 import { AlertFilters, type AlertFilterState } from '@/components/features/alerts/AlertFilters'
-import { defang } from '@/lib/utils'
+import { defang, computeRiskScore, riskScoreColor } from '@/lib/utils'
 import { exportCSV, exportJSON, exportFilename } from '@/lib/highlight'
 import { toast } from 'sonner'
 import { AlertTriangle, X, Download } from 'lucide-react'
@@ -51,7 +51,7 @@ export default function Alerts() {
   const pivotUser = sp.get('user')
 
   const filtered = useMemo(() => {
-    return alerts.filter((a) => {
+    const filtered = alerts.filter((a) => {
       if (filters.severity !== 'all' && a.severity !== filters.severity) return false
       if (filters.status !== 'all' && a.status !== filters.status) return false
       if (filters.source !== 'all' && a.source !== filters.source) return false
@@ -65,6 +65,8 @@ export default function Alerts() {
       }
       return true
     })
+    // Sort by risk score descending
+    return filtered.sort((a, b) => computeRiskScore(b) - computeRiskScore(a))
   }, [alerts, filters, pivotIp, pivotAsset, pivotUser])
 
   const clearPivot = () => {
@@ -127,6 +129,7 @@ export default function Alerts() {
           <table className="w-full text-xs">
             <thead className="sticky top-0 z-10 bg-muted/50 border-b border-border">
               <tr>
+                <th className="text-left px-3 py-2 font-medium">Risk</th>
                 <th className="text-left px-3 py-2 font-medium w-[30%]">Uyarı</th>
                 <th className="text-left px-3 py-2 font-medium">Önem</th>
                 <th className="text-left px-3 py-2 font-medium hidden md:table-cell">Kaynak</th>
@@ -136,8 +139,19 @@ export default function Alerts() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((a) => (
+              {filtered.map((a) => {
+                const rScore = computeRiskScore(a)
+                const rColor = riskScoreColor(rScore)
+                return (
                 <tr key={a.alert_id} className="border-b border-border last:border-0 even:bg-muted/5 hover:bg-muted/30 transition-colors cursor-pointer">
+                  <td className="px-3 py-2">
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden max-w-12">
+                        <div className="h-full rounded-full transition-all" style={{ width: `${rScore}%`, backgroundColor: rColor }} />
+                      </div>
+                      <span className="text-xs font-mono font-bold tabular-nums">{rScore}</span>
+                    </div>
+                  </td>
                   <td className="px-3 py-2">
                     <Link to={`/alerts/${a.alert_id}`} className="hover:text-primary transition-colors font-medium">{a.title}</Link>
                     <div className="text-xs text-muted-foreground font-mono mt-0.5">{a.alert_id} · <StatusPill status={a.status} /></div>
@@ -154,7 +168,8 @@ export default function Alerts() {
                     {a.affected_asset_id ? <PivotLink to={`/alerts?asset=${a.affected_asset_id}`} className="font-mono text-xs">{a.affected_asset_id}</PivotLink> : <span className="text-muted-foreground">—</span>}
                   </td>
                 </tr>
-              ))}
+                )
+              })}
             </tbody>
           </table>
         </div>
