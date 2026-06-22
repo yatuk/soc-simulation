@@ -31,6 +31,8 @@ const Cases = lazy(() => import('@/pages/Cases'))
 const CaseDetail = lazy(() => import('@/pages/CaseDetail'))
 const UserDetail = lazy(() => import('@/pages/UserDetail'))
 const Correlations = lazy(() => import('@/pages/Correlations'))
+const Vulnerabilities = lazy(() => import('@/pages/Vulnerabilities'))
+const VulnerabilityDetail = lazy(() => import('@/pages/VulnerabilityDetail'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 const CommandPalette = lazy(() => import('@/components/features/command-palette/CommandPalette').then(m => ({ default: m.CommandPalette })))
 
@@ -103,6 +105,8 @@ function App() {
               <Route path="/cases" element={<ErrorBoundary fallback={<PageError />}><Cases /></ErrorBoundary>} />
               <Route path="/cases/:id" element={<ErrorBoundary fallback={<PageError />}><CaseDetail /></ErrorBoundary>} />
               <Route path="/correlations" element={<ErrorBoundary fallback={<PageError />}><Correlations /></ErrorBoundary>} />
+              <Route path="/vulnerabilities" element={<ErrorBoundary fallback={<PageError />}><Vulnerabilities /></ErrorBoundary>} />
+              <Route path="/vulnerabilities/:id" element={<ErrorBoundary fallback={<PageError />}><VulnerabilityDetail /></ErrorBoundary>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

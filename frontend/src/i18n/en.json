@@ -45,7 +45,8 @@
     "users": "Users",
     "logExplorer": "Log Explorer",
     "cases": "Cases",
-    "correlations": "Correlation Graph"
+    "correlations": "Correlation Graph",
+    "vulnerabilities": "Vulnerabilities"
   },
   "topbar": {
     "overview": "Security Operations Center",
@@ -68,7 +69,9 @@
     "cases": "Case Management",
     "userDetail": "User Detail",
     "caseDetail": "Case Detail",
-    "correlations": "Correlation Graph"
+    "correlations": "Correlation Graph",
+    "vulnerabilities": "Vulnerabilities",
+    "vulnerabilityDetail": "Vulnerability Detail"
   },
   "dashboard": {
     "title": "Security Operations Center",

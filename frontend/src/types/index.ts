@@ -259,6 +259,21 @@ export interface TimeSeriesPoint {
   count: number
 }
 
+// ── Vulnerability / CVSS ────────────────────────────────────
+export interface Vulnerability {
+  vuln_id: string
+  cve_id: string
+  name: string
+  description: string
+  cvss_score: number
+  cvss_vector: string
+  severity: 'none' | 'low' | 'medium' | 'high' | 'critical'
+  affected_asset_ids: string[]
+  published_at: string
+  remediation: string
+  status: 'open' | 'in_progress' | 'remediated' | 'accepted_risk'
+}
+
 // ── Settings ───────────────────────────────────────────────
 export interface Settings {
   theme: 'dark' | 'light' | 'system'

@@ -45,7 +45,8 @@
     "users": "Kullanıcılar",
     "logExplorer": "Log Explorer",
     "cases": "Vakalar",
-    "correlations": "İlişki Grafiği"
+    "correlations": "İlişki Grafiği",
+    "vulnerabilities": "Zafiyetler"
   },
   "topbar": {
     "overview": "Siber Güvenlik Operasyon Merkezi",
@@ -68,7 +69,9 @@
     "cases": "Vaka Yönetimi",
     "userDetail": "Kullanıcı Detayı",
     "caseDetail": "Vaka Detayı",
-    "correlations": "İlişki Grafiği"
+    "correlations": "İlişki Grafiği",
+    "vulnerabilities": "Zafiyetler",
+    "vulnerabilityDetail": "Zafiyet Detayı"
   },
   "dashboard": {
     "title": "Güvenlik Operasyon Merkezi",

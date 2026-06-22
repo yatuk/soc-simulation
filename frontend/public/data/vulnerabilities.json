@@ -1,0 +1,122 @@
+[
+  {
+    "vuln_id": "VULN-001", "cve_id": "CVE-2025-44231", "name": "Microsoft Exchange Server Remote Code Execution",
+    "description": "A remote code execution vulnerability exists in Microsoft Exchange Server 2019 Cumulative Update 14 when the server fails to properly validate client requests. An authenticated attacker with mailbox access could exploit this to execute arbitrary code in the context of SYSTEM.",
+    "cvss_score": 9.8, "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "severity": "critical", "affected_asset_ids": ["AST-EXCH-001", "AST-EXCH-002"],
+    "published_at": "2026-05-15T00:00:00Z", "remediation": "Apply Microsoft Security Update KB50398XX for Exchange Server 2019 CU14. Mitigation: Restrict network access to Exchange servers via firewall rules.",
+    "status": "open"
+  },
+  {
+    "vuln_id": "VULN-002", "cve_id": "CVE-2026-11891", "name": "Apache Log4j Remote Code Execution (Log4Shell Variant)",
+    "description": "A JNDI injection vulnerability in Apache Log4j2 versions 2.20.0 to 2.23.1 allows remote attackers to execute arbitrary code via crafted log message lookups. Similar to CVE-2021-44228 but affects newer versions.",
+    "cvss_score": 9.0, "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "severity": "critical", "affected_asset_ids": ["AST-APP-005", "AST-WEB-003"],
+    "published_at": "2026-04-22T00:00:00Z", "remediation": "Upgrade to Apache Log4j 2.24.0 or later. Set log4j2.formatMsgNoLookups=true as temporary mitigation.",
+    "status": "in_progress"
+  },
+  {
+    "vuln_id": "VULN-003", "cve_id": "CVE-2026-07215", "name": "Cisco IOS XE Web UI Privilege Escalation",
+    "description": "A privilege escalation vulnerability in the web-based management interface of Cisco IOS XE devices allows an authenticated, remote attacker to execute commands with root privileges.",
+    "cvss_score": 8.8, "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "severity": "high", "affected_asset_ids": ["AST-NET-001", "AST-NET-002"],
+    "published_at": "2026-05-01T00:00:00Z", "remediation": "Upgrade to Cisco IOS XE 17.9.5 or later. Disable web UI if not required.",
+    "status": "open"
+  },
+  {
+    "vuln_id": "VULN-004", "cve_id": "CVE-2025-99832", "name": "VMware vCenter Server Information Disclosure",
+    "description": "VMware vCenter Server 8.0 contains an information disclosure vulnerability in the DCERPC protocol implementation. A malicious actor with network access may obtain sensitive information.",
+    "cvss_score": 7.5, "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "severity": "high", "affected_asset_ids": ["AST-VIRT-001"],
+    "published_at": "2026-03-10T00:00:00Z", "remediation": "Update to vCenter Server 8.0 Update 3b. Apply KB95321 workaround to restrict DCERPC ports.",
+    "status": "remediated"
+  },
+  {
+    "vuln_id": "VULN-005", "cve_id": "CVE-2026-13542", "name": "Palo Alto PAN-OS GlobalProtect SSRF",
+    "description": "A Server-Side Request Forgery vulnerability in Palo Alto Networks PAN-OS GlobalProtect portal allows an unauthenticated attacker to perform SSRF attacks to internal resources.",
+    "cvss_score": 8.1, "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "severity": "high", "affected_asset_ids": ["AST-FW-001", "AST-FW-002"],
+    "published_at": "2026-06-01T00:00:00Z", "remediation": "Upgrade to PAN-OS 10.2.7-h8 or 11.0.4-h4. Apply vulnerability protection signature 95832.",
+    "status": "open"
+  },
+  {
+    "vuln_id": "VULN-006", "cve_id": "CVE-2026-09021", "name": "Windows Print Spooler Elevation of Privilege",
+    "description": "An elevation of privilege vulnerability exists in the Windows Print Spooler service on Windows Server 2022. An authenticated attacker could exploit this to gain SYSTEM privileges.",
+    "cvss_score": 7.8, "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "severity": "high", "affected_asset_ids": ["AST-DC-001", "AST-DC-002", "AST-WS-015"],
+    "published_at": "2026-04-11T00:00:00Z", "remediation": "Apply Microsoft Security Update from April 2026 Patch Tuesday. Disable Print Spooler on domain controllers if not required.",
+    "status": "in_progress"
+  },
+  {
+    "vuln_id": "VULN-007", "cve_id": "CVE-2026-03145", "name": "Fortinet FortiOS SSL-VPN Heap Buffer Overflow",
+    "description": "A heap-based buffer overflow in FortiOS SSL-VPN allows a remote unauthenticated attacker to execute arbitrary code or commands via specifically crafted requests.",
+    "cvss_score": 9.3, "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "severity": "critical", "affected_asset_ids": ["AST-FW-003"],
+    "published_at": "2026-05-28T00:00:00Z", "remediation": "Upgrade FortiOS to 7.4.4 or 7.6.0 immediately. This vulnerability has been actively exploited in the wild.",
+    "status": "open"
+  },
+  {
+    "vuln_id": "VULN-008", "cve_id": "CVE-2025-89001", "name": "Oracle WebLogic Server T3 Protocol Deserialization",
+    "description": "A deserialization vulnerability in the T3 protocol of Oracle WebLogic Server 14.1.1 allows unauthenticated attackers to execute arbitrary code via crafted serialized Java objects.",
+    "cvss_score": 7.5, "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "severity": "high", "affected_asset_ids": ["AST-APP-003"],
+    "published_at": "2026-02-14T00:00:00Z", "remediation": "Apply Oracle Critical Patch Update (CPU) January 2026. Block T3 protocol at network perimeter.",
+    "status": "remediated"
+  },
+  {
+    "vuln_id": "VULN-009", "cve_id": "CVE-2026-17543", "name": "OpenSSL X.509 Certificate Verification Bypass",
+    "description": "A certificate verification bypass vulnerability exists in OpenSSL 3.1.x through 3.1.8 where a specially crafted certificate chain can bypass proper chain-building verification.",
+    "cvss_score": 6.5, "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+    "severity": "medium", "affected_asset_ids": ["AST-APP-001", "AST-WEB-001", "AST-APP-004"],
+    "published_at": "2026-03-28T00:00:00Z", "remediation": "Upgrade to OpenSSL 3.1.9 or 3.2.2. Verify certificate validation chains after upgrade.",
+    "status": "in_progress"
+  },
+  {
+    "vuln_id": "VULN-010", "cve_id": "CVE-2026-00853", "name": "GitLab CE/EE Project Import Path Traversal",
+    "description": "A path traversal vulnerability in GitLab Community Edition and Enterprise Edition 17.2 allows authenticated project maintainers to read arbitrary files on the server during project import.",
+    "cvss_score": 6.8, "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N",
+    "severity": "medium", "affected_asset_ids": ["AST-APP-006"],
+    "published_at": "2026-04-05T00:00:00Z", "remediation": "Upgrade to GitLab 17.2.5 or 17.3.3. Review file permissions on GitLab server.",
+    "status": "open"
+  },
+  {
+    "vuln_id": "VULN-011", "cve_id": "CVE-2025-77102", "name": "Docker Engine Container Escape via runc",
+    "description": "A container escape vulnerability in Docker Engine 26.1.x using runc 1.1.12 allows a containerized process to escape the container and execute commands on the host with root privileges.",
+    "cvss_score": 8.2, "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "severity": "high", "affected_asset_ids": ["AST-APP-005", "AST-APP-007"],
+    "published_at": "2026-05-20T00:00:00Z", "remediation": "Upgrade Docker Engine to 26.1.5+ and runc to 1.1.13+. Enable seccomp and AppArmor/SELinux profiles.",
+    "status": "open"
+  },
+  {
+    "vuln_id": "VULN-012", "cve_id": "CVE-2026-04982", "name": "Microsoft SQL Server Linked Server RCE",
+    "description": "A vulnerability in Microsoft SQL Server 2022 allows an authenticated database user with ALTER LINKED SERVER permission to execute arbitrary code via a crafted linked server configuration.",
+    "cvss_score": 7.2, "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "severity": "high", "affected_asset_ids": ["AST-DB-001", "AST-DB-002"],
+    "published_at": "2026-04-15T00:00:00Z", "remediation": "Apply SQL Server 2022 Cumulative Update 15. Restrict LINKED SERVER creation to sysadmin role.",
+    "status": "accepted_risk"
+  },
+  {
+    "vuln_id": "VULN-013", "cve_id": "CVE-2026-20571", "name": "Kubernetes API Server Unauthorized Access via ServiceAccount",
+    "description": "A flaw in Kubernetes 1.30.x API server allows pods using certain service account tokens to access cluster-level secrets they should not have permission to read.",
+    "cvss_score": 6.3, "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N",
+    "severity": "medium", "affected_asset_ids": ["AST-APP-007", "AST-APP-008"],
+    "published_at": "2026-05-08T00:00:00Z", "remediation": "Upgrade to Kubernetes 1.30.5+. Enable NodeRestriction and ServiceAccount admission plugins.",
+    "status": "open"
+  },
+  {
+    "vuln_id": "VULN-014", "cve_id": "CVE-2025-65321", "name": "Ansible Automation Platform Jinja2 Template Injection",
+    "description": "A server-side template injection vulnerability in Ansible Automation Platform 2.4 allows authenticated users to inject malicious Jinja2 template code in job templates, leading to remote code execution.",
+    "cvss_score": 5.5, "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:L/A:N",
+    "severity": "medium", "affected_asset_ids": ["AST-APP-002"],
+    "published_at": "2026-01-30T00:00:00Z", "remediation": "Upgrade to Ansible Automation Platform 2.4.3. Enable content validation on job templates.",
+    "status": "remediated"
+  },
+  {
+    "vuln_id": "VULN-015", "cve_id": "CVE-2026-25003", "name": "Citrix NetScaler ADC Unauthenticated Information Leak",
+    "description": "An information disclosure vulnerability in Citrix NetScaler ADC 14.1 allows unauthenticated attackers to obtain sensitive configuration data including certificates via the management interface.",
+    "cvss_score": 5.3, "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+    "severity": "medium", "affected_asset_ids": ["AST-NET-003"],
+    "published_at": "2026-06-10T00:00:00Z", "remediation": "Upgrade to NetScaler ADC 14.1-29.63. Restrict management interface access to trusted IPs.",
+    "status": "open"
+  }
+]

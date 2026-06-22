@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import {
   LayoutDashboard, AlertTriangle, FileSearch, Shield,
   Play, Monitor, Target, Crosshair, Settings, Users,
-  ChevronLeft, ChevronRight, X,
+  Bug, ChevronLeft, ChevronRight, X,
 } from 'lucide-react'
 
 export function Sidebar() {
@@ -27,6 +27,7 @@ export function Sidebar() {
     { to: '/logs',      icon: FileSearch,     label: t('sidebar.logExplorer') },
     { to: '/cases',     icon: FileSearch,     label: t('sidebar.cases') },
     { to: '/correlations', icon: Target,      label: t('sidebar.correlations') },
+    { to: '/vulnerabilities', icon: Bug,      label: t('sidebar.vulnerabilities') },
     { to: '/detections', icon: Crosshair,        label: t('sidebar.detections') },
     { to: '/settings',   icon: Settings,         label: t('sidebar.settings') },
   ], [t])

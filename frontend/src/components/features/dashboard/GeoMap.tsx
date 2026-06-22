@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
+import { ComposableMap, Geographies, Geography, Marker, Line } from 'react-simple-maps'
 import { Globe } from 'lucide-react'
+import { useTranslation } from '@/i18n'
 
 interface ThreatOrigin {
   country: string; city: string; lat: number; lng: number
@@ -15,6 +16,9 @@ const SEVERITY_FILL: Record<string, string> = {
   low: '#3fb950',
 }
 
+// Istanbul as target center (Anadolu Finans HQ)
+const TARGET: [number, number] = [29, 41]
+
 const GEO_URL = `${import.meta.env.BASE_URL}countries-110m.json`
 
 interface Props {
@@ -24,6 +28,7 @@ interface Props {
 
 export function GeoMap({ origins, isLoading }: Props) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [hovered, setHovered] = useState<string | null>(null)
 
   if (isLoading) {
@@ -33,7 +38,7 @@ export function GeoMap({ origins, isLoading }: Props) {
   return (
     <div className="rounded-lg border border-border bg-card p-4">
       <h3 className="text-xs font-semibold mb-3 flex items-center gap-2">
-        <Globe className="w-3.5 h-3.5" /> Tehdit Origin Haritası
+        <Globe className="w-3.5 h-3.5" /> {t('dashboard.geoMap')}
       </h3>
 
       <div className="rounded-lg border border-border overflow-hidden bg-card">
@@ -73,6 +78,24 @@ export function GeoMap({ origins, isLoading }: Props) {
             }
           </Geographies>
 
+          {/* Attack flow lines from origins to target (Istanbul) */}
+          {origins.map((o) => (
+            <Line
+              key={`line-${o.country}`}
+              from={[o.lng, o.lat]}
+              to={TARGET}
+              stroke={SEVERITY_FILL[o.severity] ?? '#8b949e'}
+              strokeWidth={Math.max(0.3, Math.min(1.5, o.count * 0.15))}
+              strokeLinecap="round"
+              strokeOpacity={0.3}
+            />
+          ))}
+
+          {/* Target marker (Istanbul) */}
+          <Marker coordinates={TARGET}>
+            <circle r={5} fill="hsl(var(--primary))" stroke="hsl(var(--background))" strokeWidth={2} opacity={0.9} />
+          </Marker>
+
           {origins.map((o) => (
             <Marker key={o.country} coordinates={[o.lng, o.lat]}>
               <g
@@ -104,9 +127,9 @@ export function GeoMap({ origins, isLoading }: Props) {
       </div>
 
       <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
-        <span>{origins.length} ülke, {origins.reduce((s, o) => s + o.count, 0)} IOC</span>
+        <span>{origins.length} {t('iocs.source')?.toLowerCase?.() ?? 'kaynak'}, {origins.reduce((s, o) => s + o.count, 0)} IOC</span>
         {hovered && !origins.find(o => o.city === hovered) && <span>{hovered}</span>}
-        <span className="italic">Türkiye marker'ı: Yerel tehdit. Daha sinsi, daha az egzotik.</span>
+        <span>📍 Istanbul — Anadolu Finans HQ</span>
       </div>
     </div>
   )

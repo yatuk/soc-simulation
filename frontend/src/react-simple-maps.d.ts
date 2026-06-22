@@ -37,8 +37,18 @@ declare module 'react-simple-maps' {
     children?: ReactNode
   }
 
+  interface LineProps {
+    from: [number, number]
+    to: [number, number]
+    stroke?: string
+    strokeWidth?: number
+    strokeLinecap?: string
+    strokeOpacity?: number
+  }
+
   export const ComposableMap: ComponentType<ComposableMapProps>
   export const Geographies: ComponentType<GeographiesProps>
   export const Geography: ComponentType<GeographyProps>
   export const Marker: ComponentType<MarkerProps>
+  export const Line: ComponentType<LineProps>
 }
