@@ -86,7 +86,18 @@
     "geoMap": "Threat Origins",
     "minutes": "min",
     "noData": "No data",
-    "vsYesterday": "vs yesterday"
+    "vsYesterday": "vs yesterday",
+    "eventVolume": "Event Volume",
+    "timeRange": "Time Range",
+    "fpRateDesc": "14-day average false positive rate",
+    "fpRateSub": "14-day average",
+    "highRiskUsers": "High Risk Users",
+    "totalUsers": "Total Users",
+    "isolatedAssets": "Isolated Assets",
+    "totalAssets": "Total Assets",
+    "totalAlerts": "Total Alerts",
+    "totalIncidents": "Total Incidents",
+    "trends": "Trends"
   },
   "alerts": {
     "title": "Alerts",

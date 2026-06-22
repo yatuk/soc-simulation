@@ -2,8 +2,10 @@ import { useEffect, useState, Suspense, lazy } from 'react'
 import { useKPIStore, useIncidentStore, useAlertStore, useMitreStore } from '@/store'
 import { SkeletonCard } from '@/components/ui/skeleton-card'
 import { SkeletonChart } from '@/components/ui/skeleton-card'
+import { TimeRangeSelector, type TimeRange } from '@/components/ui/time-range-selector'
 import { KpiCards } from '@/components/features/dashboard/KpiCards'
 import { AlertVolumeChart } from '@/components/features/dashboard/AlertVolumeChart'
+import { EventVolumeChart } from '@/components/features/dashboard/EventVolumeChart'
 import { SeverityDonut } from '@/components/features/dashboard/SeverityDonut'
 import { TopMitreBar } from '@/components/features/dashboard/TopMitreBar'
 import { RecentIncidents } from '@/components/features/dashboard/RecentIncidents'
@@ -18,6 +20,7 @@ export default function Overview() {
   const { data: mitre, isLoading: mitreLoading, load: loadMitre } = useMitreStore()
   const [origins, setOrigins] = useState<Array<Record<string, unknown>>>([])
   const [geoLoading, setGeoLoading] = useState(false)
+  const [timeRange, setTimeRange] = useState<TimeRange>('7d')
 
   useEffect(() => {
     loadKPI(); loadInc(); loadAlerts(); loadMitre()
@@ -26,6 +29,7 @@ export default function Overview() {
   }, [loadKPI, loadInc, loadAlerts, loadMitre])
 
   const loading = kpiLoading || incLoading || alertLoading || mitreLoading
+  const days = timeRange === '24h' ? 1 : timeRange === '7d' ? 7 : timeRange === '30d' ? 30 : 60
 
   if (loading && !kpi) {
     return (
@@ -39,11 +43,23 @@ export default function Overview() {
     <div className="p-6 space-y-6">
       <KpiCards kpi={kpi} isLoading={loading} />
 
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-semibold">Trendler</h2>
+        <TimeRangeSelector value={timeRange} onChange={setTimeRange} />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <AlertVolumeChart alerts={alerts} kpiData={kpi?.alert_volume_daily ?? []} days={days} isLoading={alertLoading} />
+        <EventVolumeChart data={kpi?.event_volume_daily ?? []} days={days} isLoading={kpiLoading} />
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <AlertVolumeChart alerts={alerts} isLoading={alertLoading} />
+          <SeverityDonut kpi={kpi} isLoading={kpiLoading} />
         </div>
-        <SeverityDonut kpi={kpi} isLoading={kpiLoading} />
+        <div className="lg:col-span-1">
+          <TopMitreBar mitre={mitre} isLoading={mitreLoading} />
+        </div>
       </div>
 
       <Suspense fallback={<SkeletonChart height="h-80" />}>
@@ -51,12 +67,10 @@ export default function Overview() {
       </Suspense>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1">
-          <TopMitreBar mitre={mitre} isLoading={mitreLoading} />
-        </div>
         <div className="lg:col-span-2">
           <RecentIncidents incidents={incidents} isLoading={incLoading} />
         </div>
+        <div className="lg:col-span-1" />
       </div>
     </div>
   )

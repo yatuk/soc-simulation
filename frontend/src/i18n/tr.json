@@ -86,7 +86,18 @@
     "geoMap": "Tehdit Kaynakları",
     "minutes": "dk",
     "noData": "Veri yok",
-    "vsYesterday": "düne göre"
+    "vsYesterday": "düne göre",
+    "eventVolume": "Olay Hacmi",
+    "timeRange": "Zaman Aralığı",
+    "fpRateDesc": "14 günlük ortalama false positive oranı",
+    "fpRateSub": "14 günlük ortalama",
+    "highRiskUsers": "Yüksek Riskli Kullanıcı",
+    "totalUsers": "Toplam Kullanıcı",
+    "isolatedAssets": "İzole Cihaz",
+    "totalAssets": "Toplam Cihaz",
+    "totalAlerts": "Toplam Uyarı",
+    "totalIncidents": "Toplam Olay",
+    "trends": "Trendler"
   },
   "alerts": {
     "title": "Uyarılar",
