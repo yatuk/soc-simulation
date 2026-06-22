@@ -36,8 +36,8 @@ export function TopMitreBar({ mitre, isLoading }: Props) {
           <YAxis type="category" dataKey="name" tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }} tickLine={false} axisLine={false} width={70} />
           <Tooltip
             contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)', fontSize: 12 }}
-            formatter={(val: number) => [`${val} uyarı`, '']}
-            labelFormatter={(label: string) => top5.find((t) => t.name === label)?.label ?? label}
+            formatter={(val) => [`${val} uyarı`, '']}
+            labelFormatter={(label) => top5.find((t) => t.name === label)?.label ?? String(label)}
           />
           <Bar dataKey="count" radius={[0, 2, 2, 0]} barSize={14}>
             {top5.map((t, i) => <Cell key={t.name} fill={BAR_FILL} fillOpacity={1 - i * 0.12} />)}
