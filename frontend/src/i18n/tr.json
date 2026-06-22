@@ -268,7 +268,9 @@
     "alertCount": "Uyarı",
     "searchTechnique": "Teknik ara...",
     "noMatch": "Eşleşen teknik bulunamadı",
-    "noMatchDesc": "Farklı bir arama terimi deneyin."
+    "noMatchDesc": "Farklı bir arama terimi deneyin.",
+    "gridView": "Matris Görünüm",
+    "treemapView": "Treemap Görünüm"
   },
   "detections": {
     "title": "Sigma Tespit Kuralları",

@@ -268,7 +268,9 @@
     "alertCount": "Alerts",
     "searchTechnique": "Search technique...",
     "noMatch": "No matching techniques",
-    "noMatchDesc": "Try a different search term."
+    "noMatchDesc": "Try a different search term.",
+    "gridView": "Matrix View",
+    "treemapView": "Treemap View"
   },
   "detections": {
     "title": "Sigma Detection Rules",
