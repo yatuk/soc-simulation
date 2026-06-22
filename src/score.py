@@ -139,7 +139,7 @@ class RiskScorer:
             if 'ForwardTo' in rule_actions and '@' in rule_actions:
                 # Check if external domain
                 forward_email = rule_actions.split(':')[-1].strip()
-                if 'acmecorp.example.com' not in forward_email:
+                if 'anadolufinans.example.tr' not in forward_email:
                     points = self.scoring_rules['mailbox_rule_external']
                     score += points
                     reasons.append({

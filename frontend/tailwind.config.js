@@ -73,6 +73,15 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Consolas', 'monospace'],
       },
+      fontSize: {
+        '2xs': ['9px', { lineHeight: '1.2' }],
+        'xs':  ['10px', { lineHeight: '1.4' }],
+        'sm':  ['12px', { lineHeight: '1.5' }],
+        'base':['13px', { lineHeight: '1.5' }],
+        'lg':  ['16px', { lineHeight: '1.4' }],
+        'xl':  ['20px', { lineHeight: '1.3' }],
+        '2xl': ['24px', { lineHeight: '1.2' }],
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -106,13 +115,6 @@ export default {
         'slide-out-right': 'slide-out-right 0.2s ease-out',
         'fade-in':         'fade-in 0.15s ease-out',
         shimmer:           'shimmer 2s infinite linear',
-      },
-      backgroundImage: {
-        'dot-matrix':
-          'radial-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px), radial-gradient(hsl(var(--primary) / 0.04) 1px, transparent 1px)',
-      },
-      backgroundSize: {
-        'dot-matrix': '50px 50px, 20px 20px',
       },
     },
   },

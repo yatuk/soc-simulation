@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import type { MitreCoverage } from '@/types'
+import { ChartShell } from '@/components/ui/chart-shell'
 
 const BAR_FILL = '#f0883e'
 
@@ -44,14 +45,5 @@ export function TopMitreBar({ mitre, isLoading }: Props) {
         </BarChart>
       </ResponsiveContainer>
     </ChartShell>
-  )
-}
-
-function ChartShell({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-lg border border-border bg-card p-4">
-      <h3 className="text-xs font-semibold mb-3">{title}</h3>
-      {children}
-    </div>
   )
 }

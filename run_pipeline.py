@@ -90,8 +90,8 @@ def merge_normalized_with_synthetic():
                 if line:
                     try:
                         synthetic_events.append(json.loads(line))
-                    except:
-                        pass
+                    except (json.JSONDecodeError, KeyError) as e:
+                        print(f"  [UYARI] Satir ayrıştırılamadı: {e}")
     
     print(f"[BIRLESTIRME] {len(synthetic_events)} sentetik olay yuklendi")
     
@@ -138,8 +138,8 @@ def merge_normalized_with_synthetic():
                             iocs[ioc['domain'].lower()] = ioc
                         if ioc.get('value'):
                             iocs[ioc['value'].lower()[:100]] = ioc
-                    except:
-                        pass
+                    except (json.JSONDecodeError, KeyError) as e:
+                        print(f"  [UYARI] IOC satırı ayrıştırılamadı: {e}")
         print(f"  -> {len(iocs)} IOC indexed")
     
     # Enrich normalized events with IOC matches
@@ -404,11 +404,19 @@ def main():
         print("=" * 60)
         
         if export_to_dashboard():
+            # Sync to frontend
+            import shutil
+            frontend_data = Path("frontend/public/data")
+            frontend_data.mkdir(parents=True, exist_ok=True)
+            for f in source_dir.glob("*.json"):
+                shutil.copy2(f, frontend_data / f.name)
+            for f in source_dir.glob("*.jsonl"):
+                shutil.copy2(f, frontend_data / f.name)
+            print(f"\n[SYNC] outputs/ -> frontend/public/data/ kopyalandi")
             print("\n[BASARI] Pipeline tamamlandi!")
             print("\n[SONRAKI ADIMLAR]")
-            print("  1. cd docs && python -m http.server 8000")
-            print("  2. http://localhost:8000 adresini acin")
-            print("  3. Veya GitHub Pages dagitimi icin commit ve push yapin")
+            print("  1. cd frontend && npm run dev")
+            print("  2. Veya GitHub Pages dagitimi icin commit ve push yapin")
         
         return 0
         

@@ -47,13 +47,13 @@ export function KpiCards({ kpi, isLoading }: Props) {
               <span className="text-2xl font-bold tabular-nums">{value}</span>
             )}
             {d !== null && (
-              <span className={`inline-flex items-center text-[10px] font-medium ${d > 0 ? 'text-severity-critical' : d < 0 ? 'text-severity-low' : 'text-muted-foreground'}`} aria-label={`Değişim: %${d}`}>
+              <span className={`inline-flex items-center text-xs font-medium ${d > 0 ? 'text-severity-critical' : d < 0 ? 'text-severity-low' : 'text-muted-foreground'}`} aria-label={`Değişim: %${d}`}>
                 {d > 0 ? <TrendingUp className="w-3 h-3 mr-0.5" /> : d < 0 ? <TrendingDown className="w-3 h-3 mr-0.5" /> : <Minus className="w-3 h-3 mr-0.5" />}
                 {d > 0 ? '↑' : d < 0 ? '↓' : '–'}{Math.abs(d)}%
               </span>
             )}
           </div>
-          <div className="text-[10px] text-muted-foreground mt-0.5">{sub}</div>
+          <div className="text-xs text-muted-foreground mt-0.5">{sub}</div>
           {clickable && <ArrowUpRight className="absolute top-3 right-3 w-3 h-3 text-muted-foreground/30 group-hover:text-primary/50 transition-colors" />}
         </div>
         )

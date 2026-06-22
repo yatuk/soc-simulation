@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import type { Alert } from '@/types'
+import { ChartShell } from '@/components/ui/chart-shell'
 
 const SEVERITY_ORDER = ['critical', 'high', 'medium', 'low'] as const
 const SEVERITY_FILL: Record<string, string> = {
@@ -42,7 +43,7 @@ export function AlertVolumeChart({ alerts, isLoading }: Props) {
 
   return (
     <ChartShell title="Uyarı Hacmi (7 Gün)">
-      <ResponsiveContainer width="100%" height={220}>
+      <ResponsiveContainer width="100%" height={200}>
         <AreaChart data={chartData} margin={{ top: 4, right: 0, left: -10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="date" tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }} tickLine={false} />
@@ -57,14 +58,5 @@ export function AlertVolumeChart({ alerts, isLoading }: Props) {
         </AreaChart>
       </ResponsiveContainer>
     </ChartShell>
-  )
-}
-
-function ChartShell({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-lg border border-border bg-card p-4">
-      <h3 className="text-xs font-semibold mb-3">{title}</h3>
-      {children}
-    </div>
   )
 }

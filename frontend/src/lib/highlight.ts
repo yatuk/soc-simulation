@@ -5,7 +5,7 @@
 export function highlightYAML(yaml: string): string {
   const lines = yaml.split('\n')
   return lines.map((line, i) => {
-    const num = `<span class="text-muted-foreground/40 select-none mr-3 text-[9px] w-5 inline-block text-right">${i + 1}</span>`
+    const num = `<span class="text-muted-foreground/40 select-none mr-3 text-2xs w-5 inline-block text-right">${i + 1}</span>`
 
     // Comment line
     if (/^\s*#/.test(line)) {
@@ -49,11 +49,11 @@ function escape(s: string): string {
  */
 export function exportCSV(rows: Record<string, unknown>[], filename: string): void {
   if (rows.length === 0) return
-  const headers = Object.keys(rows[0])
+  const headers = Object.keys(rows[0] as object)
   const BOM = '﻿'
   const csv = BOM + [
     headers.join(','),
-    ...rows.map(r => headers.map(h => JSON.stringify(r[h] ?? '')).join(','))
+    ...rows.map(r => headers.map(h => JSON.stringify((r as Record<string, unknown>)[h] ?? '')).join(','))
   ].join('\n')
   download(new Blob([csv], { type: 'text/csv;charset=utf-8' }), filename)
 }

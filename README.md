@@ -1,4 +1,4 @@
-# SOC Console — Bir Güvenlik Operasyon Merkezi Simülasyonu
+# SOC Console — Security Operations Center Simulation
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Vite](https://img.shields.io/badge/vite-5-blue)](https://vitejs.dev/)
@@ -6,124 +6,151 @@
 [![Tailwind](https://img.shields.io/badge/Tailwind-3-38bdf8)](https://tailwindcss.com/)
 [![GitHub Pages](https://img.shields.io/badge/deploy-GitHub%20Pages-black)](https://pages.github.com/)
 
-> SIEM + SOAR + EDR. Tamamen statik. Tamamen kurgusal.  
-> 19 alert, 9 incident, 1 gerçek tehdit, 6 kahve.
+> **SIEM + SOAR + EDR.** Fully static. Fully simulated.  
+> A production-grade SOC dashboard built as a portfolio case study.
 
-[🔗 Canlı Demo](https://yatuk.github.io/SOC-case-study-project/) · [📊 Mimari](./docs/ARCHITECTURE.md) · [📁 Veri Modeli](./docs/DATA_MODEL.md) · [📖 Senaryolar](./docs/SCENARIOS.md)
+[🔗 Live Demo](https://yatuk.github.io/soc-simulation/) · [📊 Architecture](./docs/ARCHITECTURE.md) · [📁 Data Model](./docs/DATA_MODEL.md) · [📖 Scenarios](./docs/SCENARIOS.md)
 
 ---
 
-## Ekranlar
+## Overview
+
+SOC Console is a **zero-backend**, **fully client-side** Security Operations Center simulation platform. It demonstrates real-world SOC workflows — alert triage, incident response, IOC intelligence, SOAR playbook orchestration, EDR endpoint monitoring, and MITRE ATT&CK mapping — across a fictional Turkish financial institution ("Anadolu Finans Holding").
+
+All data is procedurally generated via a deterministic Python pipeline. No authentication, no API keys, no external services. Just static JSON consumed by a React SPA.
+
+---
+
+## Screenshots
 
 ![Overview Dashboard](./docs/screenshots/overview.png)
-*KPI'lar, alert trendi, severity dağılımı, top MITRE techniques.*
+*KPI cards, alert volume trend, severity distribution, top MITRE techniques, geo threat map.*
 
 ![Alerts — Filter + Table](./docs/screenshots/alerts.png)
-*Filter, search, severity breakdown, IOC defanging.*
+*Severity/status/source filters, forensic pivot links, CSV/JSON export, IOC defanging.*
 
-![SOAR Playbook — Adım Akışı](./docs/screenshots/playbook.png)
-*Playbook adımları, DAG-benzeri flow, run history.*
-
----
-
-## Hikaye: Bir SOC Analistinin Günlüğü
-
-_Tarih: Pazartesi, 09:00_
-Adım Mehmet. Ben bir SOC analistiyim.
-
-Sabah kahvemi içerken SIEM dashboard'una baktım. **4.2 milyon olay**. Güzel, dün sadece 3.8 milyondu. Gelişiyoruz.
-
-**İlk alert:** "Suspicious PowerShell Activity Detected".
-Açtım. Bir kullanıcı `Get-Process` çalıştırmış. **KRİTİK SEVİYE**. Tabii ya, adam bilgisayarında hangi programların çalıştığını merak etmiş, kesin APT29.
-
-**İkinci alert:** "Impossible Travel - User logged in from Istanbul and Ankara within 5 minutes".
-Kullanıcıyı aradım. "Abi sen nasıl 5 dakikada İstanbul'dan Ankara'ya gittin?"
-"VPN kullanıyorum."
-"..."
-**Alert kapatıldı: False Positive - VPN**
-
-**Üçüncü alert:** "Brute Force Attack Detected - 3 Failed Login Attempts".
-Üç. Tam üç deneme. Saldırgan ya çok sabırsız ya da şifresini unutmuş bir çalışan. Spoiler: şifresini unutmuş bir çalışan.
+![SOAR Playbook — Step Flow](./docs/screenshots/playbook.png)
+*DAG-style playbook steps with automated/manual/decision indicators and run history.*
 
 ---
 
-_Tarih: Pazartesi, 11:30_
-Müdür geldi. "Mehmet, geçen haftaki güvenlik raporunu hazırladın mı?"
+## Features
 
-Hazırladım tabii. 47 sayfa. İçinde:
+### SIEM — Alert Management
+- **2,000+ alerts** with severity, status, source, and MITRE technique filters
+- Full-text search across alert title, description, and affected entities
+- **Forensic pivot navigation** — clickable IPs, users, assets, and incident links
+- **AI triage summaries** — simulated Claude-generated analyst assessments per alert
+- CSV/JSON export with defanged IOC output
+- "Promote to Incident" workflow (simulated)
 
-- 12 sayfa "her şey yolunda"
-- 15 sayfa "potansiyel tehditler" (hepsi false positive)
-- 20 sayfa grafik (çünkü yöneticiler grafik seviyor)
+### Incident Response
+- **9 incident scenarios** with full kill-chain timelines (Initial Access → Exfiltration)
+- Turkish-language incident narratives (2–3 paragraphs each)
+- Linked alerts, SOAR playbook runs, and threat actor matching
+- **Investigation Graph** — ReactFlow-based entity relationship visualization
+- Action buttons: Lock Account, Run Playbook, Close Incident
 
-En sevdiğim grafik: "Engellenen Saldırılar - Aylık Trend". Çubuklar yukarı gidiyor. Bu iyi bir şey mi? Daha çok saldırı engelliyoruz. Ama aynı zamanda daha çok saldırıya uğruyoruz. Schrödinger'in güvenliği.
+### SOAR — Playbook Orchestration
+- **4 playbook definitions:** Phishing Response, Account Compromise, Malware Isolation, Data Exfiltration
+- DAG-style step flow visualization with phase, owner, and success criteria
+- Playbook run history with automated/manual/decision step indicators
+- Parameterized commands with entity placeholder substitution
+
+### EDR — Endpoint Detection & Response
+- **140+ endpoints** filtered by type (workstation, laptop, server, mobile)
+- Risk score progress bars with color-coded severity tiers
+- Isolation toggle with simulated EDR actions
+- Process tree (parent-child hierarchy) and network connection tables
+- Per-endpoint alert history
+
+### IOC Explorer
+- **200+ indicators** across domain, IP, URL, hash, and email types
+- Threat score bars with confidence indicators
+- Expandable "seen where" section showing related alerts
+- One-click defanged copy to clipboard
+- Type-based filtering and search
+
+### Threat Intelligence
+- **Threat actor profiles** with origin, motivation, aliases, and known TTPs
+- MITRE ATT&CK technique matching with overlap percentage per incident
+- Notable campaigns and tool references
+- Public-domain attribution data (educational use)
+
+### MITRE ATT&CK Matrix
+- Horizontal-scroll enterprise matrix (14 tactic columns × 50+ technique cards)
+- Color-coded coverage heatmap with alert count badges
+- Clickable technique drawers showing related alerts and detection rules
+- Coverage gap analysis
+
+### Detection Rules
+- **28 Sigma-format detection rules** with unique, realistic signatures
+- Source-specific detection logic (M365 audit, identity provider, endpoint EDR, email gateway)
+- False positive rate and 14-day alert count per rule
+- Expandable raw Sigma YAML with syntax highlighting
+- Copy-to-clipboard for rule export
+
+### User Risk Dashboard
+- **84 user profiles** with risk scores, departments, roles, and risk factors
+- Per-user drill-down: linked alerts, incidents, assets, event timeline
+- Risk factor breakdown with rule-level scoring
+- Sortable by risk score, filterable by department and role
+
+### Case Management
+- **9 detailed security cases** with owner assignment and evidence tracking
+- Affected users, devices, and MITRE technique mapping per case
+- Full narrative descriptions and linked alert references
+- Severity and status tracking
+
+### Log Explorer
+- Raw event inspection from `events.jsonl` (200+ normalized events)
+- JSON-based full-text search across all event fields
+- Source type and severity filtering
+- Expandable raw log view with monospace formatting
+
+### Entity Correlation Graph
+- ReactFlow-based interactive graph of user-device-IP relationships
+- Color-coded node types with weighted edge connections
+- Pan, zoom, and fit-view controls
+
+### Platform Features
+- **i18n:** Turkish/English language toggle with persistent setting
+- **Command Palette (Ctrl+K):** Global search across alerts, incidents, IOCs, assets, and users
+- **Notifications Bell:** Alert, incident, and playbook run notifications
+- **Dark/Light/System theme** with CSS custom properties
+- **Table density** setting (compact/normal/comfortable) persisted to localStorage
+- **Pagination** on all list views
+- **Per-page error boundaries** — single page crash does not take down the app
+- **404 catch-all route**
+
+### Accessibility
+- Skip-to-content link
+- ARIA landmark roles and labels
+- Full keyboard navigation (Tab, Enter, Escape, arrow keys)
+- Focus trap in dialogs and drawers
+- `prefers-reduced-motion` support
+- Screen reader announcements via `role="status"` live regions
 
 ---
 
-_Tarih: Pazartesi, 14:00_
-**Gerçek bir alert geldi.** Gerçek gerçek.
-
-Bir kullanıcı phishing mailindeki linke tıklamış. Credential'ları çalınmış. Saldırgan mailbox'a erişmiş ve "Tüm Mailleri Dışarı Aktar" kuralı oluşturmuş.
-
-**Klasik.**
-
-Incident response başladı:
-
-1. Hesabı kilitle ✓
-2. Session'ları sonlandır ✓
-3. Şifreyi sıfırla ✓
-4. MFA'yı zorla ✓
-5. Kullanıcıya "linke tıklama" eğitimi ver ✓
-
-Kullanıcı: "Ama mail çok gerçekçi görünüyordu!"
-
-Mail konusu: _"ACIL!!! Şifrenizi 5 dakika içinde değiştirin yoksa hesabınız silinecek - Microsoft Güvenlik Takımı (microsoft-guvenlik-takim@gmail.com)"_
-
-Evet. Çok gerçekçi.
-
----
-
-_Tarih: Pazartesi, 17:45_
-Gün bitti. Scorecard'a baktım:
-
-| Metrik | Değer |
-| ------ | ----- |
-| İncelenen Alert | 127 |
-| Gerçek Pozitif | 1 |
-| False Positive | 126 |
-| Kahve Tüketimi | 6 fincan |
-| Saç Kaybı | 47 tel |
-| İç Çekme | 89 kez |
-
-**MTTD (Mean Time To Detect):** 4 dakika
-**MTTR (Mean Time To Respond):** 23 dakika
-**MTTC (Mean Time To Coffee):** 12 dakika
-
----
-
-Bu proje, o günü simüle eder. 19 alert, 9 incident, 1'i gerçek.
-Mehmet yok ama olabilir. Sen.
-
----
-
-## Hızlı Başlangıç
+## Quick Start
 
 ```bash
-git clone https://github.com/yatuk/SOC-case-study-project.git
-cd SOC-case-study-project/frontend
+git clone https://github.com/yatuk/soc-simulation.git
+cd soc-simulation/frontend
 npm install
 npm run dev
 # → http://localhost:3000
 ```
 
-Veri yeniden üretmek (opsiyonel — repo'da hazır veri var):
+**Regenerate data (optional — pre-built data is included in the repo):**
 
 ```bash
 python -X utf8 scripts/build_dataset.py --seed 42 --out data/normalized/
 cp data/normalized/*.json frontend/public/data/
 ```
 
-Production build:
+**Production build:**
 
 ```bash
 cd frontend
@@ -133,91 +160,76 @@ npm run preview
 
 ---
 
-## Ne Var Bunda?
-
-- **SIEM:** 19 alert severity/status/source/kaynak filtreli. Search, MITRE mapping, IOC defanging. Her alert tıklanabilir, detay sayfasında bağlı IOC'ler, MITRE teknikleri, önerilen aksiyonlar.
-- **Incident Management:** 9 olay, her biri kill chain timeline'lı (Initial Access → Execution → ... → Exfiltration), 2-3 paragraflık Türkçe narrative, bağlı alert'ler, SOAR playbook run linkleri. "Hesabı Kilitle", "Playbook Çalıştır", "Olayı Kapat" gibi kurgusal aksiyonlar.
-- **SOAR:** 4 playbook tanımı (Oltalama Yanıt, Hesap Ele Geçirme, Zararlı Yazılım İzolasyonu, Veri Sızdırma) + run history. DAG-benzeri adım akışı, her adımda otomatik/manuel durumu.
-- **EDR:** 25 endpoint, type filter (workstation/laptop/server/mobile), risk score bar, isolation toggle, process tree (parent-child), network connections.
-- **IOC Explorer:** 24 IOC (domain/IP/url/hash/email), threat score bar, expandable "nerede görüldü" bölümü, defanging + copy-to-clipboard.
-- **MITRE ATT&CK:** Yatay scroll matrix (14 tactic kolonu × 50+ technique kartı). Cover edilen teknik dolu renk + alert count badge. Tıklayınca drawer: ilgili alert'ler.
-- **Detection Rules:** 8 Sigma kuralı, genişletilebilir ham kural görüntüleme, FP oranı, MITRE teknik etiketleri.
-- **Erişilebilirlik:** Skip-to-content, landmark role'leri, keyboard navigation, focus trap, Escape tuşu, ARIA-labeled ikonlar, `prefers-reduced-motion`.
-- **Sıfır Backend:** GitHub Pages'te statik. Backend yok, auth yok, API key yok. Sadece JSON + React.
-
-### v2.1 — Power Features (2026)
-
-- **Forensic Pivot:** IP, user, asset — tıklanabilir. Gerçek SOC analist workflow'u.
-- **AI Triage:** Her alert için Mehmet tarzı analiz özeti (simüle, eğitim amaçlı).
-- **Investigation Graph:** Incident'lerin entity ilişkilerini Sentinel tarzı görsel grafikle.
-- **Geo Threat Map:** Saldırı origin'lerini dünya haritasında pulse marker'larla.
-- **Command Palette (Ctrl+K):** Linear tarzı global arama + komutlar.
-- **Sigma Highlighting + CSV Export:** Profesyonel polish.
-
----
-
-## Mimari
+## Architecture
 
 ```mermaid
 flowchart LR
     A[Raw Logs] --> B[scripts/build_dataset.py]
     C[IOC Feeds] --> B
     D[MITRE Mapping] --> B
-    B --> E[(data/normalized/*.json)]
+    B --> E[(public/data/*.json)]
     E --> F[Vite Build]
     F --> G[GitHub Pages]
     G --> H[React + Zustand]
-    H --> I[13 Lazy Routes]
+    H --> I[18 Lazy Routes]
 ```
 
-Daha detaylı: [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
+**Data flow:** Python pipeline → static JSON files → `fetch()` → in-memory `Map` cache → Zustand stores → React components.
+
+Full architecture document: [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
 
 ---
 
 ## Tech Stack
 
-- **Frontend:** React 18, TypeScript, Vite 5, Tailwind CSS 3, Radix UI, Zustand, Recharts, lucide-react
-- **Data Pipeline:** Python 3.10+ (stdlib-only), deterministic seed (`--seed 42`)
-- **Deploy:** GitHub Actions → GitHub Pages (native `actions/deploy-pages@v4`)
-- **Backend:** Yok. Hiç. Hiçbir zaman. Bu bir feature.
+| Layer | Technology |
+|-------|-----------|
+| **Framework** | React 18 + TypeScript 5 (strict mode) |
+| **Build** | Vite 5 |
+| **Styling** | Tailwind CSS 3 + CSS custom properties (shadcn-style tokens) |
+| **State** | Zustand 4 with `persist` middleware |
+| **Routing** | React Router v6 (HashRouter for GitHub Pages) |
+| **UI Primitives** | Radix UI (Dialog, DropdownMenu, Progress, ScrollArea, Select, Separator, Switch, Tabs, Tooltip) |
+| **Charts** | Recharts 2 (Area, Bar, Pie, Line) |
+| **Graph** | ReactFlow (investigation graph, correlation graph) |
+| **Maps** | react-simple-maps + d3-geo |
+| **Icons** | lucide-react |
+| **CLI** | cmdk (command palette) |
+| **Toast** | sonner |
+| **Dates** | date-fns (relative time formatting) |
+| **Pipeline** | Python 3.10+ (stdlib-only — zero external dependencies) |
+| **CI/CD** | GitHub Actions → `actions/deploy-pages@v4` |
+| **Backend** | None. Static JSON. This is a feature. |
 
 ---
 
-## Bilinen Sınırlamalar
+## Known Limitations
 
-- Authentication yok — herkes "admin". Çünkü kurgusal.
-- Veri in-memory — sayfayı yenileyince kurgusal aksiyonlar kaybolur. Bu bir SIEM değil, bir vitrin.
-- Real-time stream yok — alert volume statik snapshot.
-- Mobile (<375px) optimize değil, çalışıyor ama hoş değil.
-- Pipeline'da sadece 19 alert var (demo amaçlı). Prod SIEM'de bu sayı 5000+ olur.
-
-## Roadmap (belki bir gün)
-
-- [ ] Real Sigma rule parser
-- [ ] STIX/TAXII feed integration
-- [ ] Network graph view (saldırgan-asset-IOC ilişkileri)
-- [ ] Senaryo edit mode (kendi incident'ını oluştur)
-- [ ] PDF export (incident raporu)
-- [ ] i18n: EN/TR toggle
-- [ ] Playwright e2e testler
+- **No authentication** — everyone is "admin." This is a showcase, not a production tool.
+- **No real-time streaming** — alert volume is a static snapshot. Data loads once on mount.
+- **In-memory state** — simulated actions (isolate endpoint, close incident) reset on page refresh.
+- **Mobile optimization** — functional but not pixel-perfect below 375px. Investigation graph requires desktop.
+- **Data volume** — 2,000 alerts, ~200 events, 9 incidents. Production SIEMs handle millions.
 
 ---
 
-## Neden?
+## Roadmap
 
-Bir portfolyo. Bir case study. Bir "SOC analisti pozisyonu için CV'mde tek bir 'modern SIEM kullandım' satırından fazlasını göstermek istedim" projesi.
-
-Ama aynı zamanda: SOC tool'ları nasıl görünür, nasıl davranır, nasıl yanıltır — bunları başka tool'a abone olmadan anlamak isteyen herkes için.
-
-47 sayfa rapor yerine, tıklanabilir, gezilebilir bir vitrin.
+- [x] i18n: Turkish/English language toggle
+- [x] User risk dashboard with entity drill-down
+- [x] Case management module
+- [x] Log explorer with raw event inspection
+- [x] Entity correlation graph
+- [ ] Real Sigma rule parser and validator
+- [ ] STIX/TAXII feed integration (simulated)
+- [ ] Incident report PDF export
+- [ ] Scenario editor (create custom incidents)
+- [ ] Playwright end-to-end tests
+- [ ] PWA support with offline mode
 
 ---
+## License
 
-## Lisans
+MIT. Attribution appreciated for educational and portfolio use.
 
-MIT. Eğitim ve portfolyo amaçlı kullanımda kaynak belirtmeniz yeterli.
-
-**Not:** Tüm veriler, şirketler, domain'ler, IP'ler ve kişiler **tamamen kurgusaldır**. Gerçek dünyayla hiçbir bağlantısı yoktur.
-
-> _"Daha fazla log, daha fazla güvenlik demek değil. Ama daha az uyku demek."_  
-> — Her SOC Analisti
+**Note:** All data, companies, domains, IPs, and personas are **entirely fictional**. No connection to any real-world entity exists or is implied.

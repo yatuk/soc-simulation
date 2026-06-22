@@ -264,4 +264,5 @@ export interface Settings {
   theme: 'dark' | 'light' | 'system'
   sidebarExpanded: boolean
   tableDensity: 'compact' | 'normal' | 'comfortable'
+  language: 'tr' | 'en'
 }

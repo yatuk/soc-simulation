@@ -9,8 +9,8 @@ Bu bir kişisel portfolyo projesidir, açık katkıya kapalı. Ama:
 ## Geliştirme
 
 ```bash
-git clone https://github.com/yatuk/SOC-case-study-project.git
-cd SOC-case-study-project/frontend
+git clone https://github.com/yatuk/soc-simulation.git
+cd soc-simulation/frontend
 npm install
 npm run dev
 ```

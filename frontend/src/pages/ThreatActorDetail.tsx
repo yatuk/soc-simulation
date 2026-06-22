@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { loadEntity } from '@/lib/data'
 import { useIncidentStore } from '@/store'
-import * as Icons from 'lucide-react'
-import { ArrowLeft, Shield, Target, Wrench, Calendar, Info } from 'lucide-react'
+import { ArrowLeft, Shield, Target, Wrench, Calendar, Info, Banknote, Binary, Droplets, Eye, Flame, Ghost, Lock, MessageCircle, PackageSearch, ShieldAlert, Skull, Zap } from 'lucide-react'
+
+const ICON_MAP: Record<string, React.ComponentType<{className?: string}>> = { banknote: Banknote, binary: Binary, droplets: Droplets, eye: Eye, flame: Flame, ghost: Ghost, lock: Lock, 'message-circle': MessageCircle, 'package-search': PackageSearch, 'shield-alert': ShieldAlert, skull: Skull, zap: Zap }
 
 interface ThreatActor {
   id: string; name: string; aliases: string[]; origin: { country: string; attribution_confidence: string; suspected_sponsor?: string }; motivation: string[]; active_since: string; status: string; targeted_sectors: string[]; targeted_geographies: string[]; associated_techniques: string[]; associated_tools: string[]; notable_campaigns: { name: string; year: number; description: string }[]; description: string; references: string[]; glyph: { color: string; icon: string }; matched_incidents: { incident_id: string; ttp_overlap_percent: number; rationale: string }[]
@@ -27,7 +28,7 @@ export default function ThreatActorDetail() {
   if (loading) return <div className="p-6 max-w-5xl"><div className="h-64 bg-muted rounded-lg animate-pulse" /></div>
   if (!actor) return <div className="p-6 text-muted-foreground text-center">Aktör bulunamadı. <Link to="/threat-actors" className="text-primary hover:underline">Listeye dön</Link></div>
 
-  const Icon = (Icons as unknown as Record<string, React.ComponentType<{className?:string}>>)[actor.glyph.icon] ?? Shield
+  const Icon = ICON_MAP[actor.glyph.icon] ?? Shield
   const matchedIncidents = incidents.filter(i => actor.matched_incidents.some(mi => mi.incident_id === i.incident_id))
 
   return (
@@ -40,13 +41,13 @@ export default function ThreatActorDetail() {
         <div>
           <h1 className="text-xl font-bold">{actor.name}</h1>
           <div className="flex items-center gap-2 mt-1 flex-wrap">
-            {actor.aliases.map(a=><span key={a} className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{a}</span>)}
-            <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${actor.status==='active'?'bg-green-500/10 text-green-400':'bg-muted text-muted-foreground'}`}>{actor.status==='active'?'Aktif':actor.status}</span>
+            {actor.aliases.map(a=><span key={a} className="text-xs bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{a}</span>)}
+            <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${actor.status==='active'?'bg-green-500/10 text-green-400':'bg-muted text-muted-foreground'}`}>{actor.status==='active'?'Aktif':actor.status}</span>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center gap-4 text-[10px] text-muted-foreground">
+      <div className="flex items-center gap-4 text-xs text-muted-foreground">
         <span>{actor.origin.country} · {actor.origin.suspected_sponsor??'Belirsiz sponsor'} · {CONFIDENCE_LABELS[actor.origin.attribution_confidence]??actor.origin.attribution_confidence}</span>
         <span>{new Date().getFullYear() - parseInt(actor.active_since)} yıldır aktif</span>
       </div>
@@ -56,7 +57,7 @@ export default function ThreatActorDetail() {
         {(['overview','ttps','tools','campaigns','matches'] as const).map(t => (
           <button key={t} onClick={()=>setTab(t)} className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${tab===t?'bg-primary/10 text-primary':'text-muted-foreground hover:bg-accent'}`}>
             {t==='overview'?'Genel Bakış':t==='ttps'?'TTPs':t==='tools'?'Araçlar':t==='campaigns'?'Kampanyalar':'Eşleşmeler'}
-            {t==='matches' && actor.matched_incidents.length>0 && <span className="ml-1 text-[10px]">({actor.matched_incidents.length})</span>}
+            {t==='matches' && actor.matched_incidents.length>0 && <span className="ml-1 text-xs">({actor.matched_incidents.length})</span>}
           </button>
         ))}
       </div>
@@ -64,7 +65,7 @@ export default function ThreatActorDetail() {
       {tab==='overview' && (
         <div className="space-y-4">
           <p className="text-sm leading-relaxed whitespace-pre-line">{actor.description}</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[10px]">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
             <InfoBlock label="Motivasyon" value={actor.motivation.map(m=>MOTIVATION_LABELS[m]??m).join(', ')}/>
             <InfoBlock label="Sektörler" value={actor.targeted_sectors.join(', ')}/>
             <InfoBlock label="Coğrafi Hedef" value={actor.targeted_geographies.join(', ')}/>
@@ -75,7 +76,7 @@ export default function ThreatActorDetail() {
 
       {tab==='ttps' && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {actor.associated_techniques.map(tid=><Link key={tid} to={`/mitre`} className="flex items-center gap-2 p-3 rounded-lg border border-border hover:bg-accent transition-colors text-xs"><Target className="w-3.5 h-3.5 text-primary"/><span className="font-mono text-[10px]">{tid}</span></Link>)}
+          {actor.associated_techniques.map(tid=><Link key={tid} to={`/mitre`} className="flex items-center gap-2 p-3 rounded-lg border border-border hover:bg-accent transition-colors text-xs"><Target className="w-3.5 h-3.5 text-primary"/><span className="font-mono text-xs">{tid}</span></Link>)}
         </div>
       )}
 
@@ -87,29 +88,29 @@ export default function ThreatActorDetail() {
 
       {tab==='campaigns' && (
         <div className="space-y-4">
-          {actor.notable_campaigns.map(c=><div key={c.name} className="p-4 rounded-lg border border-border"><div className="flex items-center gap-2 mb-2"><Calendar className="w-3.5 h-3.5 text-muted-foreground"/><span className="text-xs font-semibold">{c.name}</span><span className="font-mono text-[10px] bg-muted px-1.5 py-0.5 rounded">{c.year}</span></div><p className="text-xs text-muted-foreground leading-relaxed">{c.description}</p></div>)}
+          {actor.notable_campaigns.map(c=><div key={c.name} className="p-4 rounded-lg border border-border"><div className="flex items-center gap-2 mb-2"><Calendar className="w-3.5 h-3.5 text-muted-foreground"/><span className="text-xs font-semibold">{c.name}</span><span className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">{c.year}</span></div><p className="text-xs text-muted-foreground leading-relaxed">{c.description}</p></div>)}
         </div>
       )}
 
       {tab==='matches' && (
         <div className="space-y-4">
-          <p className="flex items-center gap-1.5 text-[10px] text-muted-foreground"><Info className="w-3 h-3"/>Bu eşleşmeler <strong className="text-foreground">simüledir</strong> — gerçek attribution değildir.</p>
+          <p className="flex items-center gap-1.5 text-xs text-muted-foreground"><Info className="w-3 h-3"/>Bu eşleşmeler <strong className="text-foreground">simüledir</strong> — gerçek attribution değildir.</p>
           {actor.matched_incidents.map(mi=>{
             const inc = matchedIncidents.find(i=>i.incident_id===mi.incident_id)
             return (
               <Link key={mi.incident_id} to={`/incidents/${mi.incident_id}`} className="block p-4 rounded-lg border border-border hover:bg-accent transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium">{inc?.title??mi.incident_id}</span>
-                  <span className="font-mono text-[10px] text-muted-foreground">{mi.incident_id}</span>
+                  <span className="font-mono text-xs text-muted-foreground">{mi.incident_id}</span>
                 </div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] text-muted-foreground">TTP örtüşmesi:</span>
+                  <span className="text-xs text-muted-foreground">TTP örtüşmesi:</span>
                   <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden max-w-48">
                     <div className="h-full bg-primary rounded-full" style={{width:`${mi.ttp_overlap_percent}%`}}/>
                   </div>
-                  <span className="font-mono text-[10px] font-medium">%{mi.ttp_overlap_percent}</span>
+                  <span className="font-mono text-xs font-medium">%{mi.ttp_overlap_percent}</span>
                 </div>
-                <p className="text-[10px] text-muted-foreground">{mi.rationale}</p>
+                <p className="text-xs text-muted-foreground">{mi.rationale}</p>
               </Link>
             )
           })}

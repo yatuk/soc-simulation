@@ -160,7 +160,7 @@ class AlertDetector:
             rule_actions = event['details'].get('rule_actions', '')
             
             # Check for external forwarding
-            if 'ForwardTo' in rule_actions and 'acmecorp.example.com' not in rule_actions:
+            if 'ForwardTo' in rule_actions and 'anadolufinans.example.tr' not in rule_actions:
                 alert = {
                     "alert_id": str(uuid.uuid4()),
                     "name": "Suspicious Mailbox Forwarding Rule Created",

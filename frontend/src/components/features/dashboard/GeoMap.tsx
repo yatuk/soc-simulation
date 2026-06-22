@@ -36,7 +36,7 @@ export function GeoMap({ origins, isLoading }: Props) {
         <Globe className="w-3.5 h-3.5" /> Tehdit Origin Haritası
       </h3>
 
-      <div className="rounded-lg border border-border overflow-hidden bg-[#0d1625]">
+      <div className="rounded-lg border border-border overflow-hidden bg-card">
         <ComposableMap
           projection="geoEqualEarth"
           projectionConfig={{ scale: 155 }}
@@ -54,13 +54,13 @@ export function GeoMap({ origins, isLoading }: Props) {
                     onMouseLeave={() => setHovered(null)}
                     style={{
                       default: {
-                        fill: '#1a2540',
+                        fill: 'hsl(var(--muted))',
                         stroke: 'hsl(var(--muted-foreground) / 0.3)',
                         strokeWidth: 0.5,
                         outline: 'none',
                       },
                       hover: {
-                        fill: '#243355',
+                        fill: 'hsl(var(--muted-foreground) / 0.2)',
                         stroke: 'hsl(var(--muted-foreground) / 0.6)',
                         strokeWidth: 0.5,
                         outline: 'none',
@@ -91,7 +91,7 @@ export function GeoMap({ origins, isLoading }: Props) {
                 {/* Tooltip */}
                 {hovered === o.city && (
                   <foreignObject x={10} y={-18} width={160} height={36} style={{ overflow: 'visible' }}>
-                    <div className="bg-popover border border-border rounded-md px-2 py-1 text-[10px] whitespace-nowrap shadow-lg pointer-events-none">
+                    <div className="bg-popover border border-border rounded-md px-2 py-1 text-xs whitespace-nowrap shadow-lg pointer-events-none">
                       <span className="font-medium">{o.city}, {o.country}</span>
                       <span className="text-muted-foreground ml-1">{o.count} IOC</span>
                     </div>
@@ -103,7 +103,7 @@ export function GeoMap({ origins, isLoading }: Props) {
         </ComposableMap>
       </div>
 
-      <div className="flex items-center justify-between mt-2 text-[10px] text-muted-foreground">
+      <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
         <span>{origins.length} ülke, {origins.reduce((s, o) => s + o.count, 0)} IOC</span>
         {hovered && !origins.find(o => o.city === hovered) && <span>{hovered}</span>}
         <span className="italic">Türkiye marker'ı: Yerel tehdit. Daha sinsi, daha az egzotik.</span>

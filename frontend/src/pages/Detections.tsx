@@ -26,19 +26,19 @@ export default function Detections() {
         <div className="space-y-3">
           {rules.map((rule) => (
             <div key={rule.rule_id} className="p-4 rounded-lg border border-border hover:bg-accent transition-colors">
-              <div className="flex items-start justify-between gap-4 mb-2">
+              <div className="flex items-start gap-4 mb-2">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-mono text-[10px] text-muted-foreground">{rule.rule_id}</span>
+                    <span className="font-mono text-xs text-muted-foreground">{rule.rule_id}</span>
                     <SeverityPill severity={rule.severity} />
-                    {!rule.enabled && <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">Devre Dışı</span>}
+                    {!rule.enabled && <span className="text-xs bg-muted px-1.5 py-0.5 rounded text-muted-foreground">Devre Dışı</span>}
                   </div>
                   <h3 className="text-sm font-medium">{rule.name}</h3>
                   <p className="text-xs text-muted-foreground mt-1">{rule.description}</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 text-[10px] text-muted-foreground flex-wrap">
+              <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
                 <span>Kaynak: <span className="font-mono">{rule.source}</span></span>
                 <span>14g uyarı: <span className="font-mono">{rule.alert_count_14d}</span></span>
                 <span>FP oranı: <span className="font-mono">%{rule.false_positive_rate}</span></span>
@@ -48,13 +48,13 @@ export default function Detections() {
               {rule.mitre_technique_ids.length > 0 && (
                 <div className="flex items-center gap-1 mt-2 flex-wrap">
                   {rule.mitre_technique_ids.map((tid) => (
-                    <span key={tid} className="text-[10px] font-mono bg-muted px-1 rounded">{tid}</span>
+                    <span key={tid} className="text-xs font-mono bg-muted px-1 rounded">{tid}</span>
                   ))}
                 </div>
               )}
 
               <details className="mt-3 group/sigma">
-                <summary className="text-[10px] text-muted-foreground cursor-pointer hover:text-foreground transition-colors">Sigma Kuralını Göster</summary>
+                <summary className="text-xs text-muted-foreground cursor-pointer hover:text-foreground transition-colors">Sigma Kuralını Göster</summary>
                 <div className="relative mt-2">
                   <button
                     onClick={(e) => { e.preventDefault(); navigator.clipboard.writeText(rule.sigma_rule); toast('Sigma kuralı panoya kopyalandı.') }}
@@ -64,7 +64,7 @@ export default function Detections() {
                     <Copy className="w-3 h-3" />
                   </button>
                   <pre
-                    className="p-3 bg-muted/30 rounded text-[10px] font-mono overflow-x-auto whitespace-pre-wrap border border-border leading-relaxed"
+                    className="p-3 bg-muted/30 rounded text-xs font-mono overflow-x-auto whitespace-pre-wrap border border-border leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: highlightYAML(rule.sigma_rule) }}
                   />
                 </div>

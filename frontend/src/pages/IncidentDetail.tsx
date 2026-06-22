@@ -8,7 +8,7 @@ import { StatusPill } from '@/components/ui/status-pill'
 import { EmptyState } from '@/components/ui/empty-state'
 import { ArrowLeft, Lock, Play, CheckCircle, Target, FileSearch, Share2, Shield } from 'lucide-react'
 
-const InvestigationGraph = lazy(() => import('@/components/features/investigation/InvestigationGraph'))
+const InvestigationGraph = lazy(() => import('@/components/features/investigation/InvestigationGraph').then(m => ({ default: m.InvestigationGraph })))
 
 export default function IncidentDetail() {
   const { id } = useParams<{ id: string }>()
@@ -22,7 +22,7 @@ export default function IncidentDetail() {
     if (runs.length === 0) loadRuns()
   }, [])
 
-  if (isLoading) return <div className="p-6 max-w-5xl"><SkeletonCard /></div>
+  if (isLoading) return <div className="p-6 max-w-5xl"><SkeletonCard className="h-96" /></div>
 
   const incident = incidents.find((i) => i.incident_id === id)
   if (!incident) return <div className="p-6 text-center text-muted-foreground">Olay bulunamadı. <Link to="/incidents" className="text-primary hover:underline">Listeye dön</Link></div>
@@ -31,7 +31,7 @@ export default function IncidentDetail() {
   const linkedAlerts = alerts.filter((a) => incident.alert_ids.includes(a.alert_id))
   const linkedRuns = runs.filter((r) => incident.playbook_run_ids.includes(r.run_id))
 
-  const handleLockAccount = () => toast.success(`${incident.affected_user_ids.length} hesap kilitlendi.`, { description: 'Kurgusal işlem — session içinde geçerli.', duration: 3000 })
+  const handleLockAccount = () => toast.success(`${incident.affected_user_ids.length} hesap kilitlendi.`, { description: 'Simülasyon — session içinde geçerli.', duration: 3000 })
   const handleRunPlaybook = () => toast('Playbook çalıştırıldı.', { description: `Olay #${incident.incident_id} için otomatik yanıt başlatıldı.`, duration: 3000 })
   const handleCloseIncident = () => toast.success('Olay kapatıldı.', { description: 'Durum "closed" olarak işaretlendi.', duration: 3000 })
 
@@ -54,7 +54,7 @@ export default function IncidentDetail() {
         <div className="flex items-center gap-2 mb-2">
           <SeverityPill severity={incident.severity} />
           <StatusPill status={incident.status} />
-          <span className="text-[10px] text-muted-foreground">{linkedAlerts.length} uyarı • {linkedRuns.length} playbook run</span>
+          <span className="text-xs text-muted-foreground">{linkedAlerts.length} uyarı • {linkedRuns.length} playbook run</span>
         </div>
         <h1 className="text-lg font-bold">{incident.title}</h1>
         <p className="text-xs text-muted-foreground font-mono mt-1">{incident.incident_id}</p>
@@ -103,13 +103,13 @@ export default function IncidentDetail() {
                   <div className="p-3 rounded-lg border border-border bg-card">
                     <div className="flex items-center gap-2 flex-wrap mb-1.5">
                       <span className="text-xs font-semibold">{step.tactic}</span>
-                      <span className="font-mono text-[10px] bg-muted px-1 rounded">{step.technique_id}</span>
+                      <span className="font-mono text-xs bg-muted px-1 rounded">{step.technique_id}</span>
                       <StatusPill status={step.status} />
-                      <span className="text-[10px] text-muted-foreground font-mono ml-auto">{new Date(step.timestamp).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</span>
+                      <span className="text-xs text-muted-foreground font-mono ml-auto">{new Date(step.timestamp).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed">{step.description}</p>
                     {stepAlert && (
-                      <Link to={`/alerts/${step.alert_id}`} className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline mt-2">
+                      <Link to={`/alerts/${step.alert_id}`} className="inline-flex items-center gap-1 text-xs text-primary hover:underline mt-2">
                         {step.alert_id}: {stepAlert.title}
                       </Link>
                     )}
@@ -132,12 +132,12 @@ export default function IncidentDetail() {
               <div key={r.run_id} className="flex items-center justify-between p-3 rounded-lg border border-border bg-card">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px]">{r.run_id}</span>
+                    <span className="font-mono text-xs">{r.run_id}</span>
                     <StatusPill status={r.status} />
                   </div>
-                  <div className="text-[10px] text-muted-foreground mt-1">Süre: {r.duration_seconds}s • {r.triggered_by} tarafından</div>
+                  <div className="text-xs text-muted-foreground mt-1">Süre: {r.duration_seconds}s • {r.triggered_by} tarafından</div>
                 </div>
-                <Link to={`/playbooks/${r.playbook_id}`} className="text-[10px] text-primary hover:underline shrink-0">Detay</Link>
+                <Link to={`/playbooks/${r.playbook_id}`} className="text-xs text-primary hover:underline shrink-0">Detay</Link>
               </div>
             ))}
           </div>
@@ -157,7 +157,7 @@ export default function IncidentDetail() {
               <Link key={a.alert_id} to={`/alerts/${a.alert_id}`} className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-accent transition-colors">
                 <div className="min-w-0">
                   <div className="text-xs font-medium truncate">{a.title}</div>
-                  <div className="text-[10px] text-muted-foreground font-mono">{a.alert_id} • {new Date(a.detected_at).toLocaleDateString('tr-TR')}</div>
+                  <div className="text-xs text-muted-foreground font-mono">{a.alert_id} • {new Date(a.detected_at).toLocaleDateString('tr-TR')}</div>
                 </div>
                 <SeverityPill severity={a.severity} />
               </Link>
@@ -189,7 +189,7 @@ function ActionBtn({ icon: Icon, label, onClick, variant }: { icon: React.Compon
   return (
     <button
       onClick={onClick}
-      className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-[10px] font-medium border transition-colors ${
+      className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-medium border transition-colors ${
         variant === 'secondary'
           ? 'border-border text-muted-foreground hover:bg-accent hover:text-foreground'
           : 'bg-primary/10 border-primary/30 text-primary hover:bg-primary/20'
@@ -230,9 +230,9 @@ function ThreatActorMatches({ incidentId }: { incidentId: string }) {
                 <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden max-w-32">
                   <div className="h-full bg-primary rounded-full" style={{width:`${m?.ttp_overlap_percent ?? 0}%`}}/>
                 </div>
-                <span className="font-mono text-[10px]">%{String(m?.ttp_overlap_percent ?? 0)}</span>
+                <span className="font-mono text-xs">%{String(m?.ttp_overlap_percent ?? 0)}</span>
               </div>
-              <span className="text-[10px] text-muted-foreground">→</span>
+              <span className="text-xs text-muted-foreground">→</span>
             </Link>
           )
         })}

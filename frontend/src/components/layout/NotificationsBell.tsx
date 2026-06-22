@@ -45,7 +45,7 @@ export function NotificationsBell() {
       >
         <Bell className="w-4 h-4" />
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-severity-critical text-[9px] font-bold flex items-center justify-center text-white">{unreadCount > 9 ? '9+' : unreadCount}</span>
+          <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-severity-critical text-2xs font-bold flex items-center justify-center text-white">{unreadCount > 9 ? '9+' : unreadCount}</span>
         )}
       </button>
 
@@ -56,13 +56,13 @@ export function NotificationsBell() {
             <div className="flex items-center justify-between p-3 border-b border-border sticky top-0 bg-card z-10">
               <h3 className="text-xs font-semibold">Bildirimler</h3>
               {unreadCount > 0 && (
-                <button onClick={markAllRead} className="flex items-center gap-1 text-[10px] text-muted-foreground hover:text-foreground transition-colors">
+                <button onClick={markAllRead} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
                   <CheckCheck className="w-3 h-3" /> Tümü okundu
                 </button>
               )}
             </div>
             {notifs.length === 0 ? (
-              <p className="p-6 text-center text-[10px] text-muted-foreground">Şu an sessizlik. Bu ya iyi haber ya bir şey eksik.</p>
+              <p className="p-6 text-center text-xs text-muted-foreground">Şu an sessizlik. Bu ya iyi haber ya bir şey eksik.</p>
             ) : (
               notifs.slice(0, 15).map(n => (
                 <Link
@@ -71,9 +71,9 @@ export function NotificationsBell() {
                   onClick={() => { setNotifs(prev => prev.map(x => x.id === n.id ? { ...x, unread: false } : x)); setOpen(false) }}
                   className={cn('block p-3 border-b border-border last:border-0 hover:bg-accent transition-colors border-l-2', n.unread ? `${SEVERITY_BORDER[n.severity ?? 'info']} bg-muted/20` : 'border-l-transparent')}
                 >
-                  <div className="text-[10px] font-medium leading-tight">{n.title}</div>
-                  {n.detail && <div className="text-[9px] text-muted-foreground mt-0.5">{n.detail}</div>}
-                  <div className="text-[8px] text-muted-foreground/60 mt-1">
+                  <div className="text-xs font-medium leading-tight">{n.title}</div>
+                  {n.detail && <div className="text-2xs text-muted-foreground mt-0.5">{n.detail}</div>}
+                  <div className="text-2xs text-muted-foreground/60 mt-1">
                     {n.type === 'mehmet_note' ? '🗒️ Mehmet' : n.type === 'alert' ? '🚨 Uyarı' : n.type === 'incident_change' ? '📋 Durum' : n.type === 'playbook_run' ? '▶️ Playbook' : '📐 Kural'} · {new Date(n.timestamp).toLocaleString('tr-TR', { hour: '2-digit', minute: '2-digit' })}
                   </div>
                 </Link>

@@ -29,8 +29,8 @@ steps:
     owner: Tier-2 Analyst
     estimated_time: 5 minutes
     commands:
-      - "Revoke-UserSession -User sarah.chen@acmecorp.example.com -All"
-      - "Get-UserSession -User sarah.chen@acmecorp.example.com | Export-Csv sessions_pre_revoke.csv"
+      - "Revoke-UserSession -User {affected_user_email} -All"
+      - "Get-UserSession -User {affected_user_email} | Export-Csv sessions_pre_revoke.csv"
     success_criteria:
       - All sessions revoked
       - User cannot access systems
@@ -46,7 +46,7 @@ steps:
     owner: Tier-2 Analyst
     estimated_time: 3 minutes
     commands:
-      - "Set-UserPasswordReset -User sarah.chen@acmecorp.example.com -Force -RequireMFA"
+      - "Set-UserPasswordReset -User {affected_user_email} -Force -RequireMFA"
     success_criteria:
       - Password reset enforced
       - Old password no longer valid
@@ -80,9 +80,9 @@ steps:
     owner: Tier-2 Analyst / Security Engineer
     estimated_time: 15-20 minutes
     commands:
-      - "Get-InboxRule -Mailbox sarah.chen@acmecorp.example.com | Where-Object {$_.ForwardTo -ne $null}"
+      - "Get-InboxRule -Mailbox {affected_user_email} | Where-Object {$_.ForwardTo -ne $null}"
       - "Remove-InboxRule -Identity 'Malicious Rule Name' -Confirm:$false"
-      - "Get-OAuth2PermissionGrants -User sarah.chen@acmecorp.example.com"
+      - "Get-OAuth2PermissionGrants -User {affected_user_email}"
     success_criteria:
       - No malicious rules or persistence mechanisms remain
       - All unauthorized access revoked

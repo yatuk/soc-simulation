@@ -9,7 +9,7 @@ import type { Incident } from '@/types'
 
 interface Props { incident: Incident }
 
-export default function InvestigationGraph({ incident }: Props) {
+export function InvestigationGraph({ incident }: Props) {
   const navigate = useNavigate()
   const { data: alerts } = useAlertStore()
   const { data: iocs } = useIOCStore()
@@ -76,7 +76,7 @@ export default function InvestigationGraph({ incident }: Props) {
     })
 
     return { initialNodes: nodes.slice(0, 50), initialEdges: edges.slice(0, 100) }
-  }, [incAlerts, iocs, users, assets, incident, incAlerts])
+  }, [incAlerts, iocs, users, assets, incident])
 
   const [nodes] = useNodesState(initialNodes)
   const [edges] = useEdgesState(initialEdges)
@@ -119,10 +119,17 @@ export default function InvestigationGraph({ incident }: Props) {
           />
         </ReactFlow>
       </div>
-      <p className="sm:hidden text-xs text-muted-foreground text-center py-8">
-        Investigation graph desktop'ta görüntülenebilir. Lütfen daha büyük bir ekranda açın.
-      </p>
-      <p className="text-[9px] text-muted-foreground/50 mt-1.5 hidden sm:block">Tıklanabilir node'lar. Zoom: fare tekerleği, Pan: sürükle.</p>
+      <div className="sm:hidden space-y-1 max-h-64 overflow-y-auto p-3 border border-border rounded-lg">
+        {initialNodes.slice(0, 30).map(n => (
+          <div key={n.id} className="flex items-center gap-2 text-2xs font-mono px-2 py-1 rounded bg-muted/30">
+            <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: (n.style as Record<string,string>|undefined)?.border || '#8b949e' }} />
+            <span className="text-muted-foreground">{n.id}</span>
+            <span className="ml-auto">{(n.data as {kind?:string}|undefined)?.kind}</span>
+          </div>
+        ))}
+        {initialNodes.length > 30 && <p className="text-2xs text-muted-foreground text-center py-2">+{initialNodes.length - 30} node daha</p>}
+      </div>
+      <p className="text-2xs text-muted-foreground/50 mt-1.5 hidden sm:block">Tıklanabilir node'lar. Zoom: fare tekerleği, Pan: sürükle.</p>
     </div>
   )
 }

@@ -18,7 +18,7 @@ export function Abbr({ abbr, term, className }: Props) {
           {abbr}
         </abbr>
       </TooltipTrigger>
-      <TooltipContent side="top" className="text-[10px] px-2 py-1">
+      <TooltipContent side="top" className="text-xs px-2 py-1">
         {term}
       </TooltipContent>
     </Tooltip>

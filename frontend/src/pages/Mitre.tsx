@@ -38,7 +38,7 @@ export default function Mitre() {
     return alerts.filter((a) => a.mitre_technique_ids?.includes(selectedTech.technique_id))
   }, [selectedTech, alerts])
 
-  if (isLoading) return <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-3">{Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}</div>
+  if (isLoading) return <div className="p-6"><SkeletonCard className="h-96" /></div>
   if (!mitre) return <div className="p-6"><EmptyState icon={<Target className="w-8 h-8" />} title="MITRE verisi yüklenemedi" /></div>
 
   return (
@@ -62,12 +62,12 @@ export default function Mitre() {
             <div key={tactic.tactic_id} className="flex-shrink-0 w-40 flex flex-col">
               {/* Tactic header */}
               <div className={`rounded-t-lg border border-border bg-card px-2.5 py-2 border-t-2 ${TACTIC_BORDER_COLORS[tactic.tactic_id] ?? 'border-t-border'}`}>
-                <div className="text-[10px] font-semibold leading-tight">{tactic.name}</div>
-                <div className="text-[9px] text-muted-foreground mt-0.5">{tactic.technique_count} teknik</div>
+                <div className="text-xs font-semibold leading-tight">{tactic.name}</div>
+                <div className="text-2xs text-muted-foreground mt-0.5">{tactic.technique_count} teknik</div>
               </div>
               {/* Technique cards */}
               <div className="flex-1 space-y-0.5 border-l border-r border-b border-border rounded-b-lg bg-muted/10 p-1">
-                {techniques.length === 0 && <div className="text-[9px] text-muted-foreground p-2 text-center">—</div>}
+                {techniques.length === 0 && <div className="text-2xs text-muted-foreground p-2 text-center">—</div>}
                 {techniques.map((tech) => (
                   <TechCard key={tech.technique_id} technique={tech} onClick={() => setSelectedTech(tech)} isSelected={selectedTech?.technique_id === tech.technique_id} />
                 ))}
@@ -96,27 +96,27 @@ export default function Mitre() {
           <aside className="fixed right-0 top-0 z-50 h-full w-full max-w-md bg-card border-l border-border shadow-2xl overflow-y-auto animate-slide-in-right" role="dialog" aria-modal="true" aria-label={selectedTech.name}>
             <div className="flex items-center justify-between h-14 px-4 border-b border-border sticky top-0 bg-card z-10">
               <div>
-                <span className="font-mono text-[10px] text-primary">{selectedTech.technique_id}</span>
+                <span className="font-mono text-xs text-primary">{selectedTech.technique_id}</span>
                 <h3 className="text-sm font-semibold">{selectedTech.name}</h3>
               </div>
               <button onClick={() => setSelectedTech(null)} className="p-1 rounded hover:bg-accent" aria-label="Kapat"><X className="w-4 h-4" /></button>
             </div>
 
             <div className="p-4 space-y-4">
-              <div className="grid grid-cols-2 gap-3 text-[10px]">
+              <div className="grid grid-cols-2 gap-3 text-xs">
                 <div><span className="text-muted-foreground">Alert:</span> <span className="font-mono font-bold">{selectedTech.alert_count}</span></div>
                 <div><span className="text-muted-foreground">Olay:</span> <span className="font-mono font-bold">{selectedTech.incident_ids.length}</span></div>
                 <div className="col-span-2"><span className="text-muted-foreground">Cover:</span> {selectedTech.is_covered ? '✅ Var' : '❌ Yok'}</div>
               </div>
 
               <div>
-                <h4 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">İlgili Uyarılar ({selectedAlerts.length})</h4>
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">İlgili Uyarılar ({selectedAlerts.length})</h4>
                 {selectedAlerts.length === 0 ? (
-                  <p className="text-[10px] text-muted-foreground">Bu tekniğe bağlı uyarı yok.</p>
+                  <p className="text-xs text-muted-foreground">Bu tekniğe bağlı uyarı yok.</p>
                 ) : (
                   <div className="space-y-1.5">
                     {selectedAlerts.map((a) => (
-                      <Link key={a.alert_id} to={`/alerts/${a.alert_id}`} onClick={() => setSelectedTech(null)} className="flex items-center justify-between p-2.5 rounded-lg border border-border hover:bg-accent transition-colors text-[10px]">
+                      <Link key={a.alert_id} to={`/alerts/${a.alert_id}`} onClick={() => setSelectedTech(null)} className="flex items-center justify-between p-2.5 rounded-lg border border-border hover:bg-accent transition-colors text-xs">
                         <div className="min-w-0">
                           <div className="font-medium truncate">{a.title}</div>
                           <div className="text-muted-foreground font-mono mt-0.5">{a.alert_id} • {new Date(a.detected_at).toLocaleDateString('tr-TR')}</div>
@@ -133,10 +133,10 @@ export default function Mitre() {
 
               {selectedTech.incident_ids.length > 0 && (
                 <div>
-                  <h4 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">Bağlı Olaylar</h4>
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Bağlı Olaylar</h4>
                   <div className="space-y-1">
                     {selectedTech.incident_ids.map((iid) => (
-                      <Link key={iid} to={`/incidents/${iid}`} onClick={() => setSelectedTech(null)} className="flex items-center gap-1 text-[10px] font-mono text-primary hover:underline">{iid}</Link>
+                      <Link key={iid} to={`/incidents/${iid}`} onClick={() => setSelectedTech(null)} className="flex items-center gap-1 text-xs font-mono text-primary hover:underline">{iid}</Link>
                     ))}
                   </div>
                 </div>
@@ -153,7 +153,7 @@ const TechCard = memo(function TechCard({ technique, onClick, isSelected }: { te
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left px-2 py-1.5 rounded text-[9px] transition-colors border border-transparent ${
+      className={`w-full text-left px-2 py-1.5 rounded text-2xs transition-colors border border-transparent ${
         technique.is_covered
           ? 'bg-card hover:bg-accent cursor-pointer'
           : 'opacity-40 cursor-default'
@@ -164,7 +164,7 @@ const TechCard = memo(function TechCard({ technique, onClick, isSelected }: { te
       <div className="font-mono font-medium leading-tight">{technique.technique_id}</div>
       <div className="text-muted-foreground leading-tight mt-0.5">{technique.name}</div>
       {technique.alert_count > 0 && (
-        <span className="inline-block mt-1 text-[8px] bg-primary/10 text-primary font-medium px-1 rounded">{technique.alert_count}</span>
+        <span className="inline-block mt-1 text-2xs bg-primary/10 text-primary font-medium px-1 rounded">{technique.alert_count}</span>
       )}
     </button>
   )

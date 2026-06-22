@@ -21,18 +21,18 @@ export default function PlaybookDetail() {
     if (runs.length === 0) loadRuns()
   }, [])
 
-  if (isLoading) return <div className="p-6 max-w-3xl"><SkeletonCard /></div>
+  if (isLoading) return <div className="p-6 max-w-5xl"><SkeletonCard /></div>
 
   const def = definitions.find((d) => d.playbook_id === id)
   if (!def) return <div className="p-6 text-muted-foreground text-center">Playbook bulunamadı. <Link to="/playbooks" className="text-primary hover:underline">Listeye dön</Link></div>
 
   const relatedRuns = [...runs].filter((r) => r.playbook_id === id).sort((a, b) => b.started_at.localeCompare(a.started_at))
-  const handleRun = () => toast.success(`"${def.name}" başlatıldı.`, { description: 'Kurgusal işlem — run sıraya alındı.', duration: 3000 })
+  const handleRun = () => toast.success(`"${def.name}" başlatıldı.`, { description: 'Simülasyon — run sıraya alındı.', duration: 3000 })
 
   const sortedSteps = [...def.steps].sort((a, b) => a.order - b.order)
 
   return (
-    <div className="p-6 space-y-6 max-w-3xl">
+    <div className="p-6 space-y-6 max-w-5xl">
       <div className="flex items-center justify-between flex-wrap gap-2">
         <Link to="/playbooks" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="w-3 h-3" /> Playbook'lara dön
@@ -45,8 +45,8 @@ export default function PlaybookDetail() {
       <div>
         <div className="flex items-center gap-2 mb-2">
           <Play className="w-4 h-4 text-primary" />
-          <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded">{def.category}</span>
-          <span className="text-[10px] text-muted-foreground">{def.requires_approval ? 'Onay Gerekli' : 'Otomatik'}</span>
+          <span className="text-xs bg-muted px-1.5 py-0.5 rounded">{def.category}</span>
+          <span className="text-xs text-muted-foreground">{def.requires_approval ? 'Onay Gerekli' : 'Otomatik'}</span>
         </div>
         <h1 className="text-lg font-bold">{def.name}</h1>
         <p className="text-sm text-muted-foreground mt-2">{def.description}</p>
@@ -71,12 +71,12 @@ export default function PlaybookDetail() {
                       <StepIcon className="w-3.5 h-3.5" />
                     </div>
                     <span className="text-xs font-semibold">{step.name}</span>
-                    <span className="text-[9px] bg-muted px-1 rounded font-medium">{step.type}</span>
-                    <span className={`text-[9px] ml-auto ${step.is_automated ? 'text-primary' : 'text-amber-500'}`}>
+                    <span className="text-2xs bg-muted px-1 rounded font-medium">{step.type}</span>
+                    <span className={`text-2xs ml-auto ${step.is_automated ? 'text-primary' : 'text-amber-500'}`}>
                       {step.is_automated ? 'OTOMATİK' : 'MANUEL'}
                     </span>
                   </div>
-                  <p className="text-[10px] text-muted-foreground ml-8">{step.description}</p>
+                  <p className="text-xs text-muted-foreground ml-8">{step.description}</p>
                 </div>
               </div>
             )
@@ -96,9 +96,9 @@ export default function PlaybookDetail() {
                   <button onClick={() => setExpandedRun(isExpanded ? null : r.run_id)} className="w-full flex items-center justify-between p-3 text-left hover:bg-accent transition-colors" aria-expanded={isExpanded}>
                     <div className="flex items-center gap-3">
                       {isExpanded ? <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />}
-                      <span className="font-mono text-[10px]">{r.run_id}</span>
+                      <span className="font-mono text-xs">{r.run_id}</span>
                       <StatusPill status={r.status} />
-                      <span className="text-[10px] text-muted-foreground">{r.duration_seconds}s</span>
+                      <span className="text-xs text-muted-foreground">{r.duration_seconds}s</span>
                     </div>
                     <div className="flex items-center gap-1">
                       {r.step_results.map((sr) => (
@@ -110,7 +110,7 @@ export default function PlaybookDetail() {
                   </button>
                   {isExpanded && (
                     <div className="border-t border-border px-3 py-3 bg-muted/10 space-y-3">
-                      <div className="flex items-center gap-4 text-[10px] text-muted-foreground">
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
                         <span>Başlatan: {r.triggered_by}</span>
                         <span>Başlangıç: {new Date(r.started_at).toLocaleString('tr-TR')}</span>
                         {r.finished_at && <span>Bitiş: {new Date(r.finished_at).toLocaleString('tr-TR')}</span>}
@@ -119,11 +119,11 @@ export default function PlaybookDetail() {
                         <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
                           <div className="h-full bg-status-completed rounded-full" style={{ width: `${r.status === 'completed' ? 100 : r.status === 'failed' ? 60 : 40}%` }} />
                         </div>
-                        <span className="text-[10px] text-muted-foreground">{r.duration_seconds}s</span>
+                        <span className="text-xs text-muted-foreground">{r.duration_seconds}s</span>
                       </div>
                       <div className="space-y-1">
                         {r.step_results.map((sr) => (
-                          <div key={sr.step_id} className="flex items-center gap-2 text-[10px]">
+                          <div key={sr.step_id} className="flex items-center gap-2 text-xs">
                             {sr.status === 'completed' ? <CheckCircle className="w-3 h-3 text-status-completed shrink-0" /> : sr.status === 'failed' ? <XCircle className="w-3 h-3 text-status-failed shrink-0" /> : <Circle className="w-3 h-3 text-muted-foreground shrink-0" />}
                             <span className="font-mono">{sr.step_id}</span>
                             <span className="text-muted-foreground">{sr.output ?? sr.status}</span>
@@ -131,8 +131,8 @@ export default function PlaybookDetail() {
                           </div>
                         ))}
                       </div>
-                      {r.notes && <p className="text-[10px] text-muted-foreground italic">{r.notes}</p>}
-                      <Link to={`/incidents/${r.incident_id}`} className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline">Olay: {r.incident_id}</Link>
+                      {r.notes && <p className="text-xs text-muted-foreground italic">{r.notes}</p>}
+                      <Link to={`/incidents/${r.incident_id}`} className="inline-flex items-center gap-1 text-xs text-primary hover:underline">Olay: {r.incident_id}</Link>
                     </div>
                   )}
                 </div>

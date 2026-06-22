@@ -10,7 +10,7 @@ from _data import (
     USERS, ASSETS, MALICIOUS_DOMAINS, MALICIOUS_IPS, BENIGN_IPS,
     MITRE_TECHNIQUES, BASE_TIME,
 )
-from pseudonymize import make_alert_id, make_incident_id, make_run_id, make_rule_id
+from pseudonymize import make_alert_id, make_incident_id, make_run_id
 
 
 class IncidentGenerator:

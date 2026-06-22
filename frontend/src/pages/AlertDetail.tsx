@@ -31,7 +31,7 @@ export default function AlertDetail() {
     if (incidents.length === 0) loadInc()
   }, [])
 
-  if (isLoading) return <div className="p-6 max-w-4xl"><SkeletonCard /></div>
+  if (isLoading) return <div className="p-6 max-w-5xl"><SkeletonCard className="h-96" /></div>
 
   const alert = alerts.find((a) => a.alert_id === id)
   if (!alert) {
@@ -48,18 +48,18 @@ export default function AlertDetail() {
   const handlePromoteToIncident = () => {
     const newIncidentId = `INC-PROMO-${Date.now()}`
     toast.success(`${alert.alert_id}, ${newIncidentId} olayına yükseltildi.`, {
-      description: 'Kurgusal işlem — veri refresh edilince sıfırlanır.',
+      description: 'Simülasyon — veri refresh edilince sıfırlanır.',
       duration: 4000,
     })
   }
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text)
-    toast('Kopyalandı (defanged)', { duration: 1500 })
+    toast('Kopyalandı (güvensizleştirilmiş)', { duration: 1500 })
   }
 
   return (
-    <div className="p-6 space-y-6 max-w-4xl">
+    <div className="p-6 space-y-6 max-w-5xl">
       {/* Back + Actions */}
       <div className="flex items-center justify-between flex-wrap gap-2">
         <Link to="/alerts" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
@@ -98,14 +98,14 @@ export default function AlertDetail() {
         <div className="flex items-center gap-2 mb-2">
           <SeverityPill severity={alert.severity} />
           <StatusPill status={alert.status} />
-          <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded font-mono">{alert.confidence}% güven</span>
+          <span className="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">{alert.confidence}% güven</span>
         </div>
         <h1 className="text-lg font-bold">{alert.title}</h1>
         <p className="text-xs text-muted-foreground font-mono mt-1">{alert.alert_id}</p>
       </div>
 
       {/* Metadata grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="flex flex-wrap gap-3 text-xs">
         <Meta label="Kaynak" value={alert.source} mono />
         <Meta label="Tespit" value={new Date(alert.detected_at).toLocaleString('tr-TR')} />
         {alert.source_ip && <Meta label="Kaynak IP" value={alert.source_ip} mono />}
@@ -138,9 +138,9 @@ export default function AlertDetail() {
               <div key={t.id} className="flex items-start gap-2 p-3 rounded-lg border border-border bg-card">
                 <Target className="w-3.5 h-3.5 text-primary mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-mono text-[10px] font-medium">{t.id}</div>
+                  <div className="font-mono text-xs font-medium">{t.id}</div>
                   <div className="text-xs">{t.name}</div>
-                  <div className="text-[10px] text-muted-foreground">{t.tactic}</div>
+                  <div className="text-xs text-muted-foreground">{t.tactic}</div>
                 </div>
               </div>
             ))}
@@ -158,8 +158,8 @@ export default function AlertDetail() {
               return (
                 <div key={ioc.ioc_id} className="flex items-center justify-between p-2.5 rounded-lg border border-border bg-card text-xs">
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="font-mono text-[10px] bg-muted px-1 py-0.5 rounded shrink-0">{ioc.type.toUpperCase()}</span>
-                    <span className="font-mono text-[10px] truncate" title={defanged}>{defanged}</span>
+                    <span className="font-mono text-xs bg-muted px-1 py-0.5 rounded shrink-0">{ioc.type.toUpperCase()}</span>
+                    <span className="font-mono text-xs truncate" title={defanged}>{defanged}</span>
                     <SeverityPill severity={ioc.severity} />
                   </div>
                   <button
@@ -193,25 +193,25 @@ export default function AlertDetail() {
           {alert.source_ip && (
             <PivotLink to={`/alerts?ip=${alert.source_ip}`} className="flex items-center gap-2 p-2.5 rounded-lg border border-border bg-card hover:bg-accent transition-colors">
               <Globe className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-              <div className="min-w-0"><div className="text-[10px] text-muted-foreground">IP</div><div className="font-mono text-[10px] truncate">{alert.source_ip}</div></div>
+              <div className="min-w-0"><div className="text-xs text-muted-foreground">IP</div><div className="font-mono text-xs truncate">{alert.source_ip}</div></div>
             </PivotLink>
           )}
           {alert.affected_user_id && (
             <PivotLink to={`/alerts?user=${alert.affected_user_id}`} className="flex items-center gap-2 p-2.5 rounded-lg border border-border bg-card hover:bg-accent transition-colors">
               <User className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-              <div className="min-w-0"><div className="text-[10px] text-muted-foreground">Kullanıcı</div><div className="font-mono text-[10px] truncate">{alert.affected_user_id}</div></div>
+              <div className="min-w-0"><div className="text-xs text-muted-foreground">Kullanıcı</div><div className="font-mono text-xs truncate">{alert.affected_user_id}</div></div>
             </PivotLink>
           )}
           {alert.affected_asset_id && (
             <PivotLink to={`/alerts?asset=${alert.affected_asset_id}`} className="flex items-center gap-2 p-2.5 rounded-lg border border-border bg-card hover:bg-accent transition-colors">
               <Monitor className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-              <div className="min-w-0"><div className="text-[10px] text-muted-foreground">Cihaz</div><div className="font-mono text-[10px] truncate">{alert.affected_asset_id}</div></div>
+              <div className="min-w-0"><div className="text-xs text-muted-foreground">Cihaz</div><div className="font-mono text-xs truncate">{alert.affected_asset_id}</div></div>
             </PivotLink>
           )}
           {relatedIncident && (
             <PivotLink to={`/incidents/${relatedIncident.incident_id}`} className="flex items-center gap-2 p-2.5 rounded-lg border border-border bg-card hover:bg-accent transition-colors">
               <Shield className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-              <div className="min-w-0"><div className="text-[10px] text-muted-foreground">Olay</div><div className="font-mono text-[10px] truncate">{relatedIncident.incident_id}</div></div>
+              <div className="min-w-0"><div className="text-xs text-muted-foreground">Olay</div><div className="font-mono text-xs truncate">{relatedIncident.incident_id}</div></div>
             </PivotLink>
           )}
         </div>
@@ -224,7 +224,7 @@ export default function AlertDetail() {
           <ul className="space-y-2">
             {alert.recommended_actions.map((action, i) => (
               <li key={i} className="flex items-start gap-2 text-sm">
-                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary text-[10px] font-bold shrink-0 mt-0.5">{i + 1}</span>
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
                 {action}
               </li>
             ))}

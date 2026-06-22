@@ -58,7 +58,7 @@ export function RecentIncidents({ incidents, isLoading }: Props) {
                 <span className="text-xs font-medium group-hover:text-primary transition-colors">{inc.title}</span>
                 <SeverityPill severity={inc.severity} />
               </div>
-              <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span className="font-mono">{inc.incident_id}</span>
                 <span>•</span>
                 <StatusPill status={inc.status} />
@@ -67,7 +67,7 @@ export function RecentIncidents({ incidents, isLoading }: Props) {
                 <span>•</span>
                 <span>{inc.assignee ?? 'Atanmamış'}</span>
               </div>
-              <p className="text-[10px] text-muted-foreground mt-1.5 line-clamp-1">{inc.summary}</p>
+              <p className="text-xs text-muted-foreground mt-1.5 line-clamp-1">{inc.summary}</p>
             </div>
             <span className="text-muted-foreground/30 text-xs shrink-0 mt-1 hidden sm:block">→</span>
           </Link>

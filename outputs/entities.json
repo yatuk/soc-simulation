@@ -1,0 +1,775 @@
+{
+  "users": {
+    "ayse.demir@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "ayse.demir@anadolufinans.example.tr",
+      "name": "Ayşe Demir",
+      "dept": "Finans",
+      "title": "Finans Analisti",
+      "role": "analyst",
+      "first_seen": "2026-06-09T00:56:33.193252",
+      "last_seen": "2026-06-22T14:43:33.193252",
+      "event_count": 36,
+      "devices": [
+        "DEV-001"
+      ],
+      "ips": [
+        "198.51.100.45",
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "203.0.113.195",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "mehmet.kaya@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "mehmet.kaya@anadolufinans.example.tr",
+      "name": "Mehmet Kaya",
+      "dept": "BT",
+      "title": "Sistem Yöneticisi",
+      "role": "admin",
+      "first_seen": "2026-06-09T21:35:33.193252",
+      "last_seen": "2026-06-22T04:59:33.193252",
+      "event_count": 47,
+      "devices": [
+        "DEV-002"
+      ],
+      "ips": [
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "203.0.113.195",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101",
+        "203.0.113.180"
+      ],
+      "risk_score": 0
+    },
+    "elif.yilmaz@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "elif.yilmaz@anadolufinans.example.tr",
+      "name": "Elif Yılmaz",
+      "dept": "Yazılım",
+      "title": "Kıdemli Geliştirici",
+      "role": "analyst",
+      "first_seen": "2026-06-08T22:17:33.193252",
+      "last_seen": "2026-06-22T15:02:33.193252",
+      "event_count": 52,
+      "devices": [
+        "DEV-003"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "198.51.100.91",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "203.0.113.195",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "mustafa.arslan@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "mustafa.arslan@anadolufinans.example.tr",
+      "name": "Mustafa Arslan",
+      "dept": "Satış",
+      "title": "Satış Müdürü",
+      "role": "viewer",
+      "first_seen": "2026-06-11T17:57:33.193252",
+      "last_seen": "2026-06-22T09:44:33.193252",
+      "event_count": 29,
+      "devices": [
+        "DEV-021",
+        "DEV-004"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "203.0.113.195",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "zeynep.celik@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "zeynep.celik@anadolufinans.example.tr",
+      "name": "Zeynep Çelik",
+      "dept": "İK",
+      "title": "İK Uzmanı",
+      "role": "viewer",
+      "first_seen": "2026-06-09T15:05:33.193252",
+      "last_seen": "2026-06-22T19:57:33.193252",
+      "event_count": 38,
+      "devices": [
+        "DEV-005"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "203.0.113.78",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "203.0.113.195",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "ali.ozturk@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "ali.ozturk@anadolufinans.example.tr",
+      "name": "Ali Öztürk",
+      "dept": "Pazarlama",
+      "title": "Pazarlama Direktörü",
+      "role": "viewer",
+      "first_seen": "2026-06-09T09:28:33.193252",
+      "last_seen": "2026-06-22T07:07:33.193252",
+      "event_count": 29,
+      "devices": [
+        "DEV-006"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "203.0.113.195",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "fatma.sahin@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "fatma.sahin@anadolufinans.example.tr",
+      "name": "Fatma Şahin",
+      "dept": "Finans",
+      "title": "Muhasebe Müdürü",
+      "role": "analyst",
+      "first_seen": "2026-06-08T21:36:33.193252",
+      "last_seen": "2026-06-22T07:42:33.193252",
+      "event_count": 34,
+      "devices": [
+        "DEV-007"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "198.51.100.54",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "ahmet.yildiz@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "ahmet.yildiz@anadolufinans.example.tr",
+      "name": "Ahmet Yıldız",
+      "dept": "Yönetim",
+      "title": "CFO",
+      "role": "admin",
+      "first_seen": "2026-06-08T22:19:33.193252",
+      "last_seen": "2026-06-22T04:03:33.193252",
+      "event_count": 22,
+      "devices": [
+        "DEV-020",
+        "DEV-008",
+        "DEV-022"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "203.0.113.195",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "selin.aksoy@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "selin.aksoy@anadolufinans.example.tr",
+      "name": "Selin Aksoy",
+      "dept": "Hukuk",
+      "title": "Hukuk Danışmanı",
+      "role": "viewer",
+      "first_seen": "2026-06-08T23:11:33.193252",
+      "last_seen": "2026-06-22T19:24:33.193252",
+      "event_count": 48,
+      "devices": [
+        "DEV-009"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "emre.korkmaz@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "emre.korkmaz@anadolufinans.example.tr",
+      "name": "Emre Korkmaz",
+      "dept": "BT",
+      "title": "Siber Güvenlik Analisti",
+      "role": "analyst",
+      "first_seen": "2026-06-10T15:39:33.193252",
+      "last_seen": "2026-06-22T17:16:33.193252",
+      "event_count": 30,
+      "devices": [
+        "DEV-010"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "deniz.aydin@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "deniz.aydin@anadolufinans.example.tr",
+      "name": "Deniz Aydın",
+      "dept": "Yazılım",
+      "title": "DevOps Mühendisi",
+      "role": "analyst",
+      "first_seen": "2026-06-09T11:25:33.193252",
+      "last_seen": "2026-06-22T13:55:33.193252",
+      "event_count": 34,
+      "devices": [
+        "DEV-011"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "burak.polat@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "burak.polat@anadolufinans.example.tr",
+      "name": "Burak Polat",
+      "dept": "Satış",
+      "title": "Bölge Müdürü",
+      "role": "viewer",
+      "first_seen": "2026-06-08T22:39:33.193252",
+      "last_seen": "2026-06-22T19:39:33.193252",
+      "event_count": 32,
+      "devices": [
+        "DEV-012"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "ceren.erdogan@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "ceren.erdogan@anadolufinans.example.tr",
+      "name": "Ceren Erdoğan",
+      "dept": "Risk",
+      "title": "Risk Analisti",
+      "role": "analyst",
+      "first_seen": "2026-06-09T01:12:33.193252",
+      "last_seen": "2026-06-21T16:34:33.193252",
+      "event_count": 34,
+      "devices": [
+        "DEV-013"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "oguz.tekin@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "oguz.tekin@anadolufinans.example.tr",
+      "name": "Oğuz Tekin",
+      "dept": "Operasyon",
+      "title": "Operasyon Müdürü",
+      "role": "viewer",
+      "first_seen": "2026-06-08T21:35:33.193252",
+      "last_seen": "2026-06-22T20:43:33.193252",
+      "event_count": 33,
+      "devices": [
+        "DEV-014"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "172.16.0.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    },
+    "gulsen.dogan@anadolufinans.example.tr": {
+      "type": "user",
+      "email": "gulsen.dogan@anadolufinans.example.tr",
+      "name": "Gülşen Doğan",
+      "dept": "Müşteri Hizmetleri",
+      "title": "Müşteri İlişkileri Yöneticisi",
+      "role": "viewer",
+      "first_seen": "2026-06-09T08:53:33.193252",
+      "last_seen": "2026-06-22T19:04:33.193252",
+      "event_count": 28,
+      "devices": [
+        "DEV-015"
+      ],
+      "ips": [
+        "192.168.1.1",
+        "10.10.1.50",
+        "192.0.2.100",
+        "10.10.2.100",
+        "10.10.1.51",
+        "192.0.2.101"
+      ],
+      "risk_score": 0
+    }
+  },
+  "ips": {
+    "192.0.2.100": {
+      "type": "ip",
+      "first_seen": "2026-06-08T21:35:33.193252",
+      "last_seen": "2026-06-22T19:57:33.193252",
+      "users": [
+        "mustafa.arslan@anadolufinans.example.tr",
+        "ayse.demir@anadolufinans.example.tr",
+        "oguz.tekin@anadolufinans.example.tr",
+        "gulsen.dogan@anadolufinans.example.tr",
+        "ali.ozturk@anadolufinans.example.tr",
+        "burak.polat@anadolufinans.example.tr",
+        "deniz.aydin@anadolufinans.example.tr",
+        "selin.aksoy@anadolufinans.example.tr",
+        "mehmet.kaya@anadolufinans.example.tr",
+        "emre.korkmaz@anadolufinans.example.tr",
+        "ceren.erdogan@anadolufinans.example.tr",
+        "ahmet.yildiz@anadolufinans.example.tr",
+        "elif.yilmaz@anadolufinans.example.tr",
+        "fatma.sahin@anadolufinans.example.tr",
+        "zeynep.celik@anadolufinans.example.tr"
+      ],
+      "reputation": "clean"
+    },
+    "192.168.1.1": {
+      "type": "ip",
+      "first_seen": "2026-06-08T21:36:33.193252",
+      "last_seen": "2026-06-22T19:39:33.193252",
+      "users": [
+        "mustafa.arslan@anadolufinans.example.tr",
+        "ayse.demir@anadolufinans.example.tr",
+        "oguz.tekin@anadolufinans.example.tr",
+        "gulsen.dogan@anadolufinans.example.tr",
+        "ali.ozturk@anadolufinans.example.tr",
+        "burak.polat@anadolufinans.example.tr",
+        "deniz.aydin@anadolufinans.example.tr",
+        "selin.aksoy@anadolufinans.example.tr",
+        "emre.korkmaz@anadolufinans.example.tr",
+        "ceren.erdogan@anadolufinans.example.tr",
+        "ahmet.yildiz@anadolufinans.example.tr",
+        "elif.yilmaz@anadolufinans.example.tr",
+        "fatma.sahin@anadolufinans.example.tr",
+        "zeynep.celik@anadolufinans.example.tr"
+      ],
+      "reputation": "clean"
+    },
+    "10.10.2.100": {
+      "type": "ip",
+      "first_seen": "2026-06-08T22:17:33.193252",
+      "last_seen": "2026-06-22T19:04:33.193252",
+      "users": [
+        "mustafa.arslan@anadolufinans.example.tr",
+        "ayse.demir@anadolufinans.example.tr",
+        "oguz.tekin@anadolufinans.example.tr",
+        "gulsen.dogan@anadolufinans.example.tr",
+        "ali.ozturk@anadolufinans.example.tr",
+        "burak.polat@anadolufinans.example.tr",
+        "deniz.aydin@anadolufinans.example.tr",
+        "selin.aksoy@anadolufinans.example.tr",
+        "mehmet.kaya@anadolufinans.example.tr",
+        "emre.korkmaz@anadolufinans.example.tr",
+        "ceren.erdogan@anadolufinans.example.tr",
+        "ahmet.yildiz@anadolufinans.example.tr",
+        "elif.yilmaz@anadolufinans.example.tr",
+        "fatma.sahin@anadolufinans.example.tr",
+        "zeynep.celik@anadolufinans.example.tr"
+      ],
+      "reputation": "clean"
+    },
+    "10.10.1.51": {
+      "type": "ip",
+      "first_seen": "2026-06-08T22:19:33.193252",
+      "last_seen": "2026-06-22T19:24:33.193252",
+      "users": [
+        "mustafa.arslan@anadolufinans.example.tr",
+        "ayse.demir@anadolufinans.example.tr",
+        "oguz.tekin@anadolufinans.example.tr",
+        "gulsen.dogan@anadolufinans.example.tr",
+        "ali.ozturk@anadolufinans.example.tr",
+        "burak.polat@anadolufinans.example.tr",
+        "deniz.aydin@anadolufinans.example.tr",
+        "selin.aksoy@anadolufinans.example.tr",
+        "mehmet.kaya@anadolufinans.example.tr",
+        "emre.korkmaz@anadolufinans.example.tr",
+        "ceren.erdogan@anadolufinans.example.tr",
+        "ahmet.yildiz@anadolufinans.example.tr",
+        "elif.yilmaz@anadolufinans.example.tr",
+        "fatma.sahin@anadolufinans.example.tr",
+        "zeynep.celik@anadolufinans.example.tr"
+      ],
+      "reputation": "clean"
+    },
+    "10.10.1.50": {
+      "type": "ip",
+      "first_seen": "2026-06-09T00:56:33.193252",
+      "last_seen": "2026-06-22T14:43:33.193252",
+      "users": [
+        "mustafa.arslan@anadolufinans.example.tr",
+        "ayse.demir@anadolufinans.example.tr",
+        "oguz.tekin@anadolufinans.example.tr",
+        "gulsen.dogan@anadolufinans.example.tr",
+        "ali.ozturk@anadolufinans.example.tr",
+        "burak.polat@anadolufinans.example.tr",
+        "deniz.aydin@anadolufinans.example.tr",
+        "selin.aksoy@anadolufinans.example.tr",
+        "mehmet.kaya@anadolufinans.example.tr",
+        "emre.korkmaz@anadolufinans.example.tr",
+        "ceren.erdogan@anadolufinans.example.tr",
+        "ahmet.yildiz@anadolufinans.example.tr",
+        "elif.yilmaz@anadolufinans.example.tr",
+        "fatma.sahin@anadolufinans.example.tr",
+        "zeynep.celik@anadolufinans.example.tr"
+      ],
+      "reputation": "clean"
+    },
+    "192.0.2.101": {
+      "type": "ip",
+      "first_seen": "2026-06-09T01:12:33.193252",
+      "last_seen": "2026-06-22T15:59:33.193252",
+      "users": [
+        "mustafa.arslan@anadolufinans.example.tr",
+        "ayse.demir@anadolufinans.example.tr",
+        "oguz.tekin@anadolufinans.example.tr",
+        "gulsen.dogan@anadolufinans.example.tr",
+        "ali.ozturk@anadolufinans.example.tr",
+        "burak.polat@anadolufinans.example.tr",
+        "deniz.aydin@anadolufinans.example.tr",
+        "selin.aksoy@anadolufinans.example.tr",
+        "mehmet.kaya@anadolufinans.example.tr",
+        "emre.korkmaz@anadolufinans.example.tr",
+        "ceren.erdogan@anadolufinans.example.tr",
+        "ahmet.yildiz@anadolufinans.example.tr",
+        "elif.yilmaz@anadolufinans.example.tr",
+        "fatma.sahin@anadolufinans.example.tr",
+        "zeynep.celik@anadolufinans.example.tr"
+      ],
+      "reputation": "clean"
+    },
+    "172.16.0.1": {
+      "type": "ip",
+      "first_seen": "2026-06-09T11:26:33.193252",
+      "last_seen": "2026-06-22T20:43:33.193252",
+      "users": [
+        "mustafa.arslan@anadolufinans.example.tr",
+        "ayse.demir@anadolufinans.example.tr",
+        "oguz.tekin@anadolufinans.example.tr",
+        "ali.ozturk@anadolufinans.example.tr",
+        "burak.polat@anadolufinans.example.tr",
+        "deniz.aydin@anadolufinans.example.tr",
+        "selin.aksoy@anadolufinans.example.tr",
+        "mehmet.kaya@anadolufinans.example.tr",
+        "emre.korkmaz@anadolufinans.example.tr",
+        "ceren.erdogan@anadolufinans.example.tr",
+        "ahmet.yildiz@anadolufinans.example.tr",
+        "elif.yilmaz@anadolufinans.example.tr",
+        "fatma.sahin@anadolufinans.example.tr",
+        "zeynep.celik@anadolufinans.example.tr"
+      ],
+      "reputation": "clean"
+    },
+    "198.51.100.45": {
+      "type": "ip",
+      "first_seen": "2026-06-09T22:30:33.193252",
+      "last_seen": "2026-06-09T23:00:33.193252",
+      "users": [
+        "ayse.demir@anadolufinans.example.tr"
+      ],
+      "reputation": "malicious"
+    },
+    "203.0.113.180": {
+      "type": "ip",
+      "first_seen": "2026-06-11T22:30:33.193252",
+      "last_seen": "2026-06-11T23:25:33.193252",
+      "users": [
+        "mehmet.kaya@anadolufinans.example.tr"
+      ],
+      "reputation": "malicious"
+    },
+    "198.51.100.91": {
+      "type": "ip",
+      "first_seen": "2026-06-13T21:30:33.193252",
+      "last_seen": "2026-06-13T22:10:33.193252",
+      "users": [
+        "elif.yilmaz@anadolufinans.example.tr"
+      ],
+      "reputation": "malicious"
+    },
+    "203.0.113.195": {
+      "type": "ip",
+      "first_seen": "2026-06-15T21:30:33.193252",
+      "last_seen": "2026-06-18T21:45:33.193252",
+      "users": [
+        "mustafa.arslan@anadolufinans.example.tr",
+        "ayse.demir@anadolufinans.example.tr",
+        "ali.ozturk@anadolufinans.example.tr",
+        "mehmet.kaya@anadolufinans.example.tr",
+        "ahmet.yildiz@anadolufinans.example.tr",
+        "elif.yilmaz@anadolufinans.example.tr",
+        "zeynep.celik@anadolufinans.example.tr"
+      ],
+      "reputation": "malicious"
+    },
+    "198.51.100.54": {
+      "type": "ip",
+      "first_seen": "2026-06-16T21:40:33.193252",
+      "last_seen": "2026-06-16T21:50:33.193252",
+      "users": [
+        "fatma.sahin@anadolufinans.example.tr"
+      ],
+      "reputation": "malicious"
+    },
+    "203.0.113.78": {
+      "type": "ip",
+      "first_seen": "2026-06-17T21:45:33.193252",
+      "last_seen": "2026-06-17T23:15:33.193252",
+      "users": [
+        "zeynep.celik@anadolufinans.example.tr"
+      ],
+      "reputation": "malicious"
+    }
+  },
+  "devices": {
+    "DEV-001": {
+      "id": "DEV-001",
+      "hostname": "IST-WS-001",
+      "os": "Windows 11 Pro",
+      "owner": "ayse.demir@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-002": {
+      "id": "DEV-002",
+      "hostname": "IST-WS-002",
+      "os": "Windows 11 Pro",
+      "owner": "mehmet.kaya@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-003": {
+      "id": "DEV-003",
+      "hostname": "ANK-LT-001",
+      "os": "macOS 14 Sonoma",
+      "owner": "elif.yilmaz@anadolufinans.example.tr",
+      "location": "Ankara"
+    },
+    "DEV-004": {
+      "id": "DEV-004",
+      "hostname": "IST-WS-003",
+      "os": "Windows 11 Pro",
+      "owner": "mustafa.arslan@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-005": {
+      "id": "DEV-005",
+      "hostname": "IST-WS-004",
+      "os": "Windows 11 Pro",
+      "owner": "zeynep.celik@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-006": {
+      "id": "DEV-006",
+      "hostname": "IZM-LT-001",
+      "os": "macOS 14 Sonoma",
+      "owner": "ali.ozturk@anadolufinans.example.tr",
+      "location": "İzmir"
+    },
+    "DEV-007": {
+      "id": "DEV-007",
+      "hostname": "IST-WS-005",
+      "os": "Windows 11 Pro",
+      "owner": "fatma.sahin@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-008": {
+      "id": "DEV-008",
+      "hostname": "IST-EXC-001",
+      "os": "Windows 11 Pro",
+      "owner": "ahmet.yildiz@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-009": {
+      "id": "DEV-009",
+      "hostname": "ANK-LT-002",
+      "os": "macOS 14 Sonoma",
+      "owner": "selin.aksoy@anadolufinans.example.tr",
+      "location": "Ankara"
+    },
+    "DEV-010": {
+      "id": "DEV-010",
+      "hostname": "IST-SEC-001",
+      "os": "Windows 11 Pro",
+      "owner": "emre.korkmaz@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-011": {
+      "id": "DEV-011",
+      "hostname": "IST-DEV-001",
+      "os": "Ubuntu 22.04 LTS",
+      "owner": "deniz.aydin@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-012": {
+      "id": "DEV-012",
+      "hostname": "BRS-WS-001",
+      "os": "Windows 11 Pro",
+      "owner": "burak.polat@anadolufinans.example.tr",
+      "location": "Bursa"
+    },
+    "DEV-013": {
+      "id": "DEV-013",
+      "hostname": "IST-WS-006",
+      "os": "Windows 11 Pro",
+      "owner": "ceren.erdogan@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-014": {
+      "id": "DEV-014",
+      "hostname": "IST-WS-007",
+      "os": "Windows 11 Pro",
+      "owner": "oguz.tekin@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-015": {
+      "id": "DEV-015",
+      "hostname": "IST-WS-008",
+      "os": "Windows 11 Pro",
+      "owner": "gulsen.dogan@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-016": {
+      "id": "DEV-016",
+      "hostname": "IST-DC-001",
+      "os": "Windows Server 2022",
+      "owner": "bt-operasyon@anadolufinans.example.tr",
+      "location": "İstanbul DC"
+    },
+    "DEV-017": {
+      "id": "DEV-017",
+      "hostname": "IST-MAIL-001",
+      "os": "Windows Server 2022",
+      "owner": "bt-operasyon@anadolufinans.example.tr",
+      "location": "İstanbul DC"
+    },
+    "DEV-018": {
+      "id": "DEV-018",
+      "hostname": "IST-WEB-001",
+      "os": "Ubuntu 22.04 LTS",
+      "owner": "bt-operasyon@anadolufinans.example.tr",
+      "location": "İstanbul DC"
+    },
+    "DEV-019": {
+      "id": "DEV-019",
+      "hostname": "ANK-VDI-001",
+      "os": "Windows 11 Enterprise",
+      "owner": "vdi-pool@anadolufinans.example.tr",
+      "location": "Ankara DC"
+    },
+    "DEV-020": {
+      "id": "DEV-020",
+      "hostname": "IST-MOB-001",
+      "os": "iOS 17",
+      "owner": "ahmet.yildiz@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-021": {
+      "id": "DEV-021",
+      "hostname": "IST-MOB-002",
+      "os": "Android 14",
+      "owner": "mustafa.arslan@anadolufinans.example.tr",
+      "location": "İstanbul"
+    },
+    "DEV-022": {
+      "id": "DEV-022",
+      "hostname": "IZM-WS-001",
+      "os": "Windows 10 Pro",
+      "owner": "external-consultant@external.example.tr",
+      "location": "İzmir"
+    },
+    "DEV-023": {
+      "id": "DEV-023",
+      "hostname": "ANT-LT-001",
+      "os": "Windows 11 Pro",
+      "owner": "remote-worker@anadolufinans.example.tr",
+      "location": "Antalya"
+    },
+    "DEV-024": {
+      "id": "DEV-024",
+      "hostname": "IST-KIOSK-001",
+      "os": "Windows 10 LTSC",
+      "owner": "kiosk@anadolufinans.example.tr",
+      "location": "İstanbul Şube"
+    },
+    "DEV-025": {
+      "id": "DEV-025",
+      "hostname": "IST-PRINT-001",
+      "os": "Embedded Linux",
+      "owner": "bt-operasyon@anadolufinans.example.tr",
+      "location": "İstanbul"
+    }
+  }
+}

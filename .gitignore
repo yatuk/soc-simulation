@@ -23,8 +23,12 @@ venv/
 .DS_Store
 Thumbs.db
 
-# Outputs (optional - uncomment to exclude)
-# outputs/
+# Build artifacts
+*.tsbuildinfo
+frontend/vite.config.d.ts
+frontend/vite.config.js
+docs/dashboard_data/
+
 # Node.js / Frontend
 node_modules/
 frontend/node_modules/

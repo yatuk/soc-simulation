@@ -188,9 +188,9 @@ class EventNormalizer:
             "event_type": f"web.{data['method'].lower()}",
             "severity": "low",
             "user": {
-                "email": f"{data['user']}@acmecorp.example.com" if data['user'] != '-' else "",
+                "email": f"{data['user']}@anadolufinans.example.tr" if data['user'] != '-' else "",
                 "username": data['user'] if data['user'] != '-' else "",
-                "domain": "acmecorp.example.com"
+                "domain": "anadolufinans.example.tr"
             },
             "device": {
                 "name": "",
@@ -269,9 +269,9 @@ class EventNormalizer:
             "event_type": f"endpoint.{data['event_type']}",
             "severity": "low",
             "user": {
-                "email": f"{data['user']}@acmecorp.example.com",
+                "email": f"{data['user']}@anadolufinans.example.tr",
                 "username": data['user'],
-                "domain": "acmecorp.example.com"
+                "domain": "anadolufinans.example.tr"
             },
             "device": {
                 "name": data['host'],

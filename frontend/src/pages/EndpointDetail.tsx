@@ -16,18 +16,18 @@ export default function EndpointDetail() {
     if (users.length === 0) loadUsers()
   }, [])
 
-  if (isLoading) return <div className="p-6 max-w-4xl"><SkeletonCard /></div>
+  if (isLoading) return <div className="p-6 max-w-5xl"><SkeletonCard /></div>
 
   const asset = assets.find((a) => a.asset_id === id)
   if (!asset) return <div className="p-6 text-muted-foreground text-center">Cihaz bulunamadı. <Link to="/endpoints" className="text-primary hover:underline">Listeye dön</Link></div>
 
   const owner = users.find((u) => u.user_id === asset.owner_user_id)
 
-  const handleIsolate = () => toast.success(`${asset.hostname} izole edildi.`, { description: 'Kurgusal EDR aksiyonu — cihaz ağdan izole edildi.', duration: 3000 })
-  const handleRestore = () => toast(`${asset.hostname} izolasyonu kaldırıldı.`, { description: 'Kurgusal EDR aksiyonu.', duration: 3000 })
+  const handleIsolate = () => toast.success(`${asset.hostname} izole edildi.`, { description: 'Simüle EDR işlemi — cihaz ağdan izole edildi.', duration: 3000 })
+  const handleRestore = () => toast(`${asset.hostname} izolasyonu kaldırıldı.`, { description: 'Simüle EDR işlemi.', duration: 3000 })
 
   return (
-    <div className="p-6 space-y-6 max-w-4xl">
+    <div className="p-6 space-y-6 max-w-5xl">
       <div className="flex items-center justify-between flex-wrap gap-2">
         <Link to="/endpoints" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="w-3 h-3" /> Cihazlara dön
@@ -71,18 +71,18 @@ export default function EndpointDetail() {
                 <div className={`absolute left-[3px] top-1.5 w-[9px] h-[9px] rounded-full border-2 ${p.is_suspicious ? 'bg-severity-critical border-severity-critical' : 'bg-primary border-primary'}`} />
                 <div className={`p-2.5 rounded-lg border ${p.is_suspicious ? 'border-severity-critical/30 bg-severity-critical/5' : 'border-border bg-card'}`}>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono text-[10px] font-semibold">{p.process_name}</span>
-                    {p.pid && <span className="text-[9px] text-muted-foreground font-mono">PID {p.pid}</span>}
-                    {p.is_suspicious && <span className="text-[9px] text-severity-critical font-medium ml-auto">ŞÜPHELİ</span>}
+                    <span className="font-mono text-xs font-semibold">{p.process_name}</span>
+                    {p.pid && <span className="text-2xs text-muted-foreground font-mono">PID {p.pid}</span>}
+                    {p.is_suspicious && <span className="text-2xs text-severity-critical font-medium ml-auto">ŞÜPHELİ</span>}
                   </div>
                   {p.parent_process_name && (
-                    <div className="text-[9px] text-muted-foreground mt-1">
+                    <div className="text-2xs text-muted-foreground mt-1">
                       <span className="text-muted-foreground">Parent: </span>
                       <span className="font-mono">{p.parent_process_name}</span>
                     </div>
                   )}
-                  {p.command_line && <div className="text-[9px] text-muted-foreground mt-0.5 font-mono truncate">{p.command_line}</div>}
-                  {p.file_hash && <div className="text-[9px] text-muted-foreground mt-0.5 font-mono">SHA256: {p.file_hash}</div>}
+                  {p.command_line && <div className="text-2xs text-muted-foreground mt-0.5 font-mono truncate">{p.command_line}</div>}
+                  {p.file_hash && <div className="text-2xs text-muted-foreground mt-0.5 font-mono">SHA256: {p.file_hash}</div>}
                 </div>
               </div>
             ))}
@@ -96,7 +96,7 @@ export default function EndpointDetail() {
           <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3"><Globe className="w-3.5 h-3.5" />Ağ Bağlantıları</h3>
           <div className="space-y-1.5">
             {asset.recent_network_connections.map((c, i) => (
-              <div key={i} className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-card text-[10px]">
+              <div key={i} className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-card text-xs">
                 <span className="font-mono shrink-0">{c.protocol}</span>
                 <span className="font-mono text-muted-foreground">{c.domain ?? c.dst_ip ?? '—'}</span>
                 {c.port && <span className="text-muted-foreground font-mono">:{c.port}</span>}
@@ -113,7 +113,7 @@ export default function EndpointDetail() {
 function InfoCard({ icon: Icon, label, value, mono, highlight }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string; mono?: boolean; highlight?: boolean }) {
   return (
     <div className="p-3 rounded-lg border border-border bg-card">
-      <div className="flex items-center gap-1.5 text-muted-foreground mb-1"><Icon className="w-3 h-3" /><span className="text-[10px]">{label}</span></div>
+      <div className="flex items-center gap-1.5 text-muted-foreground mb-1"><Icon className="w-3 h-3" /><span className="text-xs">{label}</span></div>
       <span className={`${highlight ? 'font-bold text-base' : 'font-medium'} ${mono ? 'font-mono' : ''}`}>{value}</span>
     </div>
   )

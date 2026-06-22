@@ -242,7 +242,7 @@
     {
       "technique_id": "T1486",
       "name": "Veri Şifreleme (Fidye)",
-      "tactic_id": "TA0000",
+      "tactic_id": "TA0040",
       "alert_count": 0,
       "incident_ids": [],
       "is_covered": false
@@ -250,7 +250,7 @@
     {
       "technique_id": "T1496",
       "name": "Kaynak Ele Geçirme",
-      "tactic_id": "TA0000",
+      "tactic_id": "TA0040",
       "alert_count": 0,
       "incident_ids": [],
       "is_covered": false
@@ -283,8 +283,8 @@
     },
     {
       "technique_id": "T1543.003",
-      "name": "T1543.003",
-      "tactic_id": "TA0000",
+      "name": "Windows Service",
+      "tactic_id": "TA0040",
       "alert_count": 9,
       "incident_ids": [],
       "is_covered": true

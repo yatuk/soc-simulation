@@ -77,7 +77,7 @@ On January 10, 2026, our Security Operations Center detected and responded to an
 ## Business Impact
 
 **Affected Assets:**
-- 1 user account (sarah.chen@acmecorp.example.com)
+- 1 user account (ayse.demir@anadolufinans.example.tr)
 - 47 email messages accessed by attacker
 - No confirmed data exfiltration
 
@@ -167,7 +167,7 @@ The incident highlights the ongoing need for security awareness training and tec
 Initial Access → Credential Access → Persistence → Collection → (Attempted) Exfiltration → Containment
 
 **Affected Entity:**
-- User: sarah.chen@acmecorp.example.com
+- User: ayse.demir@anadolufinans.example.tr
 - Department: Marketing
 - Device: SARAH-LAPTOP-01 (legitimate), Unknown Linux device (attacker)
 
@@ -243,9 +243,9 @@ Initial Access → Credential Access → Persistence → Collection → (Attempt
 - **Analyst:** Tier-1 SOC
 
 **2026-01-10 10:05:00 UTC** - Containment Initiated
-- **Action:** Revoke all active sessions for sarah.chen
+- **Action:** Revoke all active sessions for ayse.demir
 - **Action:** Force password reset
-- **Actor:** soc.analyst@acmecorp.example.com
+- **Actor:** soc.analyst@anadolufinans.example.tr
 
 **2026-01-10 11:30:00 UTC** - Eradication Complete
 - **Action:** Malicious inbox rule deleted

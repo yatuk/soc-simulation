@@ -23,14 +23,25 @@ interface Props {
 
 export function CommandPalette({ open, onClose }: Props) {
   const navigate = useNavigate()
-  const { data: alerts } = useAlertStore()
-  const { data: incidents } = useIncidentStore()
-  const { data: iocs } = useIOCStore()
-  const { data: assets } = useAssetStore()
-  const { data: users } = useUserStore()
+  const { data: alerts, load: loadAlerts } = useAlertStore()
+  const { data: incidents, load: loadInc } = useIncidentStore()
+  const { data: iocs, load: loadIocs } = useIOCStore()
+  const { data: assets, load: loadAssets } = useAssetStore()
+  const { data: users, load: loadUsers } = useUserStore()
   const { settings, updateSetting } = useSettingsStore()
   const { toggleSidebar } = useUIStore()
   const [query, setQuery] = useState('')
+
+  // Preload data if stores are empty (e.g. palette opened from Settings page)
+  useEffect(() => {
+    if (open) {
+      if (alerts.length === 0) loadAlerts()
+      if (incidents.length === 0) loadInc()
+      if (iocs.length === 0) loadIocs()
+      if (assets.length === 0) loadAssets()
+      if (users.length === 0) loadUsers()
+    }
+  }, [open])
 
   // Keyboard shortcut
   useEffect(() => {
@@ -96,46 +107,46 @@ export function CommandPalette({ open, onClose }: Props) {
               autoFocus
               className="flex-1 h-11 bg-transparent text-sm px-3 outline-none placeholder:text-muted-foreground/50"
             />
-            <kbd className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-mono shrink-0">ESC</kbd>
+            <kbd className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-mono shrink-0">ESC</kbd>
           </div>
 
           <Command.List className="max-h-80 overflow-y-auto p-2">
             <Command.Empty className="py-8 text-center text-xs text-muted-foreground">
-              Hiç sonuç yok. Belki yanlış yazıldı veya henüz keşfedilmedi. (Saldırganlar gibi.)
+              Sonuç bulunamadı.
             </Command.Empty>
 
             {/* Pages */}
-            <Command.Group heading="Sayfalar" className="text-[10px]">
+            <Command.Group heading="Sayfalar" className="text-xs">
               {items.pages.map((p) => (
                 <Command.Item key={p.id} value={`${p.name} ${p.desc}`} onSelect={() => onSelect(() => navigate(p.path))} className="flex items-center gap-3 px-3 py-2 rounded-md text-xs cursor-pointer data-[selected=true]:bg-accent">
                   <p.icon className="w-4 h-4 text-muted-foreground shrink-0" />
-                  <div><div className="font-medium">{p.name}</div><div className="text-[10px] text-muted-foreground">{p.desc}</div></div>
+                  <div><div className="font-medium">{p.name}</div><div className="text-xs text-muted-foreground">{p.desc}</div></div>
                 </Command.Item>
               ))}
             </Command.Group>
 
             {/* Alerts */}
-            <Command.Group heading={`Uyarılar (${items.alerts.length})`} className="text-[10px]">
+            <Command.Group heading={`Uyarılar (${items.alerts.length})`} className="text-xs">
               {items.alerts.slice(0, 8).map((a) => (
                 <Command.Item key={a.alert_id} value={`${a.alert_id} ${a.title} ${a.severity}`} onSelect={() => onSelect(() => navigate(`/alerts/${a.alert_id}`))} className="flex items-center gap-3 px-3 py-2 rounded-md text-xs cursor-pointer data-[selected=true]:bg-accent">
                   <AlertTriangle className="w-4 h-4 text-muted-foreground shrink-0" />
-                  <div className="min-w-0"><div className="font-medium truncate">{a.title}</div><div className="text-[10px] text-muted-foreground">{a.alert_id} · {a.severity}</div></div>
+                  <div className="min-w-0"><div className="font-medium truncate">{a.title}</div><div className="text-xs text-muted-foreground">{a.alert_id} · {a.severity}</div></div>
                 </Command.Item>
               ))}
             </Command.Group>
 
             {/* Incidents */}
-            <Command.Group heading={`Olaylar (${items.incidents.length})`} className="text-[10px]">
+            <Command.Group heading={`Olaylar (${items.incidents.length})`} className="text-xs">
               {items.incidents.slice(0, 5).map((inc) => (
                 <Command.Item key={inc.incident_id} value={`${inc.incident_id} ${inc.title} ${inc.status}`} onSelect={() => onSelect(() => navigate(`/incidents/${inc.incident_id}`))} className="flex items-center gap-3 px-3 py-2 rounded-md text-xs cursor-pointer data-[selected=true]:bg-accent">
                   <FileSearch className="w-4 h-4 text-muted-foreground shrink-0" />
-                  <div className="min-w-0"><div className="font-medium truncate">{inc.title}</div><div className="text-[10px] text-muted-foreground">{inc.incident_id} · {inc.severity}</div></div>
+                  <div className="min-w-0"><div className="font-medium truncate">{inc.title}</div><div className="text-xs text-muted-foreground">{inc.incident_id} · {inc.severity}</div></div>
                 </Command.Item>
               ))}
             </Command.Group>
 
             {/* Actions */}
-            <Command.Group heading="Aksiyonlar" className="text-[10px]">
+            <Command.Group heading="Aksiyonlar" className="text-xs">
               <Command.Item value="Karanlık mod" onSelect={() => onSelect(() => updateSetting('theme', settings.theme === 'dark' ? 'light' : 'dark'))} className="flex items-center gap-3 px-3 py-2 rounded-md text-xs cursor-pointer data-[selected=true]:bg-accent">
                 <Settings className="w-4 h-4 text-muted-foreground shrink-0" />
                 <span>{settings.theme === 'dark' ? 'Aydınlık moda geç' : 'Karanlık moda geç'}</span>
@@ -148,7 +159,7 @@ export function CommandPalette({ open, onClose }: Props) {
                 <Settings className="w-4 h-4 text-muted-foreground shrink-0" />
                 <span>Kahve sayacını göster</span>
               </Command.Item>
-              <Command.Item value="Konami" onSelect={() => onSelect(() => toast('⬆⬆⬇⬇⬅➡⬅➡🅱🅰 Başlat! (Şaka şaka, sadece toast.)', { duration: 4000 }))} className="flex items-center gap-3 px-3 py-2 rounded-md text-xs cursor-pointer data-[selected=true]:bg-accent">
+              <Command.Item value="Konami" onSelect={() => onSelect(() => toast('⬆⬆⬇⬇⬅➡⬅➡🅱🅰 Başlat! (Easter egg)', { duration: 4000 }))} className="flex items-center gap-3 px-3 py-2 rounded-md text-xs cursor-pointer data-[selected=true]:bg-accent">
                 <Shield className="w-4 h-4 text-muted-foreground shrink-0" />
                 <span>Konami Kodu</span>
               </Command.Item>

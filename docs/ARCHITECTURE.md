@@ -7,12 +7,12 @@
 ## 1. Klasör Yapısı (Final)
 
 ```
-SOC-case-study-project/
+soc-simulation/
 ├── .github/workflows/deploy.yml     # GitHub Actions → Pages
 ├── frontend/                        # React SPA
 │   ├── index.html
 │   ├── package.json                 # v2.0.0
-│   ├── vite.config.ts               # base: /SOC-case-study-project/
+│   ├── vite.config.ts               # base: /soc-simulation/
 │   ├── tailwind.config.js
 │   ├── tsconfig.json
 │   ├── public/
@@ -133,7 +133,7 @@ push to main
   → deploy-pages@v4
 ```
 
-- `vite.config.ts`: `base: '/SOC-case-study-project/'`, `esbuild.drop: [console, debugger]`
+- `vite.config.ts`: `base: '/soc-simulation/'`, `esbuild.drop: [console, debugger]`
 - `manualChunks`: vendor (react + router), charts (recharts)
 - Output: 30 files, ~200 KB gzipped JS, ~7 KB gzipped CSS
 

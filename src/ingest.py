@@ -38,31 +38,41 @@ class LogIngestor:
         """Ingest email gateway CSV logs."""
         events = []
         file_path = self.data_dir / "email_gateway.log"
-        
-        with open(file_path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                events.append({
-                    "source": "email_gateway",
-                    "raw": row
-                })
-        
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    events.append({
+                        "source": "email_gateway",
+                        "raw": row
+                    })
+        except FileNotFoundError:
+            print(f"[UYARI] {file_path} bulunamadı, atlanıyor")
+        except (csv.Error, UnicodeDecodeError) as e:
+            print(f"[HATA] {file_path} ayrıştırılamadı: {e}")
+
         return events
     
     def ingest_identity_provider(self) -> List[Dict[str, Any]]:
         """Ingest identity provider JSON Lines logs."""
         events = []
         file_path = self.data_dir / "identity_provider.log"
-        
-        with open(file_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                if line.strip():
-                    data = json.loads(line)
-                    events.append({
-                        "source": "identity_provider",
-                        "raw": data
-                    })
-        
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    if line.strip():
+                        data = json.loads(line)
+                        events.append({
+                            "source": "identity_provider",
+                            "raw": data
+                        })
+        except FileNotFoundError:
+            print(f"[UYARI] {file_path} bulunamadı, atlanıyor")
+        except json.JSONDecodeError as e:
+            print(f"[HATA] {file_path} ayrıştırılamadı: {e}")
+
         return events
     
     def ingest_web_proxy(self) -> List[Dict[str, Any]]:
@@ -73,62 +83,75 @@ class LogIngestor:
         # Regex for Apache Common Log Extended format
         pattern = r'^(\S+) \S+ (\S+) \[(.*?)\] "(\w+) (.*?) HTTP/\d\.\d" (\d+) (\d+) "(.*?)" "(.*?)"$'
         
-        with open(file_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                match = re.match(pattern, line.strip())
-                if match:
-                    ip, user, timestamp, method, url, status, size, referrer, user_agent = match.groups()
-                    
-                    # Convert timestamp: "10/Jan/2026:08:17:45 +0000" -> ISO 8601
-                    dt = datetime.strptime(timestamp, "%d/%b/%Y:%H:%M:%S %z")
-                    
-                    events.append({
-                        "source": "web_proxy",
-                        "raw": {
-                            "src_ip": ip,
-                            "user": user,
-                            "timestamp": dt.isoformat(),
-                            "method": method,
-                            "url": url,
-                            "status": int(status),
-                            "size": int(size),
-                            "referrer": referrer,
-                            "user_agent": user_agent
-                        }
-                    })
-        
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    match = re.match(pattern, line.strip())
+                    if match:
+                        ip, user, timestamp, method, url, status, size, referrer, user_agent = match.groups()
+
+                        # Convert timestamp: "10/Jan/2026:08:17:45 +0000" -> ISO 8601
+                        dt = datetime.strptime(timestamp, "%d/%b/%Y:%H:%M:%S %z")
+
+                        events.append({
+                            "source": "web_proxy",
+                            "raw": {
+                                "src_ip": ip,
+                                "user": user,
+                                "timestamp": dt.isoformat(),
+                                "method": method,
+                                "url": url,
+                                "status": int(status),
+                                "size": int(size),
+                                "referrer": referrer,
+                                "user_agent": user_agent
+                            }
+                        })
+        except FileNotFoundError:
+            print(f"[UYARI] {file_path} bulunamadı, atlanıyor")
+
         return events
     
     def ingest_cloud_mailbox(self) -> List[Dict[str, Any]]:
         """Ingest cloud mailbox JSON Lines audit logs."""
         events = []
         file_path = self.data_dir / "cloud_mailbox.log"
-        
-        with open(file_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                if line.strip():
-                    data = json.loads(line)
-                    events.append({
-                        "source": "cloud_mailbox",
-                        "raw": data
-                    })
-        
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    if line.strip():
+                        data = json.loads(line)
+                        events.append({
+                            "source": "cloud_mailbox",
+                            "raw": data
+                        })
+        except FileNotFoundError:
+            print(f"[UYARI] {file_path} bulunamadı, atlanıyor")
+        except json.JSONDecodeError as e:
+            print(f"[HATA] {file_path} ayrıştırılamadı: {e}")
+
         return events
     
     def ingest_endpoint_edr(self) -> List[Dict[str, Any]]:
         """Ingest endpoint EDR JSON Lines logs."""
         events = []
         file_path = self.data_dir / "endpoint_edr.log"
-        
-        with open(file_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                if line.strip():
-                    data = json.loads(line)
-                    events.append({
-                        "source": "endpoint_edr",
-                        "raw": data
-                    })
-        
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    if line.strip():
+                        data = json.loads(line)
+                        events.append({
+                            "source": "endpoint_edr",
+                            "raw": data
+                        })
+        except FileNotFoundError:
+            print(f"[UYARI] {file_path} bulunamadı, atlanıyor")
+        except json.JSONDecodeError as e:
+            print(f"[HATA] {file_path} ayrıştırılamadı: {e}")
+
         return events
 
 

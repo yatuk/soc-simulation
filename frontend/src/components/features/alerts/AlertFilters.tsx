@@ -45,13 +45,13 @@ export function AlertFilters({ filters, onChange, sources, totalCount, filteredC
 
       {/* Filter chips */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-[10px] text-muted-foreground mr-1">Filtre:</span>
+        <span className="text-xs text-muted-foreground mr-1">Filtre:</span>
 
         {/* Severity */}
         <select
           value={filters.severity}
           onChange={(e) => onChange({ severity: e.target.value as AlertFilterState['severity'] })}
-          className="h-7 px-2 rounded-md border border-border bg-card text-[10px] focus:outline-none"
+          className="h-7 px-2 rounded-md border border-border bg-card text-xs focus:outline-none"
           aria-label="Önem seviyesi"
         >
           {SEVERITIES.map((s) => <option key={s} value={s}>{s === 'all' ? 'Tüm Önem' : s}</option>)}
@@ -61,7 +61,7 @@ export function AlertFilters({ filters, onChange, sources, totalCount, filteredC
         <select
           value={filters.status}
           onChange={(e) => onChange({ status: e.target.value })}
-          className="h-7 px-2 rounded-md border border-border bg-card text-[10px] focus:outline-none"
+          className="h-7 px-2 rounded-md border border-border bg-card text-xs focus:outline-none"
           aria-label="Durum"
         >
           {STATUSES.map((s) => <option key={s} value={s}>{s === 'all' ? 'Tüm Durum' : s === 'new' ? 'Yeni' : s === 'acknowledged' ? 'Onaylandı' : 'Çözüldü'}</option>)}
@@ -71,7 +71,7 @@ export function AlertFilters({ filters, onChange, sources, totalCount, filteredC
         <select
           value={filters.source}
           onChange={(e) => onChange({ source: e.target.value })}
-          className="h-7 px-2 rounded-md border border-border bg-card text-[10px] focus:outline-none"
+          className="h-7 px-2 rounded-md border border-border bg-card text-xs focus:outline-none"
           aria-label="Kaynak"
         >
           <option value="all">Tüm Kaynak</option>
@@ -79,12 +79,12 @@ export function AlertFilters({ filters, onChange, sources, totalCount, filteredC
         </select>
 
         {hasFilters && (
-          <button onClick={clear} className="h-7 px-2 rounded-md border border-border text-[10px] text-muted-foreground hover:bg-accent transition-colors">
+          <button onClick={clear} className="h-7 px-2 rounded-md border border-border text-xs text-muted-foreground hover:bg-accent transition-colors">
             Temizle
           </button>
         )}
 
-        <span className="text-[10px] text-muted-foreground ml-auto">
+        <span className="text-xs text-muted-foreground ml-auto">
           {filteredCount}/{totalCount} uyarı
         </span>
       </div>

@@ -91,7 +91,7 @@ export function AiSummary({ data, isLoading }: Props) {
           <Sparkles className="w-3.5 h-3.5" /> AI Özet
         </h3>
         {phase === 'typing' && (
-          <button onClick={skip} className="text-[10px] text-muted-foreground hover:text-foreground transition-colors">
+          <button onClick={skip} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
             Atla →
           </button>
         )}
@@ -101,7 +101,7 @@ export function AiSummary({ data, isLoading }: Props) {
       {phase === 'loading' && (
         <div className="space-y-1.5">
           {LOADING_STEPS.map((step, i) => (
-            <div key={i} className={`text-[10px] transition-all duration-200 ${i <= loadingStep ? 'text-purple-300/80' : 'text-muted-foreground/30'}`}>
+            <div key={i} className={`text-xs transition-all duration-200 ${i <= loadingStep ? 'text-purple-300/80' : 'text-muted-foreground/30'}`}>
               {i <= loadingStep ? '▸' : '○'} {step}
               {i === loadingStep && <span className="animate-pulse ml-1">▌</span>}
             </div>
@@ -121,10 +121,10 @@ export function AiSummary({ data, isLoading }: Props) {
             <>
               {/* Verdict pill */}
               <div className="flex items-center gap-3">
-                <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-medium ${verdict.color} border-current/20 bg-current/5`}>
+                <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-medium ${verdict.color} border-current/20 bg-current/5`}>
                   <VerdictIcon className="w-3 h-3" /> {verdict.label}
                 </div>
-                <div className="flex items-center gap-1.5 text-[10px]">
+                <div className="flex items-center gap-1.5 text-xs">
                   <span className="text-muted-foreground">Güven:</span>
                   <div className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
                     <div className="h-full bg-purple-400 rounded-full" style={{ width: `${Math.round((data.confidence ?? 0.4) * 100)}%` }} />
@@ -135,10 +135,10 @@ export function AiSummary({ data, isLoading }: Props) {
 
               {/* Next steps */}
               <div>
-                <h4 className="text-[10px] font-semibold text-muted-foreground mb-1.5">Önerilen Aksiyonlar</h4>
+                <h4 className="text-xs font-semibold text-muted-foreground mb-1.5">Önerilen Aksiyonlar</h4>
                 <ul className="space-y-1">
                   {data.next_steps.map((step, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[10px] text-muted-foreground">
+                    <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
                       <button
                         onClick={() => toggleStep(i)}
                         className={`mt-0.5 shrink-0 w-4 h-4 rounded border flex items-center justify-center transition-colors ${
@@ -157,9 +157,9 @@ export function AiSummary({ data, isLoading }: Props) {
               </div>
 
               {/* Disclaimer */}
-              <p className="flex items-center gap-1.5 text-[9px] text-muted-foreground/60">
+              <p className="flex items-center gap-1.5 text-2xs text-muted-foreground/60">
                 <Info className="w-3 h-3 shrink-0" />
-                Bu analiz simüledir. Gerçek bir LLM çağrısı yapılmamaktadır. Eğitim amaçlıdır.
+                Bu analiz yapay zeka tarafından simüle edilmiştir. Karar desteği amaçlıdır.
               </p>
             </>
           )}

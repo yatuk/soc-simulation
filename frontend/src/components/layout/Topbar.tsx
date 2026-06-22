@@ -1,25 +1,33 @@
+import { useMemo } from 'react'
 import { useUIStore, useSettingsStore } from '@/store'
+import { useTranslation } from '@/i18n'
 import { Menu, Moon, Sun, Search } from 'lucide-react'
 import { NotificationsBell } from '@/components/layout/NotificationsBell'
 
-const pageTitles: Record<string, string> = {
-  '/': 'Genel Bakış',
-  '/alerts': 'Uyarılar',
-  '/incidents': 'Olaylar',
-  '/iocs': 'IOC Explorer',
-  '/playbooks': 'SOAR Playbookları',
-  '/endpoints': 'Cihazlar (EDR)',
-  '/mitre': 'MITRE ATT&CK',
-  '/detections': 'Sigma Kuralları',
-  '/settings': 'Ayarlar',
-}
-
 export function Topbar() {
+  const { t } = useTranslation()
   const toggleSidebar = useUIStore((s) => s.toggleSidebar)
   const toggleCmdPalette = useUIStore((s) => s.toggleCmdPalette)
   const { settings, updateSetting } = useSettingsStore()
   const path = window.location.hash.replace('#', '') || '/'
-  const title = pageTitles[path] || 'SOC Console'
+
+  const pageTitles: Record<string, string> = useMemo(() => ({
+    '/': t('topbar.overview'),
+    '/alerts': t('topbar.alerts'),
+    '/incidents': t('topbar.incidents'),
+    '/iocs': t('topbar.iocs'),
+    '/playbooks': t('topbar.playbooks'),
+    '/endpoints': t('topbar.endpoints'),
+    '/mitre': t('topbar.mitre'),
+    '/detections': t('topbar.detections'),
+    '/settings': t('topbar.settings'),
+    '/threat-actors': t('topbar.threatActors'),
+    '/users': t('topbar.users'),
+    '/logs': t('topbar.logExplorer'),
+    '/cases': t('topbar.cases'),
+  }), [t])
+
+  const title = pageTitles[path] || t('app.title')
 
   return (
     <header className="sticky top-0 z-30 flex items-center h-14 px-4 bg-card/80 backdrop-blur border-b border-border">
@@ -27,7 +35,7 @@ export function Topbar() {
         <button
           onClick={toggleSidebar}
           className="lg:hidden p-1 rounded hover:bg-accent"
-          aria-label="Menü"
+          aria-label="Menu"
         >
           <Menu className="w-5 h-5" />
         </button>
@@ -38,11 +46,11 @@ export function Topbar() {
         <button
           onClick={toggleCmdPalette}
           className="flex items-center gap-2 h-8 px-3 rounded-md border border-border bg-muted/50 text-muted-foreground text-xs hover:bg-muted transition-colors"
-          aria-label="Komut paletini aç (Ctrl+K)"
+          aria-label="Open command palette (Ctrl+K)"
         >
           <Search className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Ara...</span>
-          <kbd className="hidden md:inline text-[10px] px-1 rounded bg-background border border-border ml-4">
+          <span className="hidden sm:inline">{t('common.search')}</span>
+          <kbd className="hidden md:inline text-xs px-1 rounded bg-background border border-border ml-4">
             Ctrl+K
           </kbd>
         </button>
@@ -54,7 +62,7 @@ export function Topbar() {
             updateSetting('theme', settings.theme === 'dark' ? 'light' : 'dark')
           }
           className="p-1.5 rounded-md hover:bg-accent transition-colors"
-          aria-label={settings.theme === 'dark' ? 'Aydınlık mod' : 'Karanlık mod'}
+          aria-label={settings.theme === 'dark' ? t('settings.themeLight') : t('settings.themeDark')}
         >
           {settings.theme === 'dark' ? (
             <Sun className="w-4 h-4" />
@@ -64,8 +72,8 @@ export function Topbar() {
         </button>
 
         <div
-          className="w-7 h-7 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-[10px] font-bold text-primary"
-          aria-label="Kullanıcı: Emre Korkmaz"
+          className="w-7 h-7 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-xs font-bold text-primary"
+          aria-label="User: Emre Korkmaz"
           role="img"
         >
           EK

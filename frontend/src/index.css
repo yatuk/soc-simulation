@@ -22,7 +22,9 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 161 94% 30%;
+    --primary: 161 94% 25%;
+    --primary-foreground: 144 100% 98%;
+    --ring: 161 94% 25%;
     --radius: 0.5rem;
     --severity-critical: #f85149;
     --severity-high: #f0883e;
@@ -47,7 +49,7 @@
     --card-foreground: 213 31% 91%;
     --popover: 224 71% 4%;
     --popover-foreground: 213 31% 91%;
-    --primary: 161 94% 30%;
+    --primary: 161 94% 25%;
     --primary-foreground: 144 100% 98%;
     --secondary: 222 47% 11%;
     --secondary-foreground: 210 40% 98%;
@@ -69,20 +71,9 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background-image:
-      radial-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px),
-      radial-gradient(hsl(var(--primary) / 0.04) 1px, transparent 1px);
-    background-size: 50px 50px, 20px 20px;
-    background-position: 0 0, 25px 25px;
-    background-attachment: fixed;
   }
 }
 
-@layer utilities {
-  .glass-panel {
-    @apply bg-black/40 backdrop-blur-md border border-white/10;
-  }
-}
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -92,6 +83,27 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--primary) / 0.5);
+}
+
+/* Skeleton shimmer */
+.skeleton-shimmer {
+  background: linear-gradient(90deg,
+    hsl(var(--muted)) 0%,
+    hsl(var(--muted-foreground) / 0.08) 50%,
+    hsl(var(--muted)) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Empty state icon depth */
+.empty-icon-bg {
+  opacity: 0.15;
+  transform: scale(2);
 }
 
 /* Geo threat map pulse */

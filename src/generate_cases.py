@@ -13,17 +13,17 @@ class CaseGenerator:
     def __init__(self):
         self.base_time = datetime.now() - timedelta(days=7)
         self.users = [
-            "sarah.chen@acmecorp.example.com",
-            "michael.rodriguez@acmecorp.example.com",
-            "priya.patel@acmecorp.example.com",
-            "james.kim@acmecorp.example.com"
+            "ayse.demir@anadolufinans.example.tr",
+            "mehmet.kaya@anadolufinans.example.tr",
+            "zeynep.yilmaz@anadolufinans.example.tr",
+            "mustafa.celik@anadolufinans.example.tr"
         ]
         self.malicious_ips = [
             "185.220.101.45", "192.42.116.180", "45.142.213.91",
             "89.248.174.195", "141.98.10.54"
         ]
         self.good_ips = ["203.0.113.50", "198.51.100.25", "8.8.8.8"]
-        self.devices = ["LAPTOP-SARAH-01", "DESKTOP-MIKE-02", "MOBILE-PRIYA-01", "WORKSTATION-JAMES-01"]
+        self.devices = ["LAPTOP-AYSE-01", "DESKTOP-MEHMET-02", "MOBILE-ZEYNEP-01", "WORKSTATION-MUSTAFA-01"]
         
     def generate_all_cases(self):
         """Generate all 3 incident cases with events."""

@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useUIStore } from '@/store'
+import { useTranslation } from '@/i18n'
 import { cn } from '@/lib/utils'
 import {
   LayoutDashboard, AlertTriangle, FileSearch, Shield,
@@ -8,22 +9,27 @@ import {
   ChevronLeft, ChevronRight, X,
 } from 'lucide-react'
 
-const links = [
-  { to: '/',           icon: LayoutDashboard, label: 'Genel Bakış' },
-  { to: '/alerts',     icon: AlertTriangle,   label: 'Uyarılar' },
-  { to: '/incidents',  icon: FileSearch,       label: 'Olaylar' },
-  { to: '/iocs',       icon: Shield,           label: 'IOC\'ler' },
-  { to: '/playbooks',  icon: Play,             label: 'Playbook\'lar' },
-  { to: '/endpoints',  icon: Monitor,          label: 'Cihazlar' },
-  { to: '/mitre',      icon: Target,           label: 'MITRE ATT&CK' },
-  { to: '/threat-actors', icon: Users,         label: 'Tehdit Aktörleri' },
-  { to: '/detections', icon: Crosshair,        label: 'Kurallar' },
-  { to: '/settings',   icon: Settings,         label: 'Ayarlar' },
-]
-
 export function Sidebar() {
+  const { t } = useTranslation()
   const collapsed = useUIStore((s) => s.sidebarCollapsed)
   const toggle = useUIStore((s) => s.toggleSidebar)
+
+  const links = useMemo(() => [
+    { to: '/',           icon: LayoutDashboard, label: t('sidebar.overview') },
+    { to: '/alerts',     icon: AlertTriangle,   label: t('sidebar.alerts') },
+    { to: '/incidents',  icon: FileSearch,       label: t('sidebar.incidents') },
+    { to: '/iocs',       icon: Shield,           label: t('sidebar.iocs') },
+    { to: '/playbooks',  icon: Play,             label: t('sidebar.playbooks') },
+    { to: '/endpoints',  icon: Monitor,          label: t('sidebar.endpoints') },
+    { to: '/mitre',      icon: Target,           label: t('sidebar.mitre') },
+    { to: '/threat-actors', icon: Users,         label: t('sidebar.threatActors') },
+    { to: '/users',     icon: Users,         label: t('sidebar.users') },
+    { to: '/logs',      icon: FileSearch,     label: t('sidebar.logExplorer') },
+    { to: '/cases',     icon: FileSearch,     label: t('sidebar.cases') },
+    { to: '/correlations', icon: Target,      label: t('sidebar.correlations') },
+    { to: '/detections', icon: Crosshair,        label: t('sidebar.detections') },
+    { to: '/settings',   icon: Settings,         label: t('sidebar.settings') },
+  ], [t])
 
   // Close on Escape
   useEffect(() => {
@@ -44,19 +50,18 @@ export function Sidebar() {
           onKeyDown={(e) => e.key === 'Escape' && toggle()}
           role="button"
           tabIndex={0}
-          aria-label="Menüyü kapat"
+          aria-label={t('app.menuClose')}
         />
       )}
 
       <aside
         className={cn(
           'fixed left-0 top-0 z-40 h-screen bg-card border-r border-border flex flex-col transition-transform duration-200',
-          // Mobile: slide from left
           'lg:translate-x-0',
           collapsed ? '-translate-x-full lg:w-14 lg:translate-x-0' : 'translate-x-0 w-56'
         )}
         role="navigation"
-        aria-label="Ana navigasyon"
+        aria-label={t('app.mainNav')}
         aria-expanded={!collapsed}
       >
         {/* Logo */}
@@ -64,14 +69,13 @@ export function Sidebar() {
           <div className="flex items-center gap-2">
             <Shield className="w-6 h-6 text-primary shrink-0" aria-hidden="true" />
             {!collapsed && (
-              <span className="font-semibold text-sm whitespace-nowrap">SOC Console</span>
+              <span className="font-semibold text-sm whitespace-nowrap">{t('app.title')}</span>
             )}
           </div>
-          {/* Mobile close button */}
           <button
             onClick={toggle}
             className="lg:hidden p-1 rounded hover:bg-accent transition-colors"
-            aria-label="Menüyü kapat"
+            aria-label={t('app.menuClose')}
           >
             <X className="w-4 h-4" />
           </button>
@@ -85,7 +89,6 @@ export function Sidebar() {
               to={to}
               end={to === '/'}
               onClick={() => {
-                // Close sidebar on mobile after navigation
                 if (window.innerWidth < 1024 && !collapsed) toggle()
               }}
               className={({ isActive }) =>
@@ -106,11 +109,10 @@ export function Sidebar() {
           ))}
         </nav>
 
-        {/* Collapse toggle (desktop only) */}
         <button
           onClick={toggle}
           className="hidden lg:flex items-center justify-center h-10 border-t border-border text-muted-foreground hover:text-foreground transition-colors shrink-0"
-          aria-label={collapsed ? 'Menüyü genişlet' : 'Menüyü daralt'}
+          aria-label={collapsed ? t('app.menuExpand') : t('app.menuCollapse')}
           aria-expanded={!collapsed}
         >
           {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}

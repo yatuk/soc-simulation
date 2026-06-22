@@ -1,5 +1,6 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import type { KPIMetrics } from '@/types'
+import { ChartShell } from '@/components/ui/chart-shell'
 
 const SEVERITY_COLORS: Record<string, string> = {
   critical: '#f85149',
@@ -52,21 +53,12 @@ export function SeverityDonut({ kpi, isLoading }: Props) {
       </ResponsiveContainer>
       <div className="flex items-center justify-center gap-3 flex-wrap mt-1">
         {data.map((d) => (
-          <div key={d.name} className="flex items-center gap-1 text-[10px] text-muted-foreground">
+          <div key={d.name} className="flex items-center gap-1 text-xs text-muted-foreground">
             <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: d.color }} />
             {d.name} ({d.value})
           </div>
         ))}
       </div>
     </ChartShell>
-  )
-}
-
-function ChartShell({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-lg border border-border bg-card p-4">
-      <h3 className="text-xs font-semibold mb-3">{title}</h3>
-      {children}
-    </div>
   )
 }

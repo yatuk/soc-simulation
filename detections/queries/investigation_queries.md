@@ -35,7 +35,7 @@ source_type = "email_gateway"
 
 ```
 source_type = "identity"
-| WHERE user = "sarah.chen@acmecorp.example.com"
+| WHERE user = "ayse.demir@anadolufinans.example.tr"
 | SELECT timestamp, event, src_ip, src_geo, device, mfa_method, result
 | SORT BY timestamp ASC
 ```
@@ -72,7 +72,7 @@ source_type = "identity"
 ```
 source_type = "cloud_mailbox"
 | WHERE operation IN ("New-InboxRule", "Set-InboxRule")
-| AND user = "sarah.chen@acmecorp.example.com"
+| AND user = "ayse.demir@anadolufinans.example.tr"
 | SELECT timestamp, rule_name, rule_conditions, rule_actions, src_ip
 ```
 
@@ -91,7 +91,7 @@ source_type = "cloud_mailbox"
 
 ```
 source_type = "cloud_mailbox"
-| WHERE user = "sarah.chen@acmecorp.example.com"
+| WHERE user = "ayse.demir@anadolufinans.example.tr"
 | AND operation IN ("SearchMailbox", "MailItemsAccessed", "MessageBind")
 | SELECT timestamp, operation, query, results_count, operation_count, src_ip
 | SORT BY timestamp ASC
@@ -142,22 +142,22 @@ email_events
 
 ```
 (
-  source_type = "email_gateway" | WHERE recipient = "sarah.chen@acmecorp.example.com"
+  source_type = "email_gateway" | WHERE recipient = "ayse.demir@anadolufinans.example.tr"
   | SELECT timestamp, "EMAIL" AS source, subject AS activity
 )
 UNION ALL
 (
-  source_type = "identity" | WHERE user = "sarah.chen@acmecorp.example.com"
+  source_type = "identity" | WHERE user = "ayse.demir@anadolufinans.example.tr"
   | SELECT timestamp, "AUTH" AS source, event + " from " + src_geo AS activity
 )
 UNION ALL
 (
-  source_type = "web_proxy" | WHERE user = "sarah.chen"
+  source_type = "web_proxy" | WHERE user = "ayse.demir"
   | SELECT timestamp, "WEB" AS source, url AS activity
 )
 UNION ALL
 (
-  source_type = "cloud_mailbox" | WHERE user = "sarah.chen@acmecorp.example.com"
+  source_type = "cloud_mailbox" | WHERE user = "ayse.demir@anadolufinans.example.tr"
   | SELECT timestamp, "MAILBOX" AS source, operation AS activity
 )
 | SORT BY timestamp ASC
@@ -263,7 +263,7 @@ UNION
 ```
 source_type = "identity"
 | WHERE event = "session.revoke"
-| AND user = "sarah.chen@acmecorp.example.com"
+| AND user = "ayse.demir@anadolufinans.example.tr"
 | SELECT timestamp, actor, reason
 ```
 
@@ -272,7 +272,7 @@ source_type = "identity"
 ```
 source_type = "cloud_mailbox"
 | WHERE operation = "Remove-InboxRule"
-| AND user = "sarah.chen@acmecorp.example.com"
+| AND user = "ayse.demir@anadolufinans.example.tr"
 | SELECT timestamp, rule_name, actor, reason
 ```
 
@@ -282,7 +282,7 @@ source_type = "cloud_mailbox"
 remediation_time = "2026-01-10T10:05:00Z"
 
 source_type = *
-| WHERE user = "sarah.chen@acmecorp.example.com"
+| WHERE user = "ayse.demir@anadolufinans.example.tr"
 | AND timestamp > remediation_time
 | AND (
     ioc_match IS NOT NULL

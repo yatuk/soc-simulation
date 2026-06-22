@@ -5,7 +5,7 @@
     "description": "Harici Posta Kutusu Yönlendirme Kuralı tespit kuralı. m365_audit kaynağında tetiklenir.",
     "severity": "critical",
     "source": "m365_audit",
-    "sigma_rule": "title: Harici Posta Kutusu Yönlendirme Kuralı\nlogsource:\n  product: m365_audit\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Harici Posta Kutusu Yonlendirme Kurali\nlogsource:\n  product: m365_audit\n  service: exchange\ndetection:\n  selection:\n    Operation: New-InboxRule\n  filter_forward:\n    Parameters|contains: ForwardTo\n  filter_external:\n    Parameters|contains|not: anadolufinans.example.tr\n  condition: selection and filter_forward and filter_external",
     "mitre_technique_ids": [
       "T1114.002",
       "T1098"
@@ -27,7 +27,7 @@
     "description": "İmkansız Seyahat Tespiti tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "high",
     "source": "idp_auth",
-    "sigma_rule": "title: İmkansız Seyahat Tespiti\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Imkansiz Seyahat Tespiti\nlogsource:\n  product: idp_auth\n  service: azure_ad\ndetection:\n  selection:\n    Operation: UserLoggedIn\n  timeframe: 60m\n  geo_distance:\n    src_geo|distinct > 1000\n  condition: selection | count(distinct(src_geo)) by user > 1",
     "mitre_technique_ids": [
       "T1078"
     ],
@@ -48,7 +48,7 @@
     "description": "MFA Push Bombardımanı tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "critical",
     "source": "idp_auth",
-    "sigma_rule": "title: MFA Push Bombardımanı\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: MFA Push Bombardimani\nlogsource:\n  product: idp_auth\n  service: azure_ad\ndetection:\n  selection:\n    Operation: MFA_Denied\n  timeframe: 10m\n  threshold: count > 5\n  condition: selection | count by user > 5",
     "mitre_technique_ids": [
       "T1556"
     ],
@@ -69,7 +69,7 @@
     "description": "Parola Püskürtme Tespiti tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "medium",
     "source": "idp_auth",
-    "sigma_rule": "title: Parola Püskürtme Tespiti\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Parola Spray Saldirisi\nlogsource:\n  product: idp_auth\n  service: azure_ad\ndetection:\n  selection:\n    Operation: UserLoginFailed\n  timeframe: 10m\n  distinct_users:\n    UserPrincipalName|count|gt: 10\n  same_src:\n    src_ip|count|lt: 3\n  condition: selection | count(distinct(user)) > 10 and count(distinct(src_ip)) < 3",
     "mitre_technique_ids": [
       "T1110.003"
     ],
@@ -90,7 +90,7 @@
     "description": "Riskli OAuth Uygulama İzni tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "high",
     "source": "idp_auth",
-    "sigma_rule": "title: Riskli OAuth Uygulama İzni\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Riskli OAuth Uygulamasi\nlogsource:\n  product: m365_audit\n  service: azure_ad\ndetection:\n  selection:\n    Operation: AddOAuth2PermissionGrant\n  filter_publisher:\n    Publisher|exists: false\n  high_perms:\n    Scope|contains: ['Mail.Read', 'Mail.Send', 'Files.ReadWrite.All']\n  condition: selection and filter_publisher and high_perms",
     "mitre_technique_ids": [
       "T1528"
     ],
@@ -111,7 +111,7 @@
     "description": "Office Makro Çalıştırma Zinciri tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "critical",
     "source": "edr_telemetry",
-    "sigma_rule": "title: Office Makro Çalıştırma Zinciri\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Makro Calistirma Tespiti\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 7\n  office_parent:\n    ParentImage|endswith: ['WINWORD.EXE', 'EXCEL.EXE']\n  script_child:\n    Image|endswith: ['cmd.exe', 'powershell.exe', 'wscript.exe']\n  condition: selection and office_parent and script_child",
     "mitre_technique_ids": [
       "T1566.001",
       "T1059.005"
@@ -133,7 +133,7 @@
     "description": "C2 Beacon İletişimi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "critical",
     "source": "edr_telemetry",
-    "sigma_rule": "title: C2 Beacon İletişimi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: C2 Beacon Iletisimi\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 3\n  filter_external:\n    DestinationIp|startswith|not: ['10.', '192.168.']\n  beacon_interval:\n    connection_interval|lt: 300\n  timeframe: 2h\n  condition: selection and filter_external | stats count, avg_interval by src_ip, dst_ip",
     "mitre_technique_ids": [
       "T1071.001"
     ],
@@ -154,7 +154,7 @@
     "description": "Toplu Dış Paylaşım tespit kuralı. m365_audit kaynağında tetiklenir.",
     "severity": "high",
     "source": "m365_audit",
-    "sigma_rule": "title: Toplu Dış Paylaşım\nlogsource:\n  product: m365_audit\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Toplu Dosya Paylasimi\nlogsource:\n  product: m365_audit\n  service: sharepoint\ndetection:\n  selection:\n    Operation: FileSharedExternally\n  timeframe: 15m\n  threshold:\n    count > 10\n  condition: selection | count by user > 10",
     "mitre_technique_ids": [
       "T1567.002"
     ],
@@ -175,7 +175,7 @@
     "description": "Anormal Uzun DNS Query Tespiti tespit kuralı. dns_logs kaynağında tetiklenir.",
     "severity": "critical",
     "source": "dns_logs",
-    "sigma_rule": "title: Anormal Uzun DNS Query Tespiti\nlogsource:\n  product: dns_logs\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: DNS Tunelleme Suphesi\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 22\n  txt_records:\n    QueryType: TXT\n  long_queries:\n    QueryName|len|gt: 52\n  timeframe: 1h\n  condition: selection and (txt_records or long_queries) | count by src_ip > 50",
     "mitre_technique_ids": [
       "T1572"
     ],
@@ -196,7 +196,7 @@
     "description": "Kerberos TGS Request Spike tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "high",
     "source": "idp_auth",
-    "sigma_rule": "title: Kerberos TGS Request Spike\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Kerberoasting Saldirisi\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 4769\n  ticket_type:\n    TicketEncryptionType: 0x17\n  non_machine_account:\n    ServiceName|contains|not: '$'\n  condition: selection and ticket_type and non_machine_account",
     "mitre_technique_ids": [
       "T1558.003"
     ],
@@ -217,7 +217,7 @@
     "description": "IIS Dizininde Şüpheli .aspx Dosyası tespit kuralı. ids_signature kaynağında tetiklenir.",
     "severity": "critical",
     "source": "ids_signature",
-    "sigma_rule": "title: IIS Dizininde Şüpheli .aspx Dosyası\nlogsource:\n  product: ids_signature\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Web Shell IIS Tespiti\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 1\n  iis_parent:\n    ParentImage|endswith: w3wp.exe\n  shell_child:\n    Image|endswith: ['cmd.exe', 'powershell.exe']\n  condition: selection and iis_parent and shell_child",
     "mitre_technique_ids": [
       "T1505.003"
     ],
@@ -238,7 +238,7 @@
     "description": "LSASS Process Memory Erişimi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "critical",
     "source": "edr_telemetry",
-    "sigma_rule": "title: LSASS Process Memory Erişimi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: LSASS Process Erisimi\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 10\n  target_lsass:\n    TargetImage|endswith: lsass.exe\n  source_untrusted:\n    SourceImage|contains|not: ['svchost.exe', 'csrss.exe', 'wininit.exe', 'winlogon.exe']\n  condition: selection and target_lsass and source_untrusted",
     "mitre_technique_ids": [
       "T1003.001"
     ],
@@ -259,7 +259,7 @@
     "description": "Admin Share Üzerinden Binary Transfer tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "high",
     "source": "edr_telemetry",
-    "sigma_rule": "title: Admin Share Üzerinden Binary Transfer\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: SMB Lateral Movement\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 3\n  smb_port:\n    DestinationPort: 445\n  admin_share:\n    DestinationShare|contains: ['ADMIN$', 'C$', 'IPC$']\n  timeframe: 5m\n  condition: selection and smb_port and admin_share | count by src_ip > 3",
     "mitre_technique_ids": [
       "T1072"
     ],
@@ -280,7 +280,7 @@
     "description": "Anormal Veri Çıkış Hacmi tespit kuralı. dlp_engine kaynağında tetiklenir.",
     "severity": "high",
     "source": "dlp_engine",
-    "sigma_rule": "title: Anormal Veri Çıkış Hacmi\nlogsource:\n  product: dlp_engine\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Anormal Veri Cikisi\nlogsource:\n  product: web_proxy\n  service: proxy\ndetection:\n  selection:\n    HttpMethod: POST\n  large_upload:\n    ResponseBytes|gt: 52428800\n  external_host:\n    Url|contains|not: ['anadolufinans.example.tr', 'office.com']\n  condition: selection and large_upload and external_host",
     "mitre_technique_ids": [
       "T1048.003"
     ],
@@ -301,7 +301,7 @@
     "description": "DGA Pattern DNS Query tespit kuralı. dns_logs kaynağında tetiklenir.",
     "severity": "high",
     "source": "dns_logs",
-    "sigma_rule": "title: DGA Pattern DNS Query\nlogsource:\n  product: dns_logs\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: DGA Domain Tespiti\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 22\n  nxdomain_count:\n    QueryStatus: NXDOMAIN\n  timeframe: 10m\n  condition: selection | count by src_ip > 20 and unique(domain) > 15",
     "mitre_technique_ids": [
       "T1071.001"
     ],
@@ -322,7 +322,7 @@
     "description": "Antivirüs Servisi Durdurma Girişimi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "critical",
     "source": "edr_telemetry",
-    "sigma_rule": "title: Antivirüs Servisi Durdurma Girişimi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Antivirus Devre Disi Birakma\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 1\n  disable_commands:\n    CommandLine|contains: ['Set-MpPreference', 'DisableRealtimeMonitoring', 'net stop', 'sc stop']\n  condition: selection and disable_commands",
     "mitre_technique_ids": [
       "T1562.001"
     ],
@@ -343,7 +343,7 @@
     "description": "Toplu Dosya Uzantısı Değişimi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "critical",
     "source": "edr_telemetry",
-    "sigma_rule": "title: Toplu Dosya Uzantısı Değişimi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Fidye Yazilimi Dosya Uzantisi\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 11\n  ransom_ext:\n    TargetFilename|endswith: ['.encrypted', '.lock', '.crypt', '.wncry', '.onion']\n  timeframe: 5m\n  condition: selection and ransom_ext | count > 20",
     "mitre_technique_ids": [
       "T1486"
     ],
@@ -364,7 +364,7 @@
     "description": "Şüpheli Zamanlanmış Görev tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "high",
     "source": "edr_telemetry",
-    "sigma_rule": "title: Şüpheli Zamanlanmış Görev\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Supheli Zamanlanmis Gorev\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 1\n  schtask_cmd:\n    CommandLine|contains: ['schtasks', '/create']\n  hidden_flag:\n    CommandLine|contains: ['/sc onstart', '/tn', '/ru system']\n  condition: selection and schtask_cmd and hidden_flag",
     "mitre_technique_ids": [
       "T1053.005"
     ],
@@ -385,7 +385,7 @@
     "description": "WMI Kalıcılığı tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "high",
     "source": "edr_telemetry",
-    "sigma_rule": "title: WMI Kalıcılığı\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: WMI Kalicilik Mekanizmasi\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 19\n  wmi_filter:\n    EventFilter|contains: ['__InstanceCreationEvent', '__EventFilter']\n  consumer_binding:\n    Consumer|contains: ['CommandLineEventConsumer', 'ActiveScriptEventConsumer']\n  condition: selection and wmi_filter and consumer_binding",
     "mitre_technique_ids": [
       "T1047"
     ],
@@ -406,7 +406,7 @@
     "description": "Kripto Mining Aktivitesi tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "medium",
     "source": "edr_telemetry",
-    "sigma_rule": "title: Kripto Mining Aktivitesi\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Kripto Mining Tespiti\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 3\n  mining_ports:\n    DestinationPort: [3333, 4444, 5555, 8080, 14444]\n  mining_pools:\n    DestinationIp|contains|not: ['10.', '192.168.', '172.16.']\n  high_cpu:\n    cpu_percent > 80\n  condition: selection and mining_ports and mining_pools",
     "mitre_technique_ids": [
       "T1496"
     ],
@@ -427,7 +427,7 @@
     "description": "Şüpheli Paket İndirme tespit kuralı. proxy kaynağında tetiklenir.",
     "severity": "high",
     "source": "proxy",
-    "sigma_rule": "title: Şüpheli Paket İndirme\nlogsource:\n  product: proxy\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Tedarik Zinciri Suphesi\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 1\n  signed_binary:\n    SignatureStatus: Valid\n  rare_publisher:\n    Publisher|frequency|lt: 5\n  condition: selection and signed_binary and rare_publisher",
     "mitre_technique_ids": [
       "T1195.002"
     ],
@@ -448,7 +448,7 @@
     "description": "Standart Olmayan Port Kullanımı tespit kuralı. firewall kaynağında tetiklenir.",
     "severity": "medium",
     "source": "firewall",
-    "sigma_rule": "title: Standart Olmayan Port Kullanımı\nlogsource:\n  product: firewall\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Alternatif Port Iletisimi\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 3\n  alt_ports:\n    DestinationPort|contains: [53, 80, 443]\n    Protocol: tcp\n  alt_service:\n    Image|contains|not: ['chrome.exe', 'firefox.exe', 'msedge.exe']\n  condition: selection and alt_ports and alt_service",
     "mitre_technique_ids": [
       "T1571"
     ],
@@ -469,7 +469,7 @@
     "description": "Dosya Uzantısı Aldatmacası tespit kuralı. email_gateway kaynağında tetiklenir.",
     "severity": "medium",
     "source": "email_gateway",
-    "sigma_rule": "title: Dosya Uzantısı Aldatmacası\nlogsource:\n  product: email_gateway\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Dosya Uzantisi Sahtekarligi\nlogsource:\n  product: email_gateway\n  service: mimecast\ndetection:\n  selection:\n    Direction: Inbound\n  double_ext:\n    AttachmentName|re: '.*\\..{3,4}\\..{3,4}'\n  exec_ext:\n    AttachmentName|endswith: ['.exe', '.scr', '.vbs', '.js', '.hta', '.ps1']\n  condition: selection and (double_ext or exec_ext)",
     "mitre_technique_ids": [
       "T1036.005"
     ],
@@ -490,7 +490,7 @@
     "description": "Session Token Replay tespit kuralı. idp_auth kaynağında tetiklenir.",
     "severity": "high",
     "source": "idp_auth",
-    "sigma_rule": "title: Session Token Replay\nlogsource:\n  product: idp_auth\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Oturum Tekrari Suphesi\nlogsource:\n  product: idp_auth\n  service: azure_ad\ndetection:\n  selection:\n    Operation: UserLoggedIn\n  same_token:\n    SessionId|count > 2\n  different_ip:\n    src_ip|distinct > 1\n  timeframe: 5m\n  condition: selection | count by SessionId > 2 and distinct(src_ip) > 1",
     "mitre_technique_ids": [
       "T1539"
     ],
@@ -511,7 +511,7 @@
     "description": "Base64 PowerShell Komutu tespit kuralı. edr_telemetry kaynağında tetiklenir.",
     "severity": "critical",
     "source": "edr_telemetry",
-    "sigma_rule": "title: Base64 PowerShell Komutu\nlogsource:\n  product: edr_telemetry\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Encoded PowerShell Komutu\nlogsource:\n  product: endpoint_edr\n  service: powershell\ndetection:\n  selection:\n    EventID: 4104\n  encoded_flag:\n    ScriptBlockText|contains: ['-EncodedCommand', '-enc ', 'FromBase64String']\n  suspicious_decode:\n    ScriptBlockText|contains: ['Invoke-Expression', 'IEX', 'Invoke-Command']\n  condition: selection and encoded_flag or suspicious_decode",
     "mitre_technique_ids": [
       "T1059.001"
     ],
@@ -532,7 +532,7 @@
     "description": "Public Cloud Storage Yanlış Yapılandırma tespit kuralı. cloud_audit kaynağında tetiklenir.",
     "severity": "medium",
     "source": "cloud_audit",
-    "sigma_rule": "title: Public Cloud Storage Yanlış Yapılandırma\nlogsource:\n  product: cloud_audit\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Cloud Yanlis Yapilandirma\nlogsource:\n  product: m365_audit\n  service: azure_ad\ndetection:\n  selection:\n    Operation: Set-AdminAuditLogConfig\n  risky_change:\n    Parameters|contains: ['-UnifiedAuditLogIngestionEnabled', '$false']\n  condition: selection and risky_change",
     "mitre_technique_ids": [
       "T1567.002"
     ],
@@ -553,7 +553,7 @@
     "description": "Anormal Sertifika İsteği tespit kuralı. cert_authority kaynağında tetiklenir.",
     "severity": "medium",
     "source": "cert_authority",
-    "sigma_rule": "title: Anormal Sertifika İsteği\nlogsource:\n  product: cert_authority\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: Sertifika Anomalisi\nlogsource:\n  product: endpoint_edr\n  service: sysmon\ndetection:\n  selection:\n    EventID: 1\n  new_cert:\n    Image|endswith: certutil.exe\n  decode_flag:\n    CommandLine|contains: ['-decode', '-urlcache', '-split']\n  condition: selection and new_cert and decode_flag",
     "mitre_technique_ids": [],
     "enabled": true,
     "alert_count_14d": 9,
@@ -572,7 +572,7 @@
     "description": "VPN Brute Force tespit kuralı. vpn_logs kaynağında tetiklenir.",
     "severity": "high",
     "source": "vpn_logs",
-    "sigma_rule": "title: VPN Brute Force\nlogsource:\n  product: vpn_logs\ndetection:\n  keywords: ['suspicious']\n  condition: keywords",
+    "sigma_rule": "title: VPN Brute Force\nlogsource:\n  product: idp_auth\n  service: vpn\ndetection:\n  selection:\n    Operation: VPN_LoginFailed\n  timeframe: 5m\n  threshold:\n    count > 30\n  geo_spread:\n    src_geo|distinct > 1\n  condition: selection | count by src_ip > 30 and distinct(src_geo) > 1",
     "mitre_technique_ids": [
       "T1110.003"
     ],

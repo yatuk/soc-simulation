@@ -22,19 +22,3 @@ def make_run_id(seq: int) -> str:
     """RUN-1001"""
     return f"RUN-{1000 + seq}"
 
-def make_rule_id(seq: int) -> str:
-    """RULE-MAILBOX-001"""
-    return f"RULE-{seq:04d}"
-
-# ── Defang helpers ───────────────────────────────────────────
-def defang_url(url: str) -> str:
-    """hxxps://evil[.]example[.]tk/path"""
-    return url.replace("http://", "hxxp://").replace("https://", "hxxps://").replace(".", "[.]")
-
-def defang_domain(domain: str) -> str:
-    """evil[.]example[.]tk"""
-    return domain.replace(".", "[.]")
-
-def defang_ip(ip: str) -> str:
-    """198[.]51[.]100[.]45"""
-    return ip.replace(".", "[.]")
